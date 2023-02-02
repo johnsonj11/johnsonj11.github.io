@@ -1,2 +1,0 @@
-project-overview
-set-up-your-r-environment
