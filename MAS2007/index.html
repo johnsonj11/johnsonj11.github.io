@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>MAS2007 - Mathematics and Statistics in Action</title>
+  <meta name="description" content="MAS2007" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="MAS2007 - Mathematics and Statistics in Action" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="MAS2007" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="MAS2007 - Mathematics and Statistics in Action" />
+  
+  <meta name="twitter:description" content="MAS2007" />
+  
+
+<meta name="author" content="" />
+
+
+<meta name="date" content="2025-01-25" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="set-up-your-r-environment.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MAS2007</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About these notes</a></li>
+<li class="chapter" data-level="1" data-path="set-up-your-r-environment.html"><a href="set-up-your-r-environment.html"><i class="fa fa-check"></i><b>1</b> Set up your R environment</a></li>
+<li class="chapter" data-level="2" data-path="project-overview.html"><a href="project-overview.html"><i class="fa fa-check"></i><b>2</b> Project overview</a></li>
+<li class="part"><span><b>I Data Processing</b></span></li>
+<li class="chapter" data-level="3" data-path="importing-data.html"><a href="importing-data.html"><i class="fa fa-check"></i><b>3</b> Importing data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="importing-data.html"><a href="importing-data.html#importing-a-.csv-file"><i class="fa fa-check"></i><b>3.1</b> Importing a .csv file</a></li>
+<li class="chapter" data-level="3.2" data-path="importing-data.html"><a href="importing-data.html#importing-excel-.xlsx-files"><i class="fa fa-check"></i><b>3.2</b> Importing Excel .xlsx files</a></li>
+<li class="chapter" data-level="3.3" data-path="importing-data.html"><a href="importing-data.html#importing-a-plain-text-file"><i class="fa fa-check"></i><b>3.3</b> Importing a plain text file</a></li>
+<li class="chapter" data-level="3.4" data-path="importing-data.html"><a href="importing-data.html#importing-online-data"><i class="fa fa-check"></i><b>3.4</b> Importing online data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="strings.html"><a href="strings.html"><i class="fa fa-check"></i><b>4</b> Strings</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="strings.html"><a href="strings.html#example-fictitous-exam-mark-data"><i class="fa fa-check"></i><b>4.1</b> Example: (fictitous) exam mark data</a></li>
+<li class="chapter" data-level="4.2" data-path="strings.html"><a href="strings.html#importing-text-data-with-read_lines"><i class="fa fa-check"></i><b>4.2</b> Importing text data with <code>read_lines()</code></a></li>
+<li class="chapter" data-level="4.3" data-path="strings.html"><a href="strings.html#finding-and-replacing-characters-in-strings"><i class="fa fa-check"></i><b>4.3</b> Finding (and replacing) characters in strings</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="strings.html"><a href="strings.html#finding-text-with-str_which"><i class="fa fa-check"></i><b>4.3.1</b> Finding text with <code>str_which()</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="strings.html"><a href="strings.html#escape-characters-and-regular-expressions"><i class="fa fa-check"></i><b>4.3.2</b> Escape characters and regular expressions</a></li>
+<li class="chapter" data-level="4.3.3" data-path="strings.html"><a href="strings.html#replacing-or-removing-text"><i class="fa fa-check"></i><b>4.3.3</b> Replacing or removing text</a></li>
+<li class="chapter" data-level="4.3.4" data-path="strings.html"><a href="strings.html#removing-white-space-at-startend-of-strings"><i class="fa fa-check"></i><b>4.3.4</b> Removing white space at start/end of strings</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="strings.html"><a href="strings.html#subsetting-strings"><i class="fa fa-check"></i><b>4.4</b> Subsetting strings</a></li>
+<li class="chapter" data-level="4.5" data-path="strings.html"><a href="strings.html#making-a-data-frame"><i class="fa fa-check"></i><b>4.5</b> Making a data frame</a></li>
+<li class="chapter" data-level="4.6" data-path="strings.html"><a href="strings.html#exercise"><i class="fa fa-check"></i><b>4.6</b> Exercise</a></li>
+<li class="chapter" data-level="4.7" data-path="strings.html"><a href="strings.html#further-reading"><i class="fa fa-check"></i><b>4.7</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html"><i class="fa fa-check"></i><b>5</b> Manipulating data frames - recap</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>5.1</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="5.2" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>5.2</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="5.3" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>5.3</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="5.4" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>5.4</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="5.5" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>5.5</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html"><i class="fa fa-check"></i><b>6</b> Summary statistics - recap</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#calculating-summary-statistics-with-the-summary-command"><i class="fa fa-check"></i><b>6.1</b> Calculating summary statistics with the <code>summary()</code> command</a></li>
+<li class="chapter" data-level="6.2" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#calculating-individual-summary-statistics"><i class="fa fa-check"></i><b>6.2</b> Calculating individual summary statistics</a></li>
+<li class="chapter" data-level="6.3" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>6.3</b> Computing summaries per group</a></li>
+<li class="chapter" data-level="6.4" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#exercise-1"><i class="fa fa-check"></i><b>6.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>7</b> Missing data</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="missing-data.html"><a href="missing-data.html#na"><i class="fa fa-check"></i><b>7.1</b> <code>NA</code></a></li>
+<li class="chapter" data-level="7.2" data-path="missing-data.html"><a href="missing-data.html#functions-and-na"><i class="fa fa-check"></i><b>7.2</b> Functions and <code>NA</code></a></li>
+</ul></li>
+<li class="part"><span><b>II Plotting data</b></span></li>
+<li class="chapter" data-level="8" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html"><i class="fa fa-check"></i><b>8</b> Making plots with <code>ggplot2</code> - recap</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#the-general-syntax"><i class="fa fa-check"></i><b>8.1</b> The general syntax</a></li>
+<li class="chapter" data-level="8.2" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#scatter-plots"><i class="fa fa-check"></i><b>8.2</b> Scatter plots</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#annotating-a-scatter-plot"><i class="fa fa-check"></i><b>8.2.1</b> Annotating a scatter plot</a></li>
+<li class="chapter" data-level="8.2.2" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#adding-a-trend"><i class="fa fa-check"></i><b>8.2.2</b> Adding a trend</a></li>
+<li class="chapter" data-level="8.2.3" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#representing-more-than-two-variables-on-a-scatter-plot"><i class="fa fa-check"></i><b>8.2.3</b> Representing more than two variables on a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#histograms"><i class="fa fa-check"></i><b>8.3</b> Histograms</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>8.3.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#box-plots"><i class="fa fa-check"></i><b>8.4</b> Box plots</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#adding-the-observations-to-a-box-plot"><i class="fa fa-check"></i><b>8.4.1</b> Adding the observations to a box plot</a></li>
+<li class="chapter" data-level="8.4.2" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#violin-plots"><i class="fa fa-check"></i><b>8.4.2</b> Violin plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#global-aesthetics"><i class="fa fa-check"></i><b>8.5</b> ‘Global’ aesthetics</a></li>
+<li class="chapter" data-level="8.6" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#facets"><i class="fa fa-check"></i><b>8.6</b> Facets</a></li>
+<li class="chapter" data-level="8.7" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#exBrexitPlots"><i class="fa fa-check"></i><b>8.7</b> Exercises</a></li>
+<li class="chapter" data-level="8.8" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#further-reading-1"><i class="fa fa-check"></i><b>8.8</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html"><i class="fa fa-check"></i><b>9</b> Presentation of plots</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-basics"><i class="fa fa-check"></i><b>9.1</b> The basics</a></li>
+<li class="chapter" data-level="9.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-caption-test"><i class="fa fa-check"></i><b>9.2</b> The caption test</a></li>
+<li class="chapter" data-level="9.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#caption-or-title"><i class="fa fa-check"></i><b>9.3</b> Caption or title?</a></li>
+<li class="chapter" data-level="9.4" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#customising-the-appearance-of-a-plot"><i class="fa fa-check"></i><b>9.4</b> Customising the appearance of a plot</a></li>
+<li class="chapter" data-level="9.5" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#refining-a-plot-an-example"><i class="fa fa-check"></i><b>9.5</b> Refining a plot: an example</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-data-to-plot"><i class="fa fa-check"></i><b>9.5.1</b> The data to plot</a></li>
+<li class="chapter" data-level="9.5.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#a-first-attempt-four-histograms"><i class="fa fa-check"></i><b>9.5.2</b> A first attempt: four histograms</a></li>
+<li class="chapter" data-level="9.5.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#using-a-box-plot"><i class="fa fa-check"></i><b>9.5.3</b> Using a box plot</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#exercises"><i class="fa fa-check"></i><b>9.6</b> Exercises</a></li>
+<li class="chapter" data-level="9.7" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#data-sources"><i class="fa fa-check"></i><b>9.7</b> Data sources</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html"><i class="fa fa-check"></i><b>10</b> Maps with <code>leaflet</code></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#a-basic-map"><i class="fa fa-check"></i><b>10.1</b> A basic map</a></li>
+<li class="chapter" data-level="10.2" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#indicating-points-on-a-map"><i class="fa fa-check"></i><b>10.2</b> Indicating points on a map</a></li>
+<li class="chapter" data-level="10.3" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#exercise-2"><i class="fa fa-check"></i><b>10.3</b> Exercise</a></li>
+<li class="chapter" data-level="10.4" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#further-reading-2"><i class="fa fa-check"></i><b>10.4</b> Further reading</a></li>
+</ul></li>
+<li class="part"><span><b>III Statistical Inference</b></span></li>
+<li class="chapter" data-level="11" data-path="computing-using-loops.html"><a href="computing-using-loops.html"><i class="fa fa-check"></i><b>11</b> Computing using loops</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="computing-using-loops.html"><a href="computing-using-loops.html#repeating-a-process-with-a-for-loop"><i class="fa fa-check"></i><b>11.1</b> Repeating a process with a <code>for</code> loop</a></li>
+<li class="chapter" data-level="11.2" data-path="computing-using-loops.html"><a href="computing-using-loops.html#example-cleaning-two-text-files"><i class="fa fa-check"></i><b>11.2</b> Example: cleaning two text files</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="computing-using-loops.html"><a href="computing-using-loops.html#the-core-code-block"><i class="fa fa-check"></i><b>11.2.1</b> The core code block</a></li>
+<li class="chapter" data-level="11.2.2" data-path="computing-using-loops.html"><a href="computing-using-loops.html#identify-the-variables-we-need-to-specify"><i class="fa fa-check"></i><b>11.2.2</b> Identify the variables we need to specify</a></li>
+<li class="chapter" data-level="11.2.3" data-path="computing-using-loops.html"><a href="computing-using-loops.html#create-an-empty-list-to-store-the-results"><i class="fa fa-check"></i><b>11.2.3</b> Create an empty list to store the results</a></li>
+<li class="chapter" data-level="11.2.4" data-path="computing-using-loops.html"><a href="computing-using-loops.html#use-a-for-loop-to-run-the-code-block-multiple-times"><i class="fa fa-check"></i><b>11.2.4</b> Use a for loop to run the code block multiple times</a></li>
+<li class="chapter" data-level="11.2.5" data-path="computing-using-loops.html"><a href="computing-using-loops.html#convert-the-list-to-a-data-frame"><i class="fa fa-check"></i><b>11.2.5</b> Convert the list to a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="computing-using-loops.html"><a href="computing-using-loops.html#example-averaging-over-groups"><i class="fa fa-check"></i><b>11.3</b> Example: averaging over groups</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="computing-using-loops.html"><a href="computing-using-loops.html#the-core-code-block-1"><i class="fa fa-check"></i><b>11.3.1</b> The core code block</a></li>
+<li class="chapter" data-level="11.3.2" data-path="computing-using-loops.html"><a href="computing-using-loops.html#identify-the-variables-we-need-to-specify-1"><i class="fa fa-check"></i><b>11.3.2</b> Identify the variables we need to specify</a></li>
+<li class="chapter" data-level="11.3.3" data-path="computing-using-loops.html"><a href="computing-using-loops.html#create-an-empty-vector-to-store-the-results"><i class="fa fa-check"></i><b>11.3.3</b> Create an empty vector to store the results</a></li>
+<li class="chapter" data-level="11.3.4" data-path="computing-using-loops.html"><a href="computing-using-loops.html#use-a-for-loop-to-run-the-code-block-multiple-times-1"><i class="fa fa-check"></i><b>11.3.4</b> Use a <code>for</code> loop to run the code block multiple times</a></li>
+<li class="chapter" data-level="11.3.5" data-path="computing-using-loops.html"><a href="computing-using-loops.html#convert-the-vector-to-a-data-frame"><i class="fa fa-check"></i><b>11.3.5</b> Convert the vector to a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="computing-using-loops.html"><a href="computing-using-loops.html#exercise-3"><i class="fa fa-check"></i><b>11.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="relationships-in-data.html"><a href="relationships-in-data.html"><i class="fa fa-check"></i><b>12</b> Relationships in data</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#covariance-and-correlation---recap"><i class="fa fa-check"></i><b>12.1</b> Covariance and correlation - recap</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#covariance"><i class="fa fa-check"></i><b>12.1.1</b> Covariance</a></li>
+<li class="chapter" data-level="12.1.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#pearsons-correlation-coefficient"><i class="fa fa-check"></i><b>12.1.2</b> Pearson’s correlation coefficient</a></li>
+<li class="chapter" data-level="12.1.3" data-path="relationships-in-data.html"><a href="relationships-in-data.html#spearmans-correlation-coefficient"><i class="fa fa-check"></i><b>12.1.3</b> Spearman’s correlation coefficient</a></li>
+<li class="chapter" data-level="12.1.4" data-path="relationships-in-data.html"><a href="relationships-in-data.html#correlations-for-the-trees-data-set"><i class="fa fa-check"></i><b>12.1.4</b> Correlations for the <code>trees</code> data set</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#simple-linear-regression"><i class="fa fa-check"></i><b>12.2</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#fitting-the-simple-linear-regression-model-in-r"><i class="fa fa-check"></i><b>12.2.1</b> Fitting the simple linear regression model in R</a></li>
+<li class="chapter" data-level="12.2.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#prediction-from-the-fitted-model"><i class="fa fa-check"></i><b>12.2.2</b> Prediction from the fitted model</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="relationships-in-data.html"><a href="relationships-in-data.html#exploring-variation-over-time"><i class="fa fa-check"></i><b>12.3</b> Exploring variation over time</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#trends"><i class="fa fa-check"></i><b>12.3.1</b> Trends</a></li>
+<li class="chapter" data-level="12.3.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#seasonality"><i class="fa fa-check"></i><b>12.3.2</b> Seasonality</a></li>
+<li class="chapter" data-level="12.3.3" data-path="relationships-in-data.html"><a href="relationships-in-data.html#temporal-dependence"><i class="fa fa-check"></i><b>12.3.3</b> Temporal dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="relationships-in-data.html"><a href="relationships-in-data.html#exercise-4"><i class="fa fa-check"></i><b>12.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="imputing-missing-data.html"><a href="imputing-missing-data.html"><i class="fa fa-check"></i><b>13</b> Imputing missing data</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="imputing-missing-data.html"><a href="imputing-missing-data.html#visualising-missing-data"><i class="fa fa-check"></i><b>13.1</b> Visualising missing data</a></li>
+<li class="chapter" data-level="13.2" data-path="imputing-missing-data.html"><a href="imputing-missing-data.html#exercise-5"><i class="fa fa-check"></i><b>13.2</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MAS2007 - Mathematics and Statistics in Action</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">MAS2007 - Mathematics and Statistics in Action</h1>
+<h2 class="subtitle"><em>Topic 1: Statistical analysis of climate-based data</em></h2>
+<p class="author"><em></em></p>
+<p class="date"><em>2025-01-25</em></p>
+</div>
+<div id="about-these-notes" class="section level1 unnumbered hasAnchor">
+<h1>About these notes<a href="index.html#about-these-notes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>These notes support the work on MAS2007 Topic 1: <em>Statistical analysis of climate-based data</em>, and build on the R notes from MAS109: Probability and Data Science (<a href="https://oakleyj.github.io/ShortRIntro/">Introduction to R</a>; <a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html">Exploratory Data Analysis Using R</a>) to provide information on additional exploratory data analysis (EDA) and statistical methods required for this work.</p>
+<p>Topics covered include:</p>
+<ul>
+<li><p>Data processing for data provided as text;</p></li>
+<li><p>A recap on EDA approaches: Manipulating, summarising and plotting data;</p></li>
+<li><p>Statistical inference: computing using ‘for loops’, exploring relationships and patterns in data and handling missing values.</p></li>
+</ul>
+
+<!-- # (PART) Set-up in R {-} -->
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="set-up-your-r-environment.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 5 Manipulating data frames - recap | MAS2007 - Mathematics and Statistics in Action</title>
+  <meta name="description" content="MAS2007" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 5 Manipulating data frames - recap | MAS2007 - Mathematics and Statistics in Action" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="MAS2007" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 5 Manipulating data frames - recap | MAS2007 - Mathematics and Statistics in Action" />
+  
+  <meta name="twitter:description" content="MAS2007" />
+  
+
+<meta name="author" content="" />
+
+
+<meta name="date" content="2025-01-25" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="strings.html"/>
+<link rel="next" href="summary-statistics---recap.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MAS2007</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About these notes</a></li>
+<li class="chapter" data-level="1" data-path="set-up-your-r-environment.html"><a href="set-up-your-r-environment.html"><i class="fa fa-check"></i><b>1</b> Set up your R environment</a></li>
+<li class="chapter" data-level="2" data-path="project-overview.html"><a href="project-overview.html"><i class="fa fa-check"></i><b>2</b> Project overview</a></li>
+<li class="part"><span><b>I Data Processing</b></span></li>
+<li class="chapter" data-level="3" data-path="importing-data.html"><a href="importing-data.html"><i class="fa fa-check"></i><b>3</b> Importing data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="importing-data.html"><a href="importing-data.html#importing-a-.csv-file"><i class="fa fa-check"></i><b>3.1</b> Importing a .csv file</a></li>
+<li class="chapter" data-level="3.2" data-path="importing-data.html"><a href="importing-data.html#importing-excel-.xlsx-files"><i class="fa fa-check"></i><b>3.2</b> Importing Excel .xlsx files</a></li>
+<li class="chapter" data-level="3.3" data-path="importing-data.html"><a href="importing-data.html#importing-a-plain-text-file"><i class="fa fa-check"></i><b>3.3</b> Importing a plain text file</a></li>
+<li class="chapter" data-level="3.4" data-path="importing-data.html"><a href="importing-data.html#importing-online-data"><i class="fa fa-check"></i><b>3.4</b> Importing online data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="strings.html"><a href="strings.html"><i class="fa fa-check"></i><b>4</b> Strings</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="strings.html"><a href="strings.html#example-fictitous-exam-mark-data"><i class="fa fa-check"></i><b>4.1</b> Example: (fictitous) exam mark data</a></li>
+<li class="chapter" data-level="4.2" data-path="strings.html"><a href="strings.html#importing-text-data-with-read_lines"><i class="fa fa-check"></i><b>4.2</b> Importing text data with <code>read_lines()</code></a></li>
+<li class="chapter" data-level="4.3" data-path="strings.html"><a href="strings.html#finding-and-replacing-characters-in-strings"><i class="fa fa-check"></i><b>4.3</b> Finding (and replacing) characters in strings</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="strings.html"><a href="strings.html#finding-text-with-str_which"><i class="fa fa-check"></i><b>4.3.1</b> Finding text with <code>str_which()</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="strings.html"><a href="strings.html#escape-characters-and-regular-expressions"><i class="fa fa-check"></i><b>4.3.2</b> Escape characters and regular expressions</a></li>
+<li class="chapter" data-level="4.3.3" data-path="strings.html"><a href="strings.html#replacing-or-removing-text"><i class="fa fa-check"></i><b>4.3.3</b> Replacing or removing text</a></li>
+<li class="chapter" data-level="4.3.4" data-path="strings.html"><a href="strings.html#removing-white-space-at-startend-of-strings"><i class="fa fa-check"></i><b>4.3.4</b> Removing white space at start/end of strings</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="strings.html"><a href="strings.html#subsetting-strings"><i class="fa fa-check"></i><b>4.4</b> Subsetting strings</a></li>
+<li class="chapter" data-level="4.5" data-path="strings.html"><a href="strings.html#making-a-data-frame"><i class="fa fa-check"></i><b>4.5</b> Making a data frame</a></li>
+<li class="chapter" data-level="4.6" data-path="strings.html"><a href="strings.html#exercise"><i class="fa fa-check"></i><b>4.6</b> Exercise</a></li>
+<li class="chapter" data-level="4.7" data-path="strings.html"><a href="strings.html#further-reading"><i class="fa fa-check"></i><b>4.7</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html"><i class="fa fa-check"></i><b>5</b> Manipulating data frames - recap</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>5.1</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="5.2" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>5.2</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="5.3" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>5.3</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="5.4" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>5.4</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="5.5" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>5.5</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html"><i class="fa fa-check"></i><b>6</b> Summary statistics - recap</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#calculating-summary-statistics-with-the-summary-command"><i class="fa fa-check"></i><b>6.1</b> Calculating summary statistics with the <code>summary()</code> command</a></li>
+<li class="chapter" data-level="6.2" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#calculating-individual-summary-statistics"><i class="fa fa-check"></i><b>6.2</b> Calculating individual summary statistics</a></li>
+<li class="chapter" data-level="6.3" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>6.3</b> Computing summaries per group</a></li>
+<li class="chapter" data-level="6.4" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#exercise-1"><i class="fa fa-check"></i><b>6.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>7</b> Missing data</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="missing-data.html"><a href="missing-data.html#na"><i class="fa fa-check"></i><b>7.1</b> <code>NA</code></a></li>
+<li class="chapter" data-level="7.2" data-path="missing-data.html"><a href="missing-data.html#functions-and-na"><i class="fa fa-check"></i><b>7.2</b> Functions and <code>NA</code></a></li>
+</ul></li>
+<li class="part"><span><b>II Plotting data</b></span></li>
+<li class="chapter" data-level="8" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html"><i class="fa fa-check"></i><b>8</b> Making plots with <code>ggplot2</code> - recap</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#the-general-syntax"><i class="fa fa-check"></i><b>8.1</b> The general syntax</a></li>
+<li class="chapter" data-level="8.2" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#scatter-plots"><i class="fa fa-check"></i><b>8.2</b> Scatter plots</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#annotating-a-scatter-plot"><i class="fa fa-check"></i><b>8.2.1</b> Annotating a scatter plot</a></li>
+<li class="chapter" data-level="8.2.2" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#adding-a-trend"><i class="fa fa-check"></i><b>8.2.2</b> Adding a trend</a></li>
+<li class="chapter" data-level="8.2.3" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#representing-more-than-two-variables-on-a-scatter-plot"><i class="fa fa-check"></i><b>8.2.3</b> Representing more than two variables on a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#histograms"><i class="fa fa-check"></i><b>8.3</b> Histograms</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>8.3.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#box-plots"><i class="fa fa-check"></i><b>8.4</b> Box plots</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#adding-the-observations-to-a-box-plot"><i class="fa fa-check"></i><b>8.4.1</b> Adding the observations to a box plot</a></li>
+<li class="chapter" data-level="8.4.2" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#violin-plots"><i class="fa fa-check"></i><b>8.4.2</b> Violin plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#global-aesthetics"><i class="fa fa-check"></i><b>8.5</b> ‘Global’ aesthetics</a></li>
+<li class="chapter" data-level="8.6" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#facets"><i class="fa fa-check"></i><b>8.6</b> Facets</a></li>
+<li class="chapter" data-level="8.7" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#exBrexitPlots"><i class="fa fa-check"></i><b>8.7</b> Exercises</a></li>
+<li class="chapter" data-level="8.8" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#further-reading-1"><i class="fa fa-check"></i><b>8.8</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html"><i class="fa fa-check"></i><b>9</b> Presentation of plots</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-basics"><i class="fa fa-check"></i><b>9.1</b> The basics</a></li>
+<li class="chapter" data-level="9.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-caption-test"><i class="fa fa-check"></i><b>9.2</b> The caption test</a></li>
+<li class="chapter" data-level="9.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#caption-or-title"><i class="fa fa-check"></i><b>9.3</b> Caption or title?</a></li>
+<li class="chapter" data-level="9.4" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#customising-the-appearance-of-a-plot"><i class="fa fa-check"></i><b>9.4</b> Customising the appearance of a plot</a></li>
+<li class="chapter" data-level="9.5" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#refining-a-plot-an-example"><i class="fa fa-check"></i><b>9.5</b> Refining a plot: an example</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-data-to-plot"><i class="fa fa-check"></i><b>9.5.1</b> The data to plot</a></li>
+<li class="chapter" data-level="9.5.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#a-first-attempt-four-histograms"><i class="fa fa-check"></i><b>9.5.2</b> A first attempt: four histograms</a></li>
+<li class="chapter" data-level="9.5.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#using-a-box-plot"><i class="fa fa-check"></i><b>9.5.3</b> Using a box plot</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#exercises"><i class="fa fa-check"></i><b>9.6</b> Exercises</a></li>
+<li class="chapter" data-level="9.7" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#data-sources"><i class="fa fa-check"></i><b>9.7</b> Data sources</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html"><i class="fa fa-check"></i><b>10</b> Maps with <code>leaflet</code></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#a-basic-map"><i class="fa fa-check"></i><b>10.1</b> A basic map</a></li>
+<li class="chapter" data-level="10.2" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#indicating-points-on-a-map"><i class="fa fa-check"></i><b>10.2</b> Indicating points on a map</a></li>
+<li class="chapter" data-level="10.3" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#exercise-2"><i class="fa fa-check"></i><b>10.3</b> Exercise</a></li>
+<li class="chapter" data-level="10.4" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#further-reading-2"><i class="fa fa-check"></i><b>10.4</b> Further reading</a></li>
+</ul></li>
+<li class="part"><span><b>III Statistical Inference</b></span></li>
+<li class="chapter" data-level="11" data-path="computing-using-loops.html"><a href="computing-using-loops.html"><i class="fa fa-check"></i><b>11</b> Computing using loops</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="computing-using-loops.html"><a href="computing-using-loops.html#repeating-a-process-with-a-for-loop"><i class="fa fa-check"></i><b>11.1</b> Repeating a process with a <code>for</code> loop</a></li>
+<li class="chapter" data-level="11.2" data-path="computing-using-loops.html"><a href="computing-using-loops.html#example-cleaning-two-text-files"><i class="fa fa-check"></i><b>11.2</b> Example: cleaning two text files</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="computing-using-loops.html"><a href="computing-using-loops.html#the-core-code-block"><i class="fa fa-check"></i><b>11.2.1</b> The core code block</a></li>
+<li class="chapter" data-level="11.2.2" data-path="computing-using-loops.html"><a href="computing-using-loops.html#identify-the-variables-we-need-to-specify"><i class="fa fa-check"></i><b>11.2.2</b> Identify the variables we need to specify</a></li>
+<li class="chapter" data-level="11.2.3" data-path="computing-using-loops.html"><a href="computing-using-loops.html#create-an-empty-list-to-store-the-results"><i class="fa fa-check"></i><b>11.2.3</b> Create an empty list to store the results</a></li>
+<li class="chapter" data-level="11.2.4" data-path="computing-using-loops.html"><a href="computing-using-loops.html#use-a-for-loop-to-run-the-code-block-multiple-times"><i class="fa fa-check"></i><b>11.2.4</b> Use a for loop to run the code block multiple times</a></li>
+<li class="chapter" data-level="11.2.5" data-path="computing-using-loops.html"><a href="computing-using-loops.html#convert-the-list-to-a-data-frame"><i class="fa fa-check"></i><b>11.2.5</b> Convert the list to a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="computing-using-loops.html"><a href="computing-using-loops.html#example-averaging-over-groups"><i class="fa fa-check"></i><b>11.3</b> Example: averaging over groups</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="computing-using-loops.html"><a href="computing-using-loops.html#the-core-code-block-1"><i class="fa fa-check"></i><b>11.3.1</b> The core code block</a></li>
+<li class="chapter" data-level="11.3.2" data-path="computing-using-loops.html"><a href="computing-using-loops.html#identify-the-variables-we-need-to-specify-1"><i class="fa fa-check"></i><b>11.3.2</b> Identify the variables we need to specify</a></li>
+<li class="chapter" data-level="11.3.3" data-path="computing-using-loops.html"><a href="computing-using-loops.html#create-an-empty-vector-to-store-the-results"><i class="fa fa-check"></i><b>11.3.3</b> Create an empty vector to store the results</a></li>
+<li class="chapter" data-level="11.3.4" data-path="computing-using-loops.html"><a href="computing-using-loops.html#use-a-for-loop-to-run-the-code-block-multiple-times-1"><i class="fa fa-check"></i><b>11.3.4</b> Use a <code>for</code> loop to run the code block multiple times</a></li>
+<li class="chapter" data-level="11.3.5" data-path="computing-using-loops.html"><a href="computing-using-loops.html#convert-the-vector-to-a-data-frame"><i class="fa fa-check"></i><b>11.3.5</b> Convert the vector to a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="computing-using-loops.html"><a href="computing-using-loops.html#exercise-3"><i class="fa fa-check"></i><b>11.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="relationships-in-data.html"><a href="relationships-in-data.html"><i class="fa fa-check"></i><b>12</b> Relationships in data</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#covariance-and-correlation---recap"><i class="fa fa-check"></i><b>12.1</b> Covariance and correlation - recap</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#covariance"><i class="fa fa-check"></i><b>12.1.1</b> Covariance</a></li>
+<li class="chapter" data-level="12.1.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#pearsons-correlation-coefficient"><i class="fa fa-check"></i><b>12.1.2</b> Pearson’s correlation coefficient</a></li>
+<li class="chapter" data-level="12.1.3" data-path="relationships-in-data.html"><a href="relationships-in-data.html#spearmans-correlation-coefficient"><i class="fa fa-check"></i><b>12.1.3</b> Spearman’s correlation coefficient</a></li>
+<li class="chapter" data-level="12.1.4" data-path="relationships-in-data.html"><a href="relationships-in-data.html#correlations-for-the-trees-data-set"><i class="fa fa-check"></i><b>12.1.4</b> Correlations for the <code>trees</code> data set</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#simple-linear-regression"><i class="fa fa-check"></i><b>12.2</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#fitting-the-simple-linear-regression-model-in-r"><i class="fa fa-check"></i><b>12.2.1</b> Fitting the simple linear regression model in R</a></li>
+<li class="chapter" data-level="12.2.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#prediction-from-the-fitted-model"><i class="fa fa-check"></i><b>12.2.2</b> Prediction from the fitted model</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="relationships-in-data.html"><a href="relationships-in-data.html#exploring-variation-over-time"><i class="fa fa-check"></i><b>12.3</b> Exploring variation over time</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#trends"><i class="fa fa-check"></i><b>12.3.1</b> Trends</a></li>
+<li class="chapter" data-level="12.3.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#seasonality"><i class="fa fa-check"></i><b>12.3.2</b> Seasonality</a></li>
+<li class="chapter" data-level="12.3.3" data-path="relationships-in-data.html"><a href="relationships-in-data.html#temporal-dependence"><i class="fa fa-check"></i><b>12.3.3</b> Temporal dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="relationships-in-data.html"><a href="relationships-in-data.html#exercise-4"><i class="fa fa-check"></i><b>12.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="imputing-missing-data.html"><a href="imputing-missing-data.html"><i class="fa fa-check"></i><b>13</b> Imputing missing data</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="imputing-missing-data.html"><a href="imputing-missing-data.html#visualising-missing-data"><i class="fa fa-check"></i><b>13.1</b> Visualising missing data</a></li>
+<li class="chapter" data-level="13.2" data-path="imputing-missing-data.html"><a href="imputing-missing-data.html#exercise-5"><i class="fa fa-check"></i><b>13.2</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MAS2007 - Mathematics and Statistics in Action</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="manipulating-data-frames---recap" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Section 5</span> Manipulating data frames - recap<a href="manipulating-data-frames---recap.html#manipulating-data-frames---recap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Once we have our data in a single data frame, we might wish to obtain some simple summary statistics, perhaps within subgroups of the data, and/or understand the structure of the data better. The package <code>dplyr</code> <span class="citation">(<a href="#ref-R-dplyr">Wickham, François, et al. 2020</a>)</span> has various functions for working with data frames, and we will recap the key ones here.</p>
+<p><img src="images/dplyr_wrangling.png" width="60%" style="display: block; margin: auto;" />
+(Artwork by @allison_horst)</p>
+<p>To illustrate the commands, we will use the data <code>maths.csv</code>, which can be read into R using:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="manipulating-data-frames---recap.html#cb39-1" tabindex="-1"></a>maths <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://oakleyj.github.io/exampledata/maths.csv&quot;</span>)</span></code></pre></div>
+<p>This is a data set of maths scores from the PISA 2015 maths tests, with data obtained from <a href="http://pisadataexplorer.oecd.org/ide/idepisa/">OECD</a> and the <a href="https://data.worldbank.org/indicator">World Bank</a>. In addition to country and continent, it contains the following columns:</p>
+<ol style="list-style-type: decimal">
+<li><code>score</code>: the mean mathematics score in the 2015 PISA test;</li>
+<li><code>gdp</code>: the gross domestic product per capita (GDP divided by the estimated population size), measured in US$;</li>
+<li><code>gini</code>: the Gini coefficient (as a percentage). This is an estimate of income inequality, with larger values indicating more income inequality;</li>
+<li><code>homework</code>: an estimate of the average number of hours per week spent on homework by 15 year-olds, from a survey in 2012;</li>
+<li><code>start.age</code>: the age (in years) in which children start school.</li>
+</ol>
+<p>The data are arranged in the data frame as they are in the underlying .csv file, with one row per country, and one column per variable. Typing <code>maths</code> (and pressing return) in the R console will display the first ten rows only, and as many columns as will fit in the window.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="manipulating-data-frames---recap.html#cb40-1" tabindex="-1"></a>maths</span></code></pre></div>
+<pre><code>## # A tibble: 70 × 7
+##    country         continent     score   gdp  gini homework start.age
+##    &lt;chr&gt;           &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Albania         Europe          413  4147  29        5.1         6
+##  2 Algeria         Africa          360  3844  27.6     NA           6
+##  3 Argentina       South America   409 12449  42.7      3.7         6
+##  4 Australia       Oceanea         494 49928  34.7      6           5
+##  5 Austria         Europe          497 44177  30.5      4.5         6
+##  6 B-S-J-G (China) Asia            531  8123  42.2     13.8         6
+##  7 Belgium         Europe          507 41096  28.1      5.5         6
+##  8 Brazil          South America   377  8650  51.3      3.3         6
+##  9 Bulgaria        Europe          441  7351  37.4      5.6         7
+## 10 Canada          North America   516 42158  34        5.5         6
+## # ℹ 60 more rows</code></pre>
+<p>Within the data frame, we see that the column names are <code>country</code>, <code>continent</code>, <code>score</code>, <code>gdp</code>, <code>gini</code>, <code>homework</code> and <code>start.age</code>, which we will use in various commands described shortly.</p>
+<p>If we want to see all 70 rows, we can either use the command</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="manipulating-data-frames---recap.html#cb42-1" tabindex="-1"></a><span class="fu">print</span>(maths, <span class="at">n =</span> <span class="dv">70</span>)</span></code></pre></div>
+<p>or, in RStudio, we can click on <code>maths</code> in the Environment window.</p>
+<div id="chaining-commands-together-with-the-pipe-operator" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Chaining commands together with the pipe operator <code>%&gt;%</code><a href="manipulating-data-frames---recap.html#chaining-commands-together-with-the-pipe-operator" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ll first look at the ‘pipe operator’ <code>%&gt;%</code>. (It’s a matter of personal preference whether you use it in your code or not, but you may find it makes your code easier to read.)</p>
+<p>The pipe operator <code>%&gt;%</code> takes whatever the output is from the left hand side, and uses it as the first argument in the function on the next line. In general,</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="manipulating-data-frames---recap.html#cb43-1" tabindex="-1"></a><span class="fu">myfunction</span>(x, y)</span></code></pre></div>
+<p>can be written using the pipe operator as</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="manipulating-data-frames---recap.html#cb44-1" tabindex="-1"></a>x <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="manipulating-data-frames---recap.html#cb44-2" tabindex="-1"></a>  <span class="fu">myfunction</span>(y)</span></code></pre></div>
+</div>
+<div id="ordering-the-rows-by-a-variable-with-the-arrange-command" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Ordering the rows by a variable with the <code>arrange()</code> command<a href="manipulating-data-frames---recap.html#ordering-the-rows-by-a-variable-with-the-arrange-command" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we want to see which countries got the highest score: we want to arrange the rows in the dataframe <code>maths</code> in order according to the values in the column <code>score</code>. To do this we use the command</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="manipulating-data-frames---recap.html#cb45-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="manipulating-data-frames---recap.html#cb45-2" tabindex="-1"></a>  <span class="fu">arrange</span>(score)</span></code></pre></div>
+<pre><code>## # A tibble: 70 × 7
+##    country            continent     score   gdp  gini homework start.age
+##    &lt;chr&gt;              &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Dominican Republic North America   328  6722  44.9     NA           6
+##  2 Algeria            Africa          360  3844  27.6     NA           6
+##  3 Tunisia            Africa          367  3689  35.8      3.5         6
+##  4 Macedonia, FYR     Europe          371  5237  35.6     NA           6
+##  5 Brazil             South America   377  8650  51.3      3.3         6
+##  6 Jordan             Asia            380  4088  33.7      4.2         6
+##  7 Indonesia          Asia            386  3570  39.5      4.9         7
+##  8 Peru               South America   387  6046  44.3      5.5         6
+##  9 Colombia           South America   390  5806  51.1      5.3         6
+## 10 Lebanon            Asia            396  7914  31.8      3.3         6
+## # ℹ 60 more rows</code></pre>
+<p>This has arranged the rows in ascending order of <code>score</code>. To see them in descending order, we include the <code>desc()</code> command:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="manipulating-data-frames---recap.html#cb47-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="manipulating-data-frames---recap.html#cb47-2" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(score))</span></code></pre></div>
+<pre><code>## # A tibble: 70 × 7
+##    country              continent     score   gdp  gini homework start.age
+##    &lt;chr&gt;                &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Singapore            Asia            564 52961  NA        9.4         6
+##  2 Hong Kong SAR, China Asia            548 43681  NA        6           6
+##  3 Macao SAR, China     Asia            544 73187  NA        5.9         6
+##  4 Japan                Asia            532 38894  32.1      3.8         6
+##  5 B-S-J-G (China)      Asia            531  8123  42.2     13.8         6
+##  6 Korea, Rep.          Asia            524 27539  31.6      2.9         6
+##  7 Switzerland          Europe          521 78813  32.5      4           7
+##  8 Estonia              Europe          520 17575  34.6      6.9         7
+##  9 Canada               North America   516 42158  34        5.5         6
+## 10 Netherlands          Europe          512 45295  28.6      5.8         6
+## # ℹ 60 more rows</code></pre>
+</div>
+<div id="selecting-rows-with-the-filter-command" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Selecting rows with the <code>filter()</code> command<a href="manipulating-data-frames---recap.html#selecting-rows-with-the-filter-command" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If we want to view a subset of the rows, we can use the <code>filter()</code> command. For example, if we want the rows in the data frame <code>maths</code> where <code>start.age</code> takes the value 5 (i.e. children start school at age 5), we can do</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="manipulating-data-frames---recap.html#cb49-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="manipulating-data-frames---recap.html#cb49-2" tabindex="-1"></a>  <span class="fu">filter</span>(start.age <span class="sc">==</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 7
+##   country             continent     score   gdp  gini homework start.age
+##   &lt;chr&gt;               &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Australia           Oceanea         494 49928  34.7      6           5
+## 2 Ireland             Europe          504 61606  31.9      7.3         5
+## 3 Malta               Europe          479 25058  NA       NA           5
+## 4 New Zealand         Oceanea         495 39427  NA        4.2         5
+## 5 Trinidad and Tobago North America   417 15377  40.3     NA           5
+## 6 United Kingdom      Europe          492 39899  34.1      4.9         5</code></pre>
+<p>Note the double equals sign <code>==</code>. This is used to test whether the left and right hand sides are equal: each country is included if its corresponding <code>start.age</code> is equal to 5.
+The UK is included above, but we’ll give an example of selecting it anyway:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="manipulating-data-frames---recap.html#cb51-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb51-2"><a href="manipulating-data-frames---recap.html#cb51-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;United Kingdom&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 7
+##   country        continent score   gdp  gini homework start.age
+##   &lt;chr&gt;          &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 United Kingdom Europe      492 39899  34.1      4.9         5</code></pre>
+</div>
+<div id="viewing-and-extracting-data-from-a-column" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Viewing and extracting data from a column<a href="manipulating-data-frames---recap.html#viewing-and-extracting-data-from-a-column" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For larger data frames (with many columns), we may wish to view a subset only. For example, to select the <code>score</code> and <code>country</code> columns only from the <code>maths</code> data frame, we do</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="manipulating-data-frames---recap.html#cb53-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb53-2"><a href="manipulating-data-frames---recap.html#cb53-2" tabindex="-1"></a>  <span class="fu">select</span>(score, country)</span></code></pre></div>
+<pre><code>## # A tibble: 70 × 2
+##    score country        
+##    &lt;dbl&gt; &lt;chr&gt;          
+##  1   413 Albania        
+##  2   360 Algeria        
+##  3   409 Argentina      
+##  4   494 Australia      
+##  5   497 Austria        
+##  6   531 B-S-J-G (China)
+##  7   507 Belgium        
+##  8   377 Brazil         
+##  9   441 Bulgaria       
+## 10   516 Canada         
+## # ℹ 60 more rows</code></pre>
+<p>If we want to extract the values from a column, we use the syntax <code>dataframe-name$column-name</code>. For example, to extract the column <code>score</code> from the data frame <code>maths</code>, we do</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="manipulating-data-frames---recap.html#cb55-1" tabindex="-1"></a>maths<span class="sc">$</span>score</span></code></pre></div>
+<pre><code>##  [1] 413 360 409 494 497 531 507 377 441 516 423 390 400 464 437 492 511 328 520
+## [20] 511 493 404 506 454 548 477 488 386 504 470 490 532 380 460 524 482 396 478
+## [39] 486 544 371 446 479 408 420 418 512 495 502 387 504 492 402 444 494 564 475
+## [58] 510 486 494 521 415 417 367 420 427 492 470 418 495</code></pre>
+<p>We could then, for example, calculate the average (mean) of all the scores:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="manipulating-data-frames---recap.html#cb57-1" tabindex="-1"></a><span class="fu">mean</span>(maths<span class="sc">$</span>score)</span></code></pre></div>
+<pre><code>## [1] 460.9714</code></pre>
+</div>
+<div id="creating-new-columns-in-a-data-frame-with-the-mutate-command" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Creating new columns in a data frame with the <code>mutate()</code> command<a href="manipulating-data-frames---recap.html#creating-new-columns-in-a-data-frame-with-the-mutate-command" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>About half the countries have a GDP per capita greater than $17000. If we try the command</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="manipulating-data-frames---recap.html#cb59-1" tabindex="-1"></a>maths<span class="sc">$</span>gdp <span class="sc">&gt;</span> <span class="dv">17000</span></span></code></pre></div>
+<pre><code>##  [1] FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
+## [13] FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+## [25]  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE
+## [37] FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE
+## [49]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE
+## [61]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE</code></pre>
+<p>this creates a new vector, in which the <span class="math inline">\(i\)</span>th element will be <code>TRUE</code> if the <code>gdp</code> value for country <span class="math inline">\(i\)</span> is greater than 17000, and <code>FALSE</code> otherwise. We will add this vector to the data frame, under the column name <code>wealthiest</code>. The command to create the new column is</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="manipulating-data-frames---recap.html#cb61-1" tabindex="-1"></a><span class="fu">mutate</span>(maths, <span class="at">wealthiest =</span> maths<span class="sc">$</span>gdp <span class="sc">&gt;</span> <span class="dv">17000</span>)</span></code></pre></div>
+<p>but this doesn’t store the result. To put the new column in the <code>maths</code> dataframe, we do</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="manipulating-data-frames---recap.html#cb62-1" tabindex="-1"></a>maths <span class="ot">&lt;-</span> maths <span class="sc">%&gt;%</span></span>
+<span id="cb62-2"><a href="manipulating-data-frames---recap.html#cb62-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wealthiest =</span> maths<span class="sc">$</span>gdp <span class="sc">&gt;</span> <span class="dv">17000</span>)</span></code></pre></div>
+<p>You may now have too many columns to see in your console, so to check this has worked, we will do</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="manipulating-data-frames---recap.html#cb63-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb63-2"><a href="manipulating-data-frames---recap.html#cb63-2" tabindex="-1"></a>  <span class="fu">select</span>(country, gdp, wealthiest)</span></code></pre></div>
+<pre><code>## # A tibble: 70 × 3
+##    country           gdp wealthiest
+##    &lt;chr&gt;           &lt;dbl&gt; &lt;lgl&gt;     
+##  1 Albania          4147 FALSE     
+##  2 Algeria          3844 FALSE     
+##  3 Argentina       12449 FALSE     
+##  4 Australia       49928 TRUE      
+##  5 Austria         44177 TRUE      
+##  6 B-S-J-G (China)  8123 FALSE     
+##  7 Belgium         41096 TRUE      
+##  8 Brazil           8650 FALSE     
+##  9 Bulgaria         7351 FALSE     
+## 10 Canada          42158 TRUE      
+## # ℹ 60 more rows</code></pre>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-R-dplyr" class="csl-entry">
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2020. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="strings.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="summary-statistics---recap.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
