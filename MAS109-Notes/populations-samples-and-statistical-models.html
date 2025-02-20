@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Populations, samples and statistical models | MAS109 - An Introduction to Data Science</title>
+  <meta name="description" content="Lecture notes for MAS109" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Populations, samples and statistical models | MAS109 - An Introduction to Data Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Lecture notes for MAS109" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Populations, samples and statistical models | MAS109 - An Introduction to Data Science" />
+  
+  <meta name="twitter:description" content="Lecture notes for MAS109" />
+  
+
+<meta name="author" content="Dr Jill Johnson" />
+
+
+<meta name="date" content="2025-02-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="machine-learning.html"/>
+<link rel="next" href="point-estimation.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MAS109 - Introduction to Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About these notes</a></li>
+<li class="chapter" data-level="1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html"><i class="fa fa-check"></i><b>1</b> Exploratory Data Analysis using R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#case-study-what-makes-a-country-good-at-maths"><i class="fa fa-check"></i><b>1.1</b> Case study: what makes a country good at maths?</a></li>
+<li class="chapter" data-level="1.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#the-tidyverse"><i class="fa fa-check"></i><b>1.2</b> The “Tidyverse”</a></li>
+<li class="chapter" data-level="1.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#importing-data-into-r-csv-and-.xlsx-files"><i class="fa fa-check"></i><b>1.3</b> Importing data into R: <code>csv</code> and <code>.xlsx</code> files</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#importing-excel-.xlsx-files"><i class="fa fa-check"></i><b>1.3.1</b> Importing Excel <code>.xlsx</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#data-frames-and-tibbles-in-r"><i class="fa fa-check"></i><b>1.4</b> Data frames and tibbles in R</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>1.4.1</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="1.4.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>1.4.2</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="1.4.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>1.4.3</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="1.4.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>1.4.4</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+<li class="chapter" data-level="1.4.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>1.4.5</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-summary-statistics-with-the-summary-command"><i class="fa fa-check"></i><b>1.5</b> Calculating summary statistics with the <code>summary()</code> command</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-individual-summary-statistics"><i class="fa fa-check"></i><b>1.5.1</b> Calculating individual summary statistics</a></li>
+<li class="chapter" data-level="1.5.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-other-quantilespercentiles"><i class="fa fa-check"></i><b>1.5.2</b> Calculating other quantiles/percentiles</a></li>
+<li class="chapter" data-level="1.5.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>1.5.3</b> Computing summaries per group</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#plotting-a-distribution-using-a-histogram"><i class="fa fa-check"></i><b>1.6</b> Plotting a distribution using a histogram</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#describing-the-shape-of-a-distribution-skewness"><i class="fa fa-check"></i><b>1.6.1</b> Describing the shape of a distribution: skewness</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#introducing-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Introducing <code>ggplot2</code></a></li>
+<li class="chapter" data-level="1.8" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#drawing-a-histogram-in-r"><i class="fa fa-check"></i><b>1.8</b> Drawing a histogram in R</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>1.8.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#covariance-and-correlation"><i class="fa fa-check"></i><b>1.9</b> Covariance and correlation</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-a-covariance-in-r"><i class="fa fa-check"></i><b>1.9.1</b> Calculating a covariance in R</a></li>
+<li class="chapter" data-level="1.9.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#pearsons-correlation-coefficient"><i class="fa fa-check"></i><b>1.9.2</b> Pearson’s correlation coefficient</a></li>
+<li class="chapter" data-level="1.9.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-pearsons-correlation-coefficient-in-r"><i class="fa fa-check"></i><b>1.9.3</b> Calculating Pearson’s correlation coefficient in R</a></li>
+<li class="chapter" data-level="1.9.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#spearmans-correlation-coefficient"><i class="fa fa-check"></i><b>1.9.4</b> Spearman’s correlation coefficient</a></li>
+<li class="chapter" data-level="1.9.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-spearmans-correlation-coefficient-in-r"><i class="fa fa-check"></i><b>1.9.5</b> Calculating Spearman’s correlation coefficient in R</a></li>
+<li class="chapter" data-level="1.9.6" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#interpreting-correlation-coefficients"><i class="fa fa-check"></i><b>1.9.6</b> Interpreting correlation coefficients</a></li>
+<li class="chapter" data-level="1.9.7" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#correlations-for-the-maths-data-set"><i class="fa fa-check"></i><b>1.9.7</b> Correlations for the <code>maths</code> data set</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#drawing-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10</b> Drawing a scatter plot in R</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#customising-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.1</b> Customising a scatter plot in R</a></li>
+<li class="chapter" data-level="1.10.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#adding-a-nonlinear-trend-to-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.2</b> Adding a nonlinear trend to a scatter plot in R</a></li>
+<li class="chapter" data-level="1.10.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#adding-a-linear-trend-to-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.3</b> Adding a linear trend to a scatter plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#box-plots"><i class="fa fa-check"></i><b>1.11</b> Box plots</a></li>
+<li class="chapter" data-level="1.12" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#scatter-plots-to-represent-three-variables"><i class="fa fa-check"></i><b>1.12</b> Scatter plots to represent three variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>2</b> Machine Learning</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="machine-learning.html"><a href="machine-learning.html#can-we-teach-a-computer-to-identify-handwritten-digits"><i class="fa fa-check"></i><b>2.1</b> Can we teach a computer to identify handwritten digits?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="machine-learning.html"><a href="machine-learning.html#step-1-converting-an-image-into-data"><i class="fa fa-check"></i><b>2.1.1</b> Step 1: converting an image into data</a></li>
+<li class="chapter" data-level="2.1.2" data-path="machine-learning.html"><a href="machine-learning.html#step-2-assembling-the-training-data-set"><i class="fa fa-check"></i><b>2.1.2</b> Step 2: assembling the training data set</a></li>
+<li class="chapter" data-level="2.1.3" data-path="machine-learning.html"><a href="machine-learning.html#step-3-an-algorithm-for-estimating-the-digit-in-a-new-image"><i class="fa fa-check"></i><b>2.1.3</b> Step 3: an algorithm for estimating the digit in a new image</a></li>
+<li class="chapter" data-level="2.1.4" data-path="machine-learning.html"><a href="machine-learning.html#the-k-nearest-neighbour-algorithm-knn"><i class="fa fa-check"></i><b>2.1.4</b> The <span class="math inline">\(K\)</span> nearest neighbour algorithm (KNN)</a></li>
+<li class="chapter" data-level="2.1.5" data-path="machine-learning.html"><a href="machine-learning.html#using-k-nearest-neighbours-in-r"><i class="fa fa-check"></i><b>2.1.5</b> Using <span class="math inline">\(K\)</span> nearest neighbours in R</a></li>
+<li class="chapter" data-level="2.1.6" data-path="machine-learning.html"><a href="machine-learning.html#the-performance-of-the-algorithm"><i class="fa fa-check"></i><b>2.1.6</b> The performance of the algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Populations, samples and statistical models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#statistical-models"><i class="fa fa-check"></i><b>3.1</b> Statistical models</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#objectives"><i class="fa fa-check"></i><b>3.1.1</b> Objectives</a></li>
+<li class="chapter" data-level="3.1.2" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#comment-infinite-and-finite-populations"><i class="fa fa-check"></i><b>3.1.2</b> Comment: infinite and finite populations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="point-estimation.html"><a href="point-estimation.html"><i class="fa fa-check"></i><b>4</b> Point estimation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="point-estimation.html"><a href="point-estimation.html#estimating-the-parameters-of-a-normal-distribution"><i class="fa fa-check"></i><b>4.1</b> Estimating the parameters of a normal distribution</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="point-estimation.html"><a href="point-estimation.html#problem-setup-and-notation"><i class="fa fa-check"></i><b>4.1.1</b> Problem setup and notation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="point-estimation.html"><a href="point-estimation.html#the-sample-mean-and-sample-variance"><i class="fa fa-check"></i><b>4.1.2</b> The sample mean and sample variance</a></li>
+<li class="chapter" data-level="4.1.3" data-path="point-estimation.html"><a href="point-estimation.html#point-estimates-for-the-mean-and-variance"><i class="fa fa-check"></i><b>4.1.3</b> Point estimates for the mean and variance</a></li>
+<li class="chapter" data-level="4.1.4" data-path="point-estimation.html"><a href="point-estimation.html#testing-the-method"><i class="fa fa-check"></i><b>4.1.4</b> Testing the method</a></li>
+<li class="chapter" data-level="4.1.5" data-path="point-estimation.html"><a href="point-estimation.html#estimators-and-estimates"><i class="fa fa-check"></i><b>4.1.5</b> Estimators and estimates</a></li>
+<li class="chapter" data-level="4.1.6" data-path="point-estimation.html"><a href="point-estimation.html#the-chi2-distribution"><i class="fa fa-check"></i><b>4.1.6</b> The <span class="math inline">\(\chi^2\)</span> distribution</a></li>
+<li class="chapter" data-level="4.1.7" data-path="point-estimation.html"><a href="point-estimation.html#the-distribution-of-the-estimators"><i class="fa fa-check"></i><b>4.1.7</b> The distribution of the estimators</a></li>
+<li class="chapter" data-level="4.1.8" data-path="point-estimation.html"><a href="point-estimation.html#unbiased-estimators"><i class="fa fa-check"></i><b>4.1.8</b> Unbiased estimators</a></li>
+<li class="chapter" data-level="4.1.9" data-path="point-estimation.html"><a href="point-estimation.html#the-standard-error-of-an-estimator"><i class="fa fa-check"></i><b>4.1.9</b> The standard error of an estimator</a></li>
+<li class="chapter" data-level="4.1.10" data-path="point-estimation.html"><a href="point-estimation.html#consistent-estimators"><i class="fa fa-check"></i><b>4.1.10</b> Consistent estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="point-estimation.html"><a href="point-estimation.html#estimating-the-probability-parameter-in-a-binomial-distribution"><i class="fa fa-check"></i><b>4.2</b> Estimating the probability parameter in a Binomial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html"><i class="fa fa-check"></i><b>5</b> Interval estimates and confidence intervals</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#the-student-t-distribution"><i class="fa fa-check"></i><b>5.1</b> The Student <span class="math inline">\(t\)</span> distribution</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#mean-and-variance-of-the-t-distribution"><i class="fa fa-check"></i><b>5.1.1</b> Mean and variance of the <span class="math inline">\(t\)</span>-distribution</a></li>
+<li class="chapter" data-level="5.1.2" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#notation-quantilespercentiles-of-the-t-distribution"><i class="fa fa-check"></i><b>5.1.2</b> Notation: quantiles/percentiles of the <span class="math inline">\(t\)</span> distribution</a></li>
+<li class="chapter" data-level="5.1.3" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#the-t-distribution-in-r."><i class="fa fa-check"></i><b>5.1.3</b> The <span class="math inline">\(t\)</span> distribution in R.</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#confidence-intervals-for-the-mean-and-the-variance-of-a-normal-distribution"><i class="fa fa-check"></i><b>5.2</b> Confidence intervals for the mean and the variance of a normal distribution</a></li>
+<li class="chapter" data-level="5.3" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#confidence-interval-for-the-probability-parameter-in-a-binomial-distribution"><i class="fa fa-check"></i><b>5.3</b> Confidence interval for the probability parameter in a binomial distribution</a></li>
+<li class="chapter" data-level="5.4" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#alpha-confidence-intervals"><i class="fa fa-check"></i><b>5.4</b> <span class="math inline">\(100(1-\alpha)\%\)</span> Confidence Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing: A-level recap</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#hypothesis-testing-with-the-neyman-pearson-approach"><i class="fa fa-check"></i><b>6.1</b> Hypothesis testing with the Neyman-Pearson approach</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#one-sided-and-two-sided-alternative-hypotheses"><i class="fa fa-check"></i><b>6.1.1</b> One-sided and two-sided alternative hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#fishers-p-value-method"><i class="fa fa-check"></i><b>6.2</b> Fisher’s <span class="math inline">\(p\)</span>-value method</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#what-counts-as-a-small-p-value"><i class="fa fa-check"></i><b>6.2.1</b> What counts as a small <span class="math inline">\(p\)</span>-value?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#relationship-between-the-neyman-pearson-and-p-value-methods"><i class="fa fa-check"></i><b>6.3</b> Relationship between the Neyman-Pearson and <span class="math inline">\(p\)</span>-value methods</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#which-hypothesis-test-do-i-use-for"><i class="fa fa-check"></i><b>6.4</b> Which hypothesis test do I use for…?</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing: comparing two population means</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#example-can-imagining-eating-food-make-you-eat-less"><i class="fa fa-check"></i><b>7.1</b> Example: can imagining eating food make you eat less?</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-hypotheses"><i class="fa fa-check"></i><b>7.1.1</b> The hypotheses</a></li>
+<li class="chapter" data-level="7.1.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#a-test-statistic"><i class="fa fa-check"></i><b>7.1.2</b> A test statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#hypothesis-testing-using-simulation"><i class="fa fa-check"></i><b>7.2</b> Hypothesis testing using simulation</a></li>
+<li class="chapter" data-level="7.3" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test"><i class="fa fa-check"></i><b>7.3</b> The two-sample <span class="math inline">\(t\)</span> test</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test-with-the-neyman-pearson-method"><i class="fa fa-check"></i><b>7.3.1</b> The two-sample <span class="math inline">\(t\)</span>-test with the Neyman-Pearson method</a></li>
+<li class="chapter" data-level="7.3.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#an-illustrated-guide"><i class="fa fa-check"></i><b>7.3.2</b> An illustrated guide</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#confidence-interval-for-the-difference-between-two-means"><i class="fa fa-check"></i><b>7.4</b> Confidence interval for the difference between two means</a></li>
+<li class="chapter" data-level="7.5" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#equivalence-of-confidence-intervals-and-neyman-pearson-testing"><i class="fa fa-check"></i><b>7.5</b> Equivalence of confidence intervals and Neyman-Pearson testing</a></li>
+<li class="chapter" data-level="7.6" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test-in-r"><i class="fa fa-check"></i><b>7.6</b> The two-sample <span class="math inline">\(t\)</span> test in R</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#t-tests-with-data-frames-in-r"><i class="fa fa-check"></i><b>7.6.1</b> <span class="math inline">\(t\)</span>-tests with data frames in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#examples"><i class="fa fa-check"></i><b>7.7</b> Examples</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#using-the-p-value-method"><i class="fa fa-check"></i><b>7.7.1</b> Using the <span class="math inline">\(p\)</span>-value method</a></li>
+<li class="chapter" data-level="7.7.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#using-neyman-pearson-testing"><i class="fa fa-check"></i><b>7.7.2</b> Using Neyman-Pearson testing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing: comparing two proportions</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#example-an-investigation-into-gender-bias"><i class="fa fa-check"></i><b>8.1</b> Example: an investigation into gender bias</a></li>
+<li class="chapter" data-level="8.2" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#comparing-two-binomial-proportions"><i class="fa fa-check"></i><b>8.2</b> Comparing two binomial proportions</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#a-simulation-method"><i class="fa fa-check"></i><b>8.2.1</b> A simulation method</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#an-analytical-method"><i class="fa fa-check"></i><b>8.3</b> An analytical method</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#the-analytical-method-a-summary"><i class="fa fa-check"></i><b>8.3.1</b> The analytical method: a summary</a></li>
+<li class="chapter" data-level="8.3.2" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#conclusion"><i class="fa fa-check"></i><b>8.3.2</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#confidence-intervals-to-measure-the-difference"><i class="fa fa-check"></i><b>8.4</b> Confidence intervals to measure the difference</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><i class="fa fa-check"></i><b>9</b> Sample size and power for a Neyman-Pearson hypothesis test</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#gender-bias-example-re-visited"><i class="fa fa-check"></i><b>9.1</b> Gender bias example re-visited</a></li>
+<li class="chapter" data-level="9.2" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#the-power-of-a-hypothesis-test"><i class="fa fa-check"></i><b>9.2</b> The power of a hypothesis test</a></li>
+<li class="chapter" data-level="9.3" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#an-analytical-approach"><i class="fa fa-check"></i><b>9.3</b> An analytical approach</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html"><i class="fa fa-check"></i><b>10</b> <span class="math inline">\(\chi^2\)</span> tests for contingency tables</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#example-customer-ratings-of-restaurants"><i class="fa fa-check"></i><b>10.1</b> Example: customer ratings of restaurants</a></li>
+<li class="chapter" data-level="10.2" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-model-and-hypotheses"><i class="fa fa-check"></i><b>10.2</b> A model and hypotheses</a></li>
+<li class="chapter" data-level="10.3" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-test-statistic-1"><i class="fa fa-check"></i><b>10.3</b> A test statistic</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#the-formula-for-the-expected-counts"><i class="fa fa-check"></i><b>10.3.1</b> The formula for the expected counts</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#computing-the-test-statistic-for-the-observed-data"><i class="fa fa-check"></i><b>10.4</b> Computing the test statistic for the observed data</a></li>
+<li class="chapter" data-level="10.5" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-simulation-method-1"><i class="fa fa-check"></i><b>10.5</b> A simulation method</a></li>
+<li class="chapter" data-level="10.6" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#an-analytical-method-1"><i class="fa fa-check"></i><b>10.6</b> An analytical method</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#chi2-tests-in-r"><i class="fa fa-check"></i><b>10.6.1</b> <span class="math inline">\(\chi^2\)</span> tests in R</a></li>
+<li class="chapter" data-level="10.6.2" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#row-homogeneity-and-independence"><i class="fa fa-check"></i><b>10.6.2</b> Row homogeneity and independence</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#exercise"><i class="fa fa-check"></i><b>10.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html"><i class="fa fa-check"></i><b>11</b> Index of definitions and examples</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html#definitions"><i class="fa fa-check"></i><b>11.1</b> Definitions</a></li>
+<li class="chapter" data-level="11.2" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html#examples-1"><i class="fa fa-check"></i><b>11.2</b> Examples</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MAS109 - An Introduction to Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="populations-samples-and-statistical-models" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Populations, samples and statistical models<a href="populations-samples-and-statistical-models.html#populations-samples-and-statistical-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<script type="text/javascript">
+$(document).ready(function() {
+  $folds = $(".fold");
+  $folds.wrapInner("<div class=\"fold-blck\">"); // wrap a div container around content
+  $folds.prepend("<button class=\"fold-btn\">Show solution</button>");  // add a button
+  $(".fold-blck").toggle();  // fold all blocks
+  $(".fold-btn").on("click", function() {  // add onClick event
+    $(this).text($(this).text() === "Show solution" ? "Hide solution" : "Show solution");  // if the text equals "Fold", change it to "Unfold"or else to "Fold" 
+    $(this).next(".fold-blck").toggle("linear");  // "swing" is the default easing function. This can be further customized in its speed or the overall animation itself.
+  })
+});
+</script>
+<p>We describe the problem of inferring characteristics of a <strong>population</strong>, such as a population mean or proportion, given a random <strong>sample</strong> drawn from that population. One general approach for learning about populations from samples is to model the sample observations as random draws from a probability distribution, with the probability distribution representing the whole population. The parameters of the distribution can then be interpreted as describing population characteristics, such as the mean of the population.</p>
+<div id="statistical-models" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Statistical models<a href="populations-samples-and-statistical-models.html#statistical-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Given a general description of a problem, we have to decide what probability distribution to use a suitable model, and think how the parameter(s) of that distribution relates to our quantity of interest</p>
+<div class="example">
+<p><span id="exm:exampleModelling" class="example"><strong>Example 3.1  (Choosing probability distributions to represent data.) </strong></span><br> Here are four examples.</p>
+</div>
+<ol style="list-style-type: decimal">
+<li>In a crime survey, we wish to estimate the proportion of households in a city that have been burgled in the last year. One hundred households are to be selected at random. Define <span class="math inline">\(X\)</span> to be the number of households responding that they have been burgled. Choose a suitable probability distribution for <span class="math inline">\(X\)</span>, and relate the parameter(s) in that distribution to the quantity of interest.</li>
+</ol>
+<div class="fold">
+<p>
+<span class="math inline"><span class="math inline">\(X\)</span></span> is a discrete random variable.
+If we treat the 100 (randomly selected) households as independent, we
+can think of <span class="math inline"><span class="math inline">\(X\)</span></span> as the number of
+times an event happens out of 100 trials. We model this with a binomial
+distribution: <span class="math display"><span class="math display">\[
+X\sim Bin(100, \theta).
+\]</span></span> The parameter <span class="math inline"><span class="math inline">\(\theta\)</span></span>
+would be the probability of a single household responding that they have
+been burgled; we interpret <span class="math inline"><span class="math inline">\(\theta\)</span></span>
+as the population proportion of all burgled households.
+</p>
+<p>
+It is unlikely that the sample proportion <span class="math inline"><span class="math inline">\(X/n\)</span></span> will equal the true (but unknown)
+population proportion <span class="math inline"><span class="math inline">\(\theta\)</span></span>. By
+studying this model, we can understand how <span class="math inline"><span class="math inline">\(X/n\)</span></span> may deviate from <span class="math inline"><span class="math inline">\(\theta\)</span></span> (more in the next chapter).
+</p>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>The number of accidents occurring over a road network is to be investigated. The interest is in the mean number of accidents per week, averaged over ‘all’ weeks. Define <span class="math inline">\(X_1,\ldots,X_{10}\)</span> to be the number of accidents that will be observed in each of the first 10 weeks. Choose a suitable probability distribution for <span class="math inline">\(X_1,\ldots,X_{10}\)</span>, and relate the parameter(s) in that distribution to the quantity of interest.</li>
+</ol>
+<div class="fold">
+<p>
+Each <span class="math inline"><span class="math inline">\(X_i\)</span></span> is a discrete random
+variable, and is a count of the number of accidents in a particular
+week. We are counting the number of events in a period of time: this
+situation can be modelled with a Poisson distribution: <span class="math display"><span class="math display">\[
+X_1,\ldots,X_{10}\stackrel{i.i.d}\sim Poisson(\lambda).
+\]</span></span> The notation i.i.d is short for “independent and identically
+distributed”. Each of <span class="math inline"><span class="math inline">\(X_1,\ldots,X_{10}\)</span></span> has the same <span class="math inline"><span class="math inline">\(Poisson(\lambda)\)</span></span> distribution, and <span class="math inline"><span class="math inline">\(X_1,\ldots,X_{10}\)</span></span> are assumed
+independent.
+</p>
+<p>
+We interpret <span class="math inline"><span class="math inline">\(\lambda\)</span></span> as the
+population mean number of accidents per week, over all weeks, assuming
+no change to the underlying risk of an accident occurring in any
+week.
+</p>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>In a call-centre, there is interest in the volume of incoming calls during peak opening times. Specifically, there is interest in the mean length of time (in seconds) between two successive incoming calls. Define <span class="math inline">\(X_1,\ldots,X_{100}\)</span> to be the times that will be observed between calls for 100 successive pairs of calls. Choose a suitable probability distribution for <span class="math inline">\(X_1,\ldots,X_{100}\)</span>, and relate the parameter(s) in that distribution to the quantity of interest.</li>
+</ol>
+<div class="fold">
+<p>
+The time between two successive calls is a continuous quantity,
+cannot be negative, but could be close to 0. From the distributions you
+have met so far in this module, the exponential distribution would be
+the most suitable choice. We suppose <span class="math display"><span class="math display">\[
+X_1,\ldots,X_{100}\stackrel{i.i.d}\sim Exponential(\lambda),
+\]</span></span> and we interpret <span class="math inline"><span class="math inline">\(1/\lambda\)</span></span> as the population mean time
+between all successive calls during peak hours.
+</p>
+</div>
+<ol start="4" style="list-style-type: decimal">
+<li>For an electric car, we are interested in how many miles the car can be driven on a single charge of the battery, on a particular test journey route. The interest is in both what the mileage is ‘on average’, and how variable this mileage can be. Eight cars, all of the same model, are to be driven on the test route, all starting at the same time and day each week. Let <span class="math inline">\(X_1,\ldots,X_8\)</span> denote the mileages that will be observed.
+Choose a suitable probability distribution for <span class="math inline">\(X_1,\ldots,X_{8}\)</span>, and relate the parameter(s) in that distribution to the quantities of interest.</li>
+</ol>
+<div class="fold">
+<p>
+Mileage is a continuous quantity. Out of the continuous distributions
+we have covered in this module, the most suitable one would be a normal
+distribution: <span class="math display"><span class="math display">\[
+X_1,\ldots,X_{8}\stackrel{i.i.d}\sim N(\mu,\sigma^2).
+\]</span></span> We interpret <span class="math inline"><span class="math inline">\(\mu\)</span></span> as the
+population mean mileage, and <span class="math inline"><span class="math inline">\(\sigma^2\)</span></span> as the population variance of
+the mileages, for all cars of this model on the test route.
+</p>
+</div>
+<div id="objectives" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Objectives<a href="populations-samples-and-statistical-models.html#objectives" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We have described various scenarios where we are interested in some characteristic of a population (mean, variance, proportion), and we draw a sample from that population. In the remaining chapters, we will study</p>
+<ul>
+<li>how to estimate these population characteristics, once we have observed our data, via <strong>estimating parameters of probability distributions</strong>;</li>
+<li>how to assess the accuracy of our estimates, using <strong>confidence intervals</strong>;</li>
+<li>how to compare different populations, and test if they have different characteristics or not, using a variety of <strong>hypothesis tests</strong>.</li>
+</ul>
+</div>
+<div id="comment-infinite-and-finite-populations" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Comment: infinite and finite populations<a href="populations-samples-and-statistical-models.html#comment-infinite-and-finite-populations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When a population is represented by a probability distribution, we are working with what we describe as an <strong>infinite</strong> population: each member of the population corresponds to a random draw from this distribution, and there is no limit on the number of possible random draws: there is no limit on the size of the population.</p>
+<p>An alternative is the <strong>finite population</strong> approach, in which we define a (finite) list of all population members, and any sample of data is a random selection from this list. With finite population methods, we don’t actually need to assume a probability distribution for the population members: we can do inference for population means, proportions etc. without assuming one. The limitation with this is that there are many statistical inference problems where the sample can’t be thought of as a random selection from a list. For example, if the population of interest was all newborn babies, including babies born in the future, then some population members do not yet exist; we could not produce a list of all the population members.</p>
+<p>In this module, we will cover infinite population approaches only. Finite population methods are covered in MAS370/MAS61003 Sampling Theory and Design of Experiments.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="machine-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="point-estimation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

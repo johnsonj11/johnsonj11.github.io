@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Exploratory Data Analysis using R | MAS109 - An Introduction to Data Science</title>
+  <meta name="description" content="Lecture notes for MAS109" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Exploratory Data Analysis using R | MAS109 - An Introduction to Data Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Lecture notes for MAS109" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Exploratory Data Analysis using R | MAS109 - An Introduction to Data Science" />
+  
+  <meta name="twitter:description" content="Lecture notes for MAS109" />
+  
+
+<meta name="author" content="Dr Jill Johnson" />
+
+
+<meta name="date" content="2025-02-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="machine-learning.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MAS109 - Introduction to Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About these notes</a></li>
+<li class="chapter" data-level="1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html"><i class="fa fa-check"></i><b>1</b> Exploratory Data Analysis using R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#case-study-what-makes-a-country-good-at-maths"><i class="fa fa-check"></i><b>1.1</b> Case study: what makes a country good at maths?</a></li>
+<li class="chapter" data-level="1.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#the-tidyverse"><i class="fa fa-check"></i><b>1.2</b> The “Tidyverse”</a></li>
+<li class="chapter" data-level="1.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#importing-data-into-r-csv-and-.xlsx-files"><i class="fa fa-check"></i><b>1.3</b> Importing data into R: <code>csv</code> and <code>.xlsx</code> files</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#importing-excel-.xlsx-files"><i class="fa fa-check"></i><b>1.3.1</b> Importing Excel <code>.xlsx</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#data-frames-and-tibbles-in-r"><i class="fa fa-check"></i><b>1.4</b> Data frames and tibbles in R</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>1.4.1</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="1.4.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>1.4.2</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="1.4.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>1.4.3</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="1.4.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>1.4.4</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+<li class="chapter" data-level="1.4.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>1.4.5</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-summary-statistics-with-the-summary-command"><i class="fa fa-check"></i><b>1.5</b> Calculating summary statistics with the <code>summary()</code> command</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-individual-summary-statistics"><i class="fa fa-check"></i><b>1.5.1</b> Calculating individual summary statistics</a></li>
+<li class="chapter" data-level="1.5.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-other-quantilespercentiles"><i class="fa fa-check"></i><b>1.5.2</b> Calculating other quantiles/percentiles</a></li>
+<li class="chapter" data-level="1.5.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>1.5.3</b> Computing summaries per group</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#plotting-a-distribution-using-a-histogram"><i class="fa fa-check"></i><b>1.6</b> Plotting a distribution using a histogram</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#describing-the-shape-of-a-distribution-skewness"><i class="fa fa-check"></i><b>1.6.1</b> Describing the shape of a distribution: skewness</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#introducing-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Introducing <code>ggplot2</code></a></li>
+<li class="chapter" data-level="1.8" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#drawing-a-histogram-in-r"><i class="fa fa-check"></i><b>1.8</b> Drawing a histogram in R</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>1.8.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#covariance-and-correlation"><i class="fa fa-check"></i><b>1.9</b> Covariance and correlation</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-a-covariance-in-r"><i class="fa fa-check"></i><b>1.9.1</b> Calculating a covariance in R</a></li>
+<li class="chapter" data-level="1.9.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#pearsons-correlation-coefficient"><i class="fa fa-check"></i><b>1.9.2</b> Pearson’s correlation coefficient</a></li>
+<li class="chapter" data-level="1.9.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-pearsons-correlation-coefficient-in-r"><i class="fa fa-check"></i><b>1.9.3</b> Calculating Pearson’s correlation coefficient in R</a></li>
+<li class="chapter" data-level="1.9.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#spearmans-correlation-coefficient"><i class="fa fa-check"></i><b>1.9.4</b> Spearman’s correlation coefficient</a></li>
+<li class="chapter" data-level="1.9.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-spearmans-correlation-coefficient-in-r"><i class="fa fa-check"></i><b>1.9.5</b> Calculating Spearman’s correlation coefficient in R</a></li>
+<li class="chapter" data-level="1.9.6" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#interpreting-correlation-coefficients"><i class="fa fa-check"></i><b>1.9.6</b> Interpreting correlation coefficients</a></li>
+<li class="chapter" data-level="1.9.7" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#correlations-for-the-maths-data-set"><i class="fa fa-check"></i><b>1.9.7</b> Correlations for the <code>maths</code> data set</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#drawing-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10</b> Drawing a scatter plot in R</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#customising-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.1</b> Customising a scatter plot in R</a></li>
+<li class="chapter" data-level="1.10.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#adding-a-nonlinear-trend-to-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.2</b> Adding a nonlinear trend to a scatter plot in R</a></li>
+<li class="chapter" data-level="1.10.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#adding-a-linear-trend-to-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.3</b> Adding a linear trend to a scatter plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#box-plots"><i class="fa fa-check"></i><b>1.11</b> Box plots</a></li>
+<li class="chapter" data-level="1.12" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#scatter-plots-to-represent-three-variables"><i class="fa fa-check"></i><b>1.12</b> Scatter plots to represent three variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>2</b> Machine Learning</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="machine-learning.html"><a href="machine-learning.html#can-we-teach-a-computer-to-identify-handwritten-digits"><i class="fa fa-check"></i><b>2.1</b> Can we teach a computer to identify handwritten digits?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="machine-learning.html"><a href="machine-learning.html#step-1-converting-an-image-into-data"><i class="fa fa-check"></i><b>2.1.1</b> Step 1: converting an image into data</a></li>
+<li class="chapter" data-level="2.1.2" data-path="machine-learning.html"><a href="machine-learning.html#step-2-assembling-the-training-data-set"><i class="fa fa-check"></i><b>2.1.2</b> Step 2: assembling the training data set</a></li>
+<li class="chapter" data-level="2.1.3" data-path="machine-learning.html"><a href="machine-learning.html#step-3-an-algorithm-for-estimating-the-digit-in-a-new-image"><i class="fa fa-check"></i><b>2.1.3</b> Step 3: an algorithm for estimating the digit in a new image</a></li>
+<li class="chapter" data-level="2.1.4" data-path="machine-learning.html"><a href="machine-learning.html#the-k-nearest-neighbour-algorithm-knn"><i class="fa fa-check"></i><b>2.1.4</b> The <span class="math inline">\(K\)</span> nearest neighbour algorithm (KNN)</a></li>
+<li class="chapter" data-level="2.1.5" data-path="machine-learning.html"><a href="machine-learning.html#using-k-nearest-neighbours-in-r"><i class="fa fa-check"></i><b>2.1.5</b> Using <span class="math inline">\(K\)</span> nearest neighbours in R</a></li>
+<li class="chapter" data-level="2.1.6" data-path="machine-learning.html"><a href="machine-learning.html#the-performance-of-the-algorithm"><i class="fa fa-check"></i><b>2.1.6</b> The performance of the algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Populations, samples and statistical models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#statistical-models"><i class="fa fa-check"></i><b>3.1</b> Statistical models</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#objectives"><i class="fa fa-check"></i><b>3.1.1</b> Objectives</a></li>
+<li class="chapter" data-level="3.1.2" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#comment-infinite-and-finite-populations"><i class="fa fa-check"></i><b>3.1.2</b> Comment: infinite and finite populations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="point-estimation.html"><a href="point-estimation.html"><i class="fa fa-check"></i><b>4</b> Point estimation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="point-estimation.html"><a href="point-estimation.html#estimating-the-parameters-of-a-normal-distribution"><i class="fa fa-check"></i><b>4.1</b> Estimating the parameters of a normal distribution</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="point-estimation.html"><a href="point-estimation.html#problem-setup-and-notation"><i class="fa fa-check"></i><b>4.1.1</b> Problem setup and notation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="point-estimation.html"><a href="point-estimation.html#the-sample-mean-and-sample-variance"><i class="fa fa-check"></i><b>4.1.2</b> The sample mean and sample variance</a></li>
+<li class="chapter" data-level="4.1.3" data-path="point-estimation.html"><a href="point-estimation.html#point-estimates-for-the-mean-and-variance"><i class="fa fa-check"></i><b>4.1.3</b> Point estimates for the mean and variance</a></li>
+<li class="chapter" data-level="4.1.4" data-path="point-estimation.html"><a href="point-estimation.html#testing-the-method"><i class="fa fa-check"></i><b>4.1.4</b> Testing the method</a></li>
+<li class="chapter" data-level="4.1.5" data-path="point-estimation.html"><a href="point-estimation.html#estimators-and-estimates"><i class="fa fa-check"></i><b>4.1.5</b> Estimators and estimates</a></li>
+<li class="chapter" data-level="4.1.6" data-path="point-estimation.html"><a href="point-estimation.html#the-chi2-distribution"><i class="fa fa-check"></i><b>4.1.6</b> The <span class="math inline">\(\chi^2\)</span> distribution</a></li>
+<li class="chapter" data-level="4.1.7" data-path="point-estimation.html"><a href="point-estimation.html#the-distribution-of-the-estimators"><i class="fa fa-check"></i><b>4.1.7</b> The distribution of the estimators</a></li>
+<li class="chapter" data-level="4.1.8" data-path="point-estimation.html"><a href="point-estimation.html#unbiased-estimators"><i class="fa fa-check"></i><b>4.1.8</b> Unbiased estimators</a></li>
+<li class="chapter" data-level="4.1.9" data-path="point-estimation.html"><a href="point-estimation.html#the-standard-error-of-an-estimator"><i class="fa fa-check"></i><b>4.1.9</b> The standard error of an estimator</a></li>
+<li class="chapter" data-level="4.1.10" data-path="point-estimation.html"><a href="point-estimation.html#consistent-estimators"><i class="fa fa-check"></i><b>4.1.10</b> Consistent estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="point-estimation.html"><a href="point-estimation.html#estimating-the-probability-parameter-in-a-binomial-distribution"><i class="fa fa-check"></i><b>4.2</b> Estimating the probability parameter in a Binomial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html"><i class="fa fa-check"></i><b>5</b> Interval estimates and confidence intervals</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#the-student-t-distribution"><i class="fa fa-check"></i><b>5.1</b> The Student <span class="math inline">\(t\)</span> distribution</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#mean-and-variance-of-the-t-distribution"><i class="fa fa-check"></i><b>5.1.1</b> Mean and variance of the <span class="math inline">\(t\)</span>-distribution</a></li>
+<li class="chapter" data-level="5.1.2" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#notation-quantilespercentiles-of-the-t-distribution"><i class="fa fa-check"></i><b>5.1.2</b> Notation: quantiles/percentiles of the <span class="math inline">\(t\)</span> distribution</a></li>
+<li class="chapter" data-level="5.1.3" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#the-t-distribution-in-r."><i class="fa fa-check"></i><b>5.1.3</b> The <span class="math inline">\(t\)</span> distribution in R.</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#confidence-intervals-for-the-mean-and-the-variance-of-a-normal-distribution"><i class="fa fa-check"></i><b>5.2</b> Confidence intervals for the mean and the variance of a normal distribution</a></li>
+<li class="chapter" data-level="5.3" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#confidence-interval-for-the-probability-parameter-in-a-binomial-distribution"><i class="fa fa-check"></i><b>5.3</b> Confidence interval for the probability parameter in a binomial distribution</a></li>
+<li class="chapter" data-level="5.4" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#alpha-confidence-intervals"><i class="fa fa-check"></i><b>5.4</b> <span class="math inline">\(100(1-\alpha)\%\)</span> Confidence Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing: A-level recap</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#hypothesis-testing-with-the-neyman-pearson-approach"><i class="fa fa-check"></i><b>6.1</b> Hypothesis testing with the Neyman-Pearson approach</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#one-sided-and-two-sided-alternative-hypotheses"><i class="fa fa-check"></i><b>6.1.1</b> One-sided and two-sided alternative hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#fishers-p-value-method"><i class="fa fa-check"></i><b>6.2</b> Fisher’s <span class="math inline">\(p\)</span>-value method</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#what-counts-as-a-small-p-value"><i class="fa fa-check"></i><b>6.2.1</b> What counts as a small <span class="math inline">\(p\)</span>-value?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#relationship-between-the-neyman-pearson-and-p-value-methods"><i class="fa fa-check"></i><b>6.3</b> Relationship between the Neyman-Pearson and <span class="math inline">\(p\)</span>-value methods</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#which-hypothesis-test-do-i-use-for"><i class="fa fa-check"></i><b>6.4</b> Which hypothesis test do I use for…?</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing: comparing two population means</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#example-can-imagining-eating-food-make-you-eat-less"><i class="fa fa-check"></i><b>7.1</b> Example: can imagining eating food make you eat less?</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-hypotheses"><i class="fa fa-check"></i><b>7.1.1</b> The hypotheses</a></li>
+<li class="chapter" data-level="7.1.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#a-test-statistic"><i class="fa fa-check"></i><b>7.1.2</b> A test statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#hypothesis-testing-using-simulation"><i class="fa fa-check"></i><b>7.2</b> Hypothesis testing using simulation</a></li>
+<li class="chapter" data-level="7.3" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test"><i class="fa fa-check"></i><b>7.3</b> The two-sample <span class="math inline">\(t\)</span> test</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test-with-the-neyman-pearson-method"><i class="fa fa-check"></i><b>7.3.1</b> The two-sample <span class="math inline">\(t\)</span>-test with the Neyman-Pearson method</a></li>
+<li class="chapter" data-level="7.3.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#an-illustrated-guide"><i class="fa fa-check"></i><b>7.3.2</b> An illustrated guide</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#confidence-interval-for-the-difference-between-two-means"><i class="fa fa-check"></i><b>7.4</b> Confidence interval for the difference between two means</a></li>
+<li class="chapter" data-level="7.5" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#equivalence-of-confidence-intervals-and-neyman-pearson-testing"><i class="fa fa-check"></i><b>7.5</b> Equivalence of confidence intervals and Neyman-Pearson testing</a></li>
+<li class="chapter" data-level="7.6" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test-in-r"><i class="fa fa-check"></i><b>7.6</b> The two-sample <span class="math inline">\(t\)</span> test in R</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#t-tests-with-data-frames-in-r"><i class="fa fa-check"></i><b>7.6.1</b> <span class="math inline">\(t\)</span>-tests with data frames in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#examples"><i class="fa fa-check"></i><b>7.7</b> Examples</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#using-the-p-value-method"><i class="fa fa-check"></i><b>7.7.1</b> Using the <span class="math inline">\(p\)</span>-value method</a></li>
+<li class="chapter" data-level="7.7.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#using-neyman-pearson-testing"><i class="fa fa-check"></i><b>7.7.2</b> Using Neyman-Pearson testing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing: comparing two proportions</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#example-an-investigation-into-gender-bias"><i class="fa fa-check"></i><b>8.1</b> Example: an investigation into gender bias</a></li>
+<li class="chapter" data-level="8.2" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#comparing-two-binomial-proportions"><i class="fa fa-check"></i><b>8.2</b> Comparing two binomial proportions</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#a-simulation-method"><i class="fa fa-check"></i><b>8.2.1</b> A simulation method</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#an-analytical-method"><i class="fa fa-check"></i><b>8.3</b> An analytical method</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#the-analytical-method-a-summary"><i class="fa fa-check"></i><b>8.3.1</b> The analytical method: a summary</a></li>
+<li class="chapter" data-level="8.3.2" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#conclusion"><i class="fa fa-check"></i><b>8.3.2</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#confidence-intervals-to-measure-the-difference"><i class="fa fa-check"></i><b>8.4</b> Confidence intervals to measure the difference</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><i class="fa fa-check"></i><b>9</b> Sample size and power for a Neyman-Pearson hypothesis test</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#gender-bias-example-re-visited"><i class="fa fa-check"></i><b>9.1</b> Gender bias example re-visited</a></li>
+<li class="chapter" data-level="9.2" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#the-power-of-a-hypothesis-test"><i class="fa fa-check"></i><b>9.2</b> The power of a hypothesis test</a></li>
+<li class="chapter" data-level="9.3" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#an-analytical-approach"><i class="fa fa-check"></i><b>9.3</b> An analytical approach</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html"><i class="fa fa-check"></i><b>10</b> <span class="math inline">\(\chi^2\)</span> tests for contingency tables</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#example-customer-ratings-of-restaurants"><i class="fa fa-check"></i><b>10.1</b> Example: customer ratings of restaurants</a></li>
+<li class="chapter" data-level="10.2" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-model-and-hypotheses"><i class="fa fa-check"></i><b>10.2</b> A model and hypotheses</a></li>
+<li class="chapter" data-level="10.3" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-test-statistic-1"><i class="fa fa-check"></i><b>10.3</b> A test statistic</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#the-formula-for-the-expected-counts"><i class="fa fa-check"></i><b>10.3.1</b> The formula for the expected counts</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#computing-the-test-statistic-for-the-observed-data"><i class="fa fa-check"></i><b>10.4</b> Computing the test statistic for the observed data</a></li>
+<li class="chapter" data-level="10.5" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-simulation-method-1"><i class="fa fa-check"></i><b>10.5</b> A simulation method</a></li>
+<li class="chapter" data-level="10.6" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#an-analytical-method-1"><i class="fa fa-check"></i><b>10.6</b> An analytical method</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#chi2-tests-in-r"><i class="fa fa-check"></i><b>10.6.1</b> <span class="math inline">\(\chi^2\)</span> tests in R</a></li>
+<li class="chapter" data-level="10.6.2" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#row-homogeneity-and-independence"><i class="fa fa-check"></i><b>10.6.2</b> Row homogeneity and independence</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#exercise"><i class="fa fa-check"></i><b>10.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html"><i class="fa fa-check"></i><b>11</b> Index of definitions and examples</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html#definitions"><i class="fa fa-check"></i><b>11.1</b> Definitions</a></li>
+<li class="chapter" data-level="11.2" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html#examples-1"><i class="fa fa-check"></i><b>11.2</b> Examples</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MAS109 - An Introduction to Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exploratory-data-analysis-using-r" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Exploratory Data Analysis using R<a href="exploratory-data-analysis-using-r.html#exploratory-data-analysis-using-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this chapter we study how to extract information from a data set using various plots and summary statistics. (We will do more formal statistical modelling and analysis in later chapters). We will study how to handle data sets in R and how to produce various plots.</p>
+<div id="case-study-what-makes-a-country-good-at-maths" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Case study: what makes a country good at maths?<a href="exploratory-data-analysis-using-r.html#case-study-what-makes-a-country-good-at-maths" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Every few years, the Organisation for Economic Co-operation and Development (OECD) conducts a survey, known as the <a href="http://www.oecd.org/pisa/" target="_blank">Programme of International Student Assessment (PISA)</a>, to compare school systems across different countries. In the 2015 survey, 72 countries (including the UK) were compared, and about half a million 15-year-old children took tests in reading, mathematics and science. Two questions we may wish to consider are</p>
+<ol style="list-style-type: decimal">
+<li>how does the UK compare with other countries?</li>
+<li>Are there factors that could explain why some countries do better than others?</li>
+</ol>
+<p>The PISA data can be obtained from (<a href="http://pisadataexplorer.oecd.org/ide/idepisa/" class="uri">http://pisadataexplorer.oecd.org/ide/idepisa/</a>). To consider the second question, we will explore some of the data available from the <a href="https://data.worldbank.org/indicator">World Bank</a></p>
+<p>A spreadsheet <code>maths.csv</code> (which you can <a href="https://oakleyj.github.io/exampledata/maths.csv">download here</a>) has been compiled from these sources, and gives five variables for each country</p>
+<ol style="list-style-type: decimal">
+<li><code>score</code>: the mean mathematics score in the 2015 PISA test;</li>
+<li><code>gdp</code>: the gross domestic product per capita (GDP divided by the estimated population size), measured in US<span class="math inline">\(\$\)</span>;</li>
+<li><code>gini</code>: the gini coefficient (as a percentage). This is an estimate of income inequality, with larger values indicating more income inequality;</li>
+<li><code>homework</code>: an estimate of the average number of hours per week spent on homework by 15 year-olds, from a survey in 2012;</li>
+<li><code>start.age</code>: the age (in years) in which children start school.</li>
+</ol>
+<p>In the remainder of this chapter, we will see how an exploratory data analysis can be used to extract information from our data, to help answer the two questions above.</p>
+</div>
+<div id="the-tidyverse" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> The “Tidyverse”<a href="exploratory-data-analysis-using-r.html#the-tidyverse" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <a href="https://www.tidyverse.org/">Tidyverse</a> is a collection of R packages designed for data science.</p>
+<p><img src="images/tidyverse_celestial.png" width="60%" style="display: block; margin: auto;" />
+(Artwork by @allison_horst)</p>
+<p>We will be using some of these packages (in particular, a package for data manipulation called <code>dplyr</code>, and a package for graphics called <code>ggplot2</code>) in this course. You will need to install it with the command</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="exploratory-data-analysis-using-r.html#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<p>You only need to do this once, but every session, you will need to load it with the command</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="exploratory-data-analysis-using-r.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+</div>
+<div id="importing-data-into-r-csv-and-.xlsx-files" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Importing data into R: <code>csv</code> and <code>.xlsx</code> files<a href="exploratory-data-analysis-using-r.html#importing-data-into-r-csv-and-.xlsx-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The data are in “comma separated variables” (csv) format, so we can use the command <code>read_csv</code> to get the data into R. (The file <code>maths.csv</code> will need to be in your working directory. You can change the working directory in RStudio by going to Session &gt; Set Working Directory).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="exploratory-data-analysis-using-r.html#cb3-1" tabindex="-1"></a>maths <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;maths.csv&quot;</span>)</span></code></pre></div>
+<p>The data are now stored in R in an object called <code>maths</code>. All commands and names in R are case-sensitive: R won’t recognise the name <code>Maths</code>.</p>
+<p>In R, you can read in files directly from websites. If you are working through this chapter on your own, and want to try out all the commands, you will either need to <a href="https://oakleyj.github.io/exampledata/maths.csv">download the file</a> <code>maths.csv</code> first, or you can import it directly with the command</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="exploratory-data-analysis-using-r.html#cb4-1" tabindex="-1"></a>maths <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://oakleyj.github.io/exampledata/maths.csv&quot;</span>)</span></code></pre></div>
+<div id="importing-excel-.xlsx-files" class="section level3 hasAnchor" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Importing Excel <code>.xlsx</code> files<a href="exploratory-data-analysis-using-r.html#importing-excel-.xlsx-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If your data is an Excel spreadsheet in <code>.xlsx</code> format, you can either save it in Excel as a <code>.csv</code> file, or you can use the <code>read_xlsx()</code> command (for which you will need to load the <code>readxl</code> package first). For example, to import a file <code>spreadsheet.xlsx</code>, you would use the command</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="exploratory-data-analysis-using-r.html#cb5-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb5-2"><a href="exploratory-data-analysis-using-r.html#cb5-2" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">&quot;spreadsheet.xlsx&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="data-frames-and-tibbles-in-r" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Data frames and tibbles in R<a href="exploratory-data-analysis-using-r.html#data-frames-and-tibbles-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>maths</code> is a type of object known as a data frame, which is the main way of organising data in R. In fact, it’s actually a special type of data frame known as a “tibble”. We’ll always be using tibbles rather than ordinary data frames here, but we won’t worry too much about the difference.</p>
+<p>The data are arranged in the data frame as they were in the .csv file, with one row per country, and one column per variable. Typing <code>maths</code> (and pressing return) in the R console will display the first ten rows only, and as many columns as will fit in the window.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="exploratory-data-analysis-using-r.html#cb6-1" tabindex="-1"></a>maths</span></code></pre></div>
+<pre><code>## # A tibble: 70 × 7
+##    country         continent     score   gdp  gini homework start.age
+##    &lt;chr&gt;           &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Albania         Europe          413  4147  29        5.1         6
+##  2 Algeria         Africa          360  3844  27.6     NA           6
+##  3 Argentina       South America   409 12449  42.7      3.7         6
+##  4 Australia       Oceanea         494 49928  34.7      6           5
+##  5 Austria         Europe          497 44177  30.5      4.5         6
+##  6 B-S-J-G (China) Asia            531  8123  42.2     13.8         6
+##  7 Belgium         Europe          507 41096  28.1      5.5         6
+##  8 Brazil          South America   377  8650  51.3      3.3         6
+##  9 Bulgaria        Europe          441  7351  37.4      5.6         7
+## 10 Canada          North America   516 42158  34        5.5         6
+## # ℹ 60 more rows</code></pre>
+<p>Within the data frame, we see that the column names are <code>country</code>, <code>continent</code>, <code>score</code>, <code>gdp</code>, <code>gini</code>, <code>homework</code> and <code>start.age</code>, which we will use in various commands described shortly.</p>
+<p>If we want to see all 70 rows, we can either use the command</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="exploratory-data-analysis-using-r.html#cb8-1" tabindex="-1"></a><span class="fu">print</span>(maths, <span class="at">n =</span> <span class="dv">70</span>)</span></code></pre></div>
+<p>or, in RStudio, we can click on <code>maths</code> in the Environment window.</p>
+<div id="ordering-the-rows-by-a-variable-with-the-arrange-command" class="section level3 hasAnchor" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> Ordering the rows by a variable with the <code>arrange()</code> command<a href="exploratory-data-analysis-using-r.html#ordering-the-rows-by-a-variable-with-the-arrange-command" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose we want to see which countries got the highest score: we want to arrange the rows in the dataframe <code>maths</code> in order according to the values in the column <code>score</code>. To do this we use the command</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="exploratory-data-analysis-using-r.html#cb9-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="exploratory-data-analysis-using-r.html#cb9-2" tabindex="-1"></a>  <span class="fu">arrange</span>(score)</span></code></pre></div>
+<pre><code>## # A tibble: 70 × 7
+##    country            continent     score   gdp  gini homework start.age
+##    &lt;chr&gt;              &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Dominican Republic North America   328  6722  44.9     NA           6
+##  2 Algeria            Africa          360  3844  27.6     NA           6
+##  3 Tunisia            Africa          367  3689  35.8      3.5         6
+##  4 Macedonia, FYR     Europe          371  5237  35.6     NA           6
+##  5 Brazil             South America   377  8650  51.3      3.3         6
+##  6 Jordan             Asia            380  4088  33.7      4.2         6
+##  7 Indonesia          Asia            386  3570  39.5      4.9         7
+##  8 Peru               South America   387  6046  44.3      5.5         6
+##  9 Colombia           South America   390  5806  51.1      5.3         6
+## 10 Lebanon            Asia            396  7914  31.8      3.3         6
+## # ℹ 60 more rows</code></pre>
+<p>This has arranged the rows in ascending order of <code>score</code>. To see them in descending order, we include the <code>desc()</code> command:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="exploratory-data-analysis-using-r.html#cb11-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="exploratory-data-analysis-using-r.html#cb11-2" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(score))</span></code></pre></div>
+<pre><code>## # A tibble: 70 × 7
+##    country              continent     score   gdp  gini homework start.age
+##    &lt;chr&gt;                &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Singapore            Asia            564 52961  NA        9.4         6
+##  2 Hong Kong SAR, China Asia            548 43681  NA        6           6
+##  3 Macao SAR, China     Asia            544 73187  NA        5.9         6
+##  4 Japan                Asia            532 38894  32.1      3.8         6
+##  5 B-S-J-G (China)      Asia            531  8123  42.2     13.8         6
+##  6 Korea, Rep.          Asia            524 27539  31.6      2.9         6
+##  7 Switzerland          Europe          521 78813  32.5      4           7
+##  8 Estonia              Europe          520 17575  34.6      6.9         7
+##  9 Canada               North America   516 42158  34        5.5         6
+## 10 Netherlands          Europe          512 45295  28.6      5.8         6
+## # ℹ 60 more rows</code></pre>
+<p>(Just by sorting the data, we can see something interesting: look at the <code>continent</code> variable for the highest scoring countries.)</p>
+</div>
+<div id="selecting-rows-with-the-filter-command" class="section level3 hasAnchor" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> Selecting rows with the <code>filter()</code> command<a href="exploratory-data-analysis-using-r.html#selecting-rows-with-the-filter-command" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If we want to view a subset of the rows, we can use the <code>filter()</code> command. For example, if we want the rows in the data frame <code>maths</code> where <code>start.age</code> takes the value 5 (i.e. children start school at age 5), we can do</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="exploratory-data-analysis-using-r.html#cb13-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="exploratory-data-analysis-using-r.html#cb13-2" tabindex="-1"></a>  <span class="fu">filter</span>(start.age <span class="sc">==</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 7
+##   country             continent     score   gdp  gini homework start.age
+##   &lt;chr&gt;               &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Australia           Oceanea         494 49928  34.7      6           5
+## 2 Ireland             Europe          504 61606  31.9      7.3         5
+## 3 Malta               Europe          479 25058  NA       NA           5
+## 4 New Zealand         Oceanea         495 39427  NA        4.2         5
+## 5 Trinidad and Tobago North America   417 15377  40.3     NA           5
+## 6 United Kingdom      Europe          492 39899  34.1      4.9         5</code></pre>
+<p>Note the double equals sign <code>==</code>. This is used to test whether the left and right hand sides are equal: each country is included if its corresponding <code>start.age</code> is equal to 5.
+The UK is included above, but we’ll give an example of selecting it anyway:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="exploratory-data-analysis-using-r.html#cb15-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="exploratory-data-analysis-using-r.html#cb15-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;United Kingdom&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 7
+##   country        continent score   gdp  gini homework start.age
+##   &lt;chr&gt;          &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 United Kingdom Europe      492 39899  34.1      4.9         5</code></pre>
+</div>
+<div id="viewing-and-extracting-data-from-a-column" class="section level3 hasAnchor" number="1.4.3">
+<h3><span class="header-section-number">1.4.3</span> Viewing and extracting data from a column<a href="exploratory-data-analysis-using-r.html#viewing-and-extracting-data-from-a-column" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For larger data frames (with many columns), we may wish to view a subset only. For example, to select the <code>score</code> and <code>country</code> columns only from the <code>maths</code> data frame, we do</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="exploratory-data-analysis-using-r.html#cb17-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="exploratory-data-analysis-using-r.html#cb17-2" tabindex="-1"></a>  <span class="fu">select</span>(score, country)</span></code></pre></div>
+<pre><code>## # A tibble: 70 × 2
+##    score country        
+##    &lt;dbl&gt; &lt;chr&gt;          
+##  1   413 Albania        
+##  2   360 Algeria        
+##  3   409 Argentina      
+##  4   494 Australia      
+##  5   497 Austria        
+##  6   531 B-S-J-G (China)
+##  7   507 Belgium        
+##  8   377 Brazil         
+##  9   441 Bulgaria       
+## 10   516 Canada         
+## # ℹ 60 more rows</code></pre>
+<p>If we want to extract the values from a column, we use the syntax <code>dataframe-name$column-name</code>. For example, to extract the column <code>score</code> from the data frame <code>maths</code>, we do</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="exploratory-data-analysis-using-r.html#cb19-1" tabindex="-1"></a>maths<span class="sc">$</span>score</span></code></pre></div>
+<pre><code>##  [1] 413 360 409 494 497 531 507 377 441 516 423 390 400 464 437 492 511 328 520
+## [20] 511 493 404 506 454 548 477 488 386 504 470 490 532 380 460 524 482 396 478
+## [39] 486 544 371 446 479 408 420 418 512 495 502 387 504 492 402 444 494 564 475
+## [58] 510 486 494 521 415 417 367 420 427 492 470 418 495</code></pre>
+<p>We could then, for example, calculate the average (mean) of all the scores:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="exploratory-data-analysis-using-r.html#cb21-1" tabindex="-1"></a><span class="fu">mean</span>(maths<span class="sc">$</span>score)</span></code></pre></div>
+<pre><code>## [1] 460.9714</code></pre>
+</div>
+<div id="creating-new-columns-in-a-data-frame-with-the-mutate-command" class="section level3 hasAnchor" number="1.4.4">
+<h3><span class="header-section-number">1.4.4</span> Creating new columns in a data frame with the <code>mutate()</code> command<a href="exploratory-data-analysis-using-r.html#creating-new-columns-in-a-data-frame-with-the-mutate-command" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>About half the countries have a GDP per capita greater than $17000. If we try the command</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="exploratory-data-analysis-using-r.html#cb23-1" tabindex="-1"></a>maths<span class="sc">$</span>gdp <span class="sc">&gt;</span> <span class="dv">17000</span></span></code></pre></div>
+<pre><code>##  [1] FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
+## [13] FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+## [25]  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE
+## [37] FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE
+## [49]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE
+## [61]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE</code></pre>
+<p>this creates a new vector, in which the <span class="math inline">\(i\)</span>th element will be <code>TRUE</code> if the <code>gdp</code> value for country <span class="math inline">\(i\)</span> is greater than 17000, and <code>FALSE</code> otherwise. We will add this vector to the data frame, under the column name <code>wealthiest</code>. The command to create the new column is</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="exploratory-data-analysis-using-r.html#cb25-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="exploratory-data-analysis-using-r.html#cb25-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wealthiest =</span> maths<span class="sc">$</span>gdp <span class="sc">&gt;</span> <span class="dv">17000</span>)</span></code></pre></div>
+<p>but this doesn’t store the result. To put the new column in the <code>maths</code> dataframe, we do</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="exploratory-data-analysis-using-r.html#cb26-1" tabindex="-1"></a>maths <span class="ot">&lt;-</span> maths <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="exploratory-data-analysis-using-r.html#cb26-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wealthiest =</span> maths<span class="sc">$</span>gdp <span class="sc">&gt;</span> <span class="dv">17000</span>)</span></code></pre></div>
+<p>You may now have too many columns to see in your console, so to check this has worked, we will do</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="exploratory-data-analysis-using-r.html#cb27-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="exploratory-data-analysis-using-r.html#cb27-2" tabindex="-1"></a>  <span class="fu">select</span>(country, gdp, wealthiest)</span></code></pre></div>
+<pre><code>## # A tibble: 70 × 3
+##    country           gdp wealthiest
+##    &lt;chr&gt;           &lt;dbl&gt; &lt;lgl&gt;     
+##  1 Albania          4147 FALSE     
+##  2 Algeria          3844 FALSE     
+##  3 Argentina       12449 FALSE     
+##  4 Australia       49928 TRUE      
+##  5 Austria         44177 TRUE      
+##  6 B-S-J-G (China)  8123 FALSE     
+##  7 Belgium         41096 TRUE      
+##  8 Brazil           8650 FALSE     
+##  9 Bulgaria         7351 FALSE     
+## 10 Canada          42158 TRUE      
+## # ℹ 60 more rows</code></pre>
+</div>
+<div id="chaining-commands-together-with-the-pipe-operator" class="section level3 hasAnchor" number="1.4.5">
+<h3><span class="header-section-number">1.4.5</span> Chaining commands together with the pipe operator <code>%&gt;%</code><a href="exploratory-data-analysis-using-r.html#chaining-commands-together-with-the-pipe-operator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ve been making use of the ‘pipe operator’ <code>%&gt;%</code>, which we will now discuss a little more. The pipe operator <code>%&gt;%</code> takes whatever the output is from the left hand side, and uses it as the first argument in the function on the next line. In general,</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="exploratory-data-analysis-using-r.html#cb29-1" tabindex="-1"></a><span class="fu">myfunction</span>(x, y)</span></code></pre></div>
+<p>is the same as</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="exploratory-data-analysis-using-r.html#cb30-1" tabindex="-1"></a>x <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="exploratory-data-analysis-using-r.html#cb30-2" tabindex="-1"></a>  <span class="fu">myfunction</span>(y)</span></code></pre></div>
+<p>so, for example,</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="exploratory-data-analysis-using-r.html#cb31-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="exploratory-data-analysis-using-r.html#cb31-2" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>)</span></code></pre></div>
+<p>is the same as <code>filter(maths, continent == "Europe")</code>.</p>
+<p>The <code>%&gt;%</code> syntax can be easier to read when we want to chain several functions together. Suppose we want to see the top 10 countries by score, within Europe. This will involve using both the <code>arrange()</code> and <code>filter()</code> commands. We can chain these together as follows</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="exploratory-data-analysis-using-r.html#cb32-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="exploratory-data-analysis-using-r.html#cb32-2" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="exploratory-data-analysis-using-r.html#cb32-3" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(score))</span></code></pre></div>
+<pre><code>## # A tibble: 39 × 8
+##    country     continent score   gdp  gini homework start.age wealthiest
+##    &lt;chr&gt;       &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;     
+##  1 Switzerland Europe      521 78813  32.5      4           7 TRUE      
+##  2 Estonia     Europe      520 17575  34.6      6.9         7 TRUE      
+##  3 Netherlands Europe      512 45295  28.6      5.8         6 TRUE      
+##  4 Denmark     Europe      511 53418  28.5      4.3         6 TRUE      
+##  5 Finland     Europe      511 43090  26.8      2.8         7 TRUE      
+##  6 Slovenia    Europe      510 21305  25.7      3.7         6 TRUE      
+##  7 Belgium     Europe      507 41096  28.1      5.5         6 TRUE      
+##  8 Germany     Europe      506 41936  31.4      4.7         6 TRUE      
+##  9 Ireland     Europe      504 61606  31.9      7.3         5 TRUE      
+## 10 Poland      Europe      504 12372  32.1      6.6         7 FALSE     
+## # ℹ 29 more rows</code></pre>
+<p>We read this as, “Start with the <code>maths</code> data set, filter it to extract the European countries, then arrange in order of decreasing scores.” The code above could be written as</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="exploratory-data-analysis-using-r.html#cb34-1" tabindex="-1"></a><span class="fu">arrange</span>(<span class="fu">filter</span>(maths, continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>), <span class="fu">desc</span>(score))</span></code></pre></div>
+<p>but a single (and potentially long) line of code such as this can be harder to read and understand.</p>
+</div>
+</div>
+<div id="calculating-summary-statistics-with-the-summary-command" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Calculating summary statistics with the <code>summary()</code> command<a href="exploratory-data-analysis-using-r.html#calculating-summary-statistics-with-the-summary-command" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can now start to compare the UK’s score with that in other countries. Recall that <code>maths$score</code> extracts the maths scores for the 70 countries. We can obtain various summary statistics for this variable with the command</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="exploratory-data-analysis-using-r.html#cb35-1" tabindex="-1"></a><span class="fu">summary</span>(maths<span class="sc">$</span>score)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   328.0   417.2   477.5   461.0   500.8   564.0</code></pre>
+<p>We’ll need a few definitions to interpret some of this output.</p>
+<hr>
+<div class="definition">
+<p><span id="def:defPercentile" class="definition"><strong>Definition 1.1  (Percentile/Quantile) </strong></span>Given a set of (real-valued) observations, for any <span class="math inline">\(\alpha \in [0,1]\)</span>, the <span class="math inline">\(\alpha\)</span> quantile or 100<span class="math inline">\(\alpha\)</span> percentile is a value where (approximately) 100<span class="math inline">\(\alpha\%\)</span> of the observations are below this value, and the remainder are above.</p>
+</div>
+<p>So, for example,</p>
+<ul>
+<li>the 25th percentile, or 0.25 quantile, is 417.2: approximately 25% of the countries have scores less than (or equal to) 417.2;</li>
+<li>the 75th percentile, or 0.75 quantile, is 500.8: approximately 75% of the countries have scores less than (or equal to) 500.8.</li>
+</ul>
+<hr>
+(There are different algorithms for obtaining the value of percentile/quantile, for example using linear interpolation, but we won’t worry with the details here.)
+<hr>
+<div class="definition">
+<p><span id="def:defMedian" class="definition"><strong>Definition 1.2  (Median and quartiles) </strong></span>The median is the 50th percentile/0.5 quantile. The lower quartile is the 25th percentile/0.25 quantile, and the upper quartile is the 75th percentile/0.75 quantile.</p>
+</div>
+<hr>
+<p>The output from the <code>summary()</code> command also tells us that</p>
+<ul>
+<li>the smallest observed score was 328;</li>
+<li>the median score was 477.5;</li>
+<li>the arithmetic mean (sum of all the scores, divided by 70) for the 70 countries was 461;</li>
+<li>the largest observed score was 564.</li>
+</ul>
+<hr>
+<div class="definition">
+<p><span id="def:defIQR" class="definition"><strong>Definition 1.3  (The interquartile range) </strong></span>The interquartile range is the difference between the 75th percentile (0.75 quantile) and 25th percentile (0.25 quantile), and is sometimes used to describe variation in data.</p>
+</div>
+<hr>
+<p>The interquartile range can be obtained in R with the command</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="exploratory-data-analysis-using-r.html#cb37-1" tabindex="-1"></a><span class="fu">IQR</span>(maths<span class="sc">$</span>score)</span></code></pre></div>
+<pre><code>## [1] 83.5</code></pre>
+<p>We’ve seen that the UK’s score was 492. This ranks the UK outside the top 25%, but inside the top 50%. We can find the actual rank as follows:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="exploratory-data-analysis-using-r.html#cb39-1" tabindex="-1"></a><span class="fu">sum</span>(maths<span class="sc">$</span>score <span class="sc">&gt;</span> <span class="dv">492</span>)</span></code></pre></div>
+<pre><code>## [1] 25</code></pre>
+<p>This tells us that the UK ranked 26th: 25 countries got higher scores.</p>
+<div id="calculating-individual-summary-statistics" class="section level3 hasAnchor" number="1.5.1">
+<h3><span class="header-section-number">1.5.1</span> Calculating individual summary statistics<a href="exploratory-data-analysis-using-r.html#calculating-individual-summary-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Individually, we could have calculated these summaries as follows</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="exploratory-data-analysis-using-r.html#cb41-1" tabindex="-1"></a><span class="fu">min</span>(maths<span class="sc">$</span>score)</span></code></pre></div>
+<pre><code>## [1] 328</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="exploratory-data-analysis-using-r.html#cb43-1" tabindex="-1"></a><span class="fu">quantile</span>(maths<span class="sc">$</span>score, <span class="fl">0.25</span>)</span></code></pre></div>
+<pre><code>##    25% 
+## 417.25</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="exploratory-data-analysis-using-r.html#cb45-1" tabindex="-1"></a><span class="fu">quantile</span>(maths<span class="sc">$</span>score, <span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>##   50% 
+## 477.5</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="exploratory-data-analysis-using-r.html#cb47-1" tabindex="-1"></a><span class="fu">mean</span>(maths<span class="sc">$</span>score)</span></code></pre></div>
+<pre><code>## [1] 460.9714</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="exploratory-data-analysis-using-r.html#cb49-1" tabindex="-1"></a><span class="fu">quantile</span>(maths<span class="sc">$</span>score, <span class="fl">0.75</span>)</span></code></pre></div>
+<pre><code>##    75% 
+## 500.75</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="exploratory-data-analysis-using-r.html#cb51-1" tabindex="-1"></a><span class="fu">max</span>(maths<span class="sc">$</span>score)</span></code></pre></div>
+<pre><code>## [1] 564</code></pre>
+<p>This may be more convenient if we just want a particular summary statistic, and/or want to store the result for use later on.</p>
+</div>
+<div id="calculating-other-quantilespercentiles" class="section level3 hasAnchor" number="1.5.2">
+<h3><span class="header-section-number">1.5.2</span> Calculating other quantiles/percentiles<a href="exploratory-data-analysis-using-r.html#calculating-other-quantilespercentiles" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If we wanted, say, the 90th percentile (0.9 quantile), we could do</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="exploratory-data-analysis-using-r.html#cb53-1" tabindex="-1"></a><span class="fu">quantile</span>(maths<span class="sc">$</span>score, <span class="fl">0.9</span>)</span></code></pre></div>
+<pre><code>##   90% 
+## 520.1</code></pre>
+<p>so that, approximately, 90% of the countries has scores less than or equal to 520.1</p>
+</div>
+<div id="computing-summaries-per-group" class="section level3 hasAnchor" number="1.5.3">
+<h3><span class="header-section-number">1.5.3</span> Computing summaries per group<a href="exploratory-data-analysis-using-r.html#computing-summaries-per-group" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose we want to know the mean score within particular groups, for example, continents. We can do this by chaining together the <code>group_by()</code> and <code>summarise()</code> commands.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="exploratory-data-analysis-using-r.html#cb55-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb55-2"><a href="exploratory-data-analysis-using-r.html#cb55-2" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">%&gt;%</span></span>
+<span id="cb55-3"><a href="exploratory-data-analysis-using-r.html#cb55-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanscore =</span> <span class="fu">mean</span>(score))</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##   continent     meanscore
+##   &lt;chr&gt;             &lt;dbl&gt;
+## 1 Africa             364.
+## 2 Asia               471.
+## 3 Europe             476.
+## 4 North America      423.
+## 5 Oceanea            494.
+## 6 South America      401.</code></pre>
+<p>We read the command as, “Start with the <code>maths</code> data frame, organise into groups based on the <code>continent</code> column, then create a new variable called <code>meanscore</code>, which is the mean of the <code>score</code> variable within each group.”</p>
+</div>
+</div>
+<div id="plotting-a-distribution-using-a-histogram" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Plotting a distribution using a histogram<a href="exploratory-data-analysis-using-r.html#plotting-a-distribution-using-a-histogram" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ve seen that 25 countries got higher scores than the UK, but perhaps some of these were only <em>just</em> higher, so that the just looking at ranks can be misleading. We can plot the distribution of scores using a <strong>histogram</strong>.</p>
+<hr>
+<div class="definition">
+<p><span id="def:defHistogram" class="definition"><strong>Definition 1.4  (Histogram) </strong></span>A histogram is a bar chart, where the area of each bar is proportional to the number of observations lying in the interval indicated by the bar. Each interval is known as a <strong>bin</strong>. If the bars are all of equal width (which is recommended), then the height of the bar is normally either the number of observations in the corresponding bin, or the proportion of the total number that lie in that bin.</p>
+</div>
+<hr>
+<div id="describing-the-shape-of-a-distribution-skewness" class="section level3 hasAnchor" number="1.6.1">
+<h3><span class="header-section-number">1.6.1</span> Describing the shape of a distribution: skewness<a href="exploratory-data-analysis-using-r.html#describing-the-shape-of-a-distribution-skewness" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>From a histogram plot, we sometimes refer to a distribution as being (approximately) symmetrical, positively skewed, or negatively skewed. Some examples are below.</p>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-31-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Starting from the peak of a distribution, a positively skewed distribution extends further to the right than to the left, and vice-versa for a negatively skewed distribution. Note that in a positively skewed distribution, the mean is greater than the median, and vice-versa for a negatively skewed distribution.</p>
+</div>
+</div>
+<div id="introducing-ggplot2" class="section level2 hasAnchor" number="1.7">
+<h2><span class="header-section-number">1.7</span> Introducing <code>ggplot2</code><a href="exploratory-data-analysis-using-r.html#introducing-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ll be using the R package <code>ggplot2</code> to produce all our plots. <code>ggplot2</code> is a popular and versatile package for producing a wide range of plots.</p>
+<p><img src="images/ggplot2_masterpiece.png" width="60%" style="display: block; margin: auto;" />
+(Artwork by @allison_horst)</p>
+<p>Everything you need for this module is included in these notes, but there are lots of good online resources too:</p>
+<ul>
+<li><a href="https://rstudio.cloud/learn/primers/3">R Studio Primers (Visualize Data)</a></li>
+<li><a href="https://r4ds.had.co.nz/">R for Data Science (Chapter 3)</a></li>
+<li><a href="https://r-graphics.org/">R Graphics Cookbook</a></li>
+</ul>
+<p><code>ggplot2</code> is included in the <code>tidyverse</code> package, so we don’t need to install or load it separately.</p>
+</div>
+<div id="drawing-a-histogram-in-r" class="section level2 hasAnchor" number="1.8">
+<h2><span class="header-section-number">1.8</span> Drawing a histogram in R<a href="exploratory-data-analysis-using-r.html#drawing-a-histogram-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can produce a basic histogram as follows</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="exploratory-data-analysis-using-r.html#cb57-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths, <span class="fu">aes</span>(<span class="at">x =</span> score)) <span class="sc">+</span> </span>
+<span id="cb57-2"><a href="exploratory-data-analysis-using-r.html#cb57-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-33-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>This is really a single command, spread over two lines, using the <code>+</code> symbol to carry over the command from one line to the next year. The command works as follows.</p>
+<ul>
+<li>The first line <code>ggplot(data = maths, aes(x = score))</code> sets up the axes, and tells R that we will be plotting data from the <code>maths</code> dataframe, with the dataframe column <code>score</code> represented on the <span class="math inline">\(x\)</span>-axis.</li>
+<li>The second line <code>geom_histogram()</code> tells R to draw a histogram for the axes specified in the first line.</li>
+</ul>
+<div class="rmdnote">
+<p>
+When producing any plot with <code>ggplot2</code>, any command
+involving a column in a dataframe needs to go <strong>inside</strong> an
+<code>aes()</code> command (e.g., <code>aes(x = score)</code>). This can
+take a little getting used to, but you will see more examples later
+on.
+</p>
+</div>
+<div id="customising-a-histogram-plot-in-r" class="section level3 hasAnchor" number="1.8.1">
+<h3><span class="header-section-number">1.8.1</span> Customising a histogram plot in R<a href="exploratory-data-analysis-using-r.html#customising-a-histogram-plot-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ll redraw the plot with different colours, add a better axis label, specify a histogram bin-width of size 10, and indicate the UK’s score with a red dot:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="exploratory-data-analysis-using-r.html#cb58-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths, <span class="fu">aes</span>(<span class="at">x =</span> score)) <span class="sc">+</span> </span>
+<span id="cb58-2"><a href="exploratory-data-analysis-using-r.html#cb58-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="at">binwidth =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb58-3"><a href="exploratory-data-analysis-using-r.html#cb58-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>) <span class="sc">+</span></span>
+<span id="cb58-4"><a href="exploratory-data-analysis-using-r.html#cb58-4" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;point&quot;</span>, <span class="at">x =</span> <span class="dv">492</span>, <span class="at">y =</span> <span class="dv">0</span>,  <span class="at">size =</span> <span class="dv">4</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) </span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-35-1.png" width="384" style="display: block; margin: auto;" />
+Note that the <code>+</code> symbol at the end of the first three lines tells R to treat all four lines as a single command.</p>
+<ul>
+<li>The second line now includes extra arguments: <code>fill</code> sets the colour of the interior of the bars, and <code>colour</code> sets the colour of the bar edges. <code>binwidth</code> sets how wide each bar is on the <span class="math inline">\(x\)</span>-axis;</li>
+<li>the third line (<code>labs</code>) specifies the label on the <span class="math inline">\(x\)</span>-axis;</li>
+<li>the fourth line (<code>annotate</code>) draws a red circle at the coordinates <span class="math inline">\(x=492, y=0\)</span>, and <code>size = 4</code> increases the size of the circle (the default value for <code>size</code> is 1.)</li>
+</ul>
+<p>Now we can see that quite a few countries got scores close to the UK’s, so that there’s not necessarily much to distinguish countries, even if they are, say, 10 places apart in the rankings.</p>
+</div>
+</div>
+<div id="covariance-and-correlation" class="section level2 hasAnchor" number="1.9">
+<h2><span class="header-section-number">1.9</span> Covariance and correlation<a href="exploratory-data-analysis-using-r.html#covariance-and-correlation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s first consider the relationship between the maths score and GDP per capita. For the <span class="math inline">\(i\)</span>-th country, let <span class="math inline">\(x_i\)</span> be its maths score and <span class="math inline">\(y_i\)</span> its GDP per capita, for <span class="math inline">\(i=1,\ldots,70\)</span>. Looking at the first few rows of the data</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="exploratory-data-analysis-using-r.html#cb59-1" tabindex="-1"></a><span class="fu">head</span>(maths)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 8
+##   country         continent     score   gdp  gini homework start.age wealthiest
+##   &lt;chr&gt;           &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;     
+## 1 Albania         Europe          413  4147  29        5.1         6 FALSE     
+## 2 Algeria         Africa          360  3844  27.6     NA           6 FALSE     
+## 3 Argentina       South America   409 12449  42.7      3.7         6 FALSE     
+## 4 Australia       Oceanea         494 49928  34.7      6           5 TRUE      
+## 5 Austria         Europe          497 44177  30.5      4.5         6 TRUE      
+## 6 B-S-J-G (China) Asia            531  8123  42.2     13.8         6 FALSE</code></pre>
+<p>so we have paired observations <span class="math inline">\((x_1=413, y_1=4147)\)</span>, <span class="math inline">\((x_2=360, y_2=3844)\)</span>, <span class="math inline">\((x_3=409, y_3=12449)\)</span> and so on.</p>
+<hr>
+<div class="definition">
+<p><span id="def:defCovariance" class="definition"><strong>Definition 1.5  (Covariance) </strong></span>For pairs of observations <span class="math inline">\((x_1,y_1), (x_2, y_2),\ldots,(x_n,y_n)\)</span> we define their covariance to be
+<span class="math display">\[
+s_{xy}=\frac{1}{n-1}\sum_{i=1}^n(x_i - \bar{x})(y_i - \bar{y}),
+\]</span>
+where <span class="math inline">\(\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i\)</span> and <span class="math inline">\(\bar{y} = \frac{1}{n}\sum_{i=1}^n y_i\)</span>.</p>
+</div>
+<hr>
+<div id="calculating-a-covariance-in-r" class="section level3 hasAnchor" number="1.9.1">
+<h3><span class="header-section-number">1.9.1</span> Calculating a covariance in R<a href="exploratory-data-analysis-using-r.html#calculating-a-covariance-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In R, we can use the command <code>cov()</code>:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="exploratory-data-analysis-using-r.html#cb61-1" tabindex="-1"></a><span class="fu">cov</span>(maths<span class="sc">$</span>score, maths<span class="sc">$</span>gdp)</span></code></pre></div>
+<pre><code>## [1] 710058.9</code></pre>
+<p>and so <span class="math inline">\(s_{xy} = 710058.9\)</span> to 1 d.p.</p>
+</div>
+<div id="pearsons-correlation-coefficient" class="section level3 hasAnchor" number="1.9.2">
+<h3><span class="header-section-number">1.9.2</span> Pearson’s correlation coefficient<a href="exploratory-data-analysis-using-r.html#pearsons-correlation-coefficient" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Covariances aren’t very informative on their own, as they will depend on the scale of measurement of the variables. <strong>Correlation coefficients</strong> are scale independent. There are different versions of the correlation coefficient.</p>
+<hr>
+<div class="definition">
+<p><span id="def:defPearson" class="definition"><strong>Definition 1.6  (Pearson's correlation coefficient) </strong></span>For pairs of observations <span class="math inline">\((x_1,y_1), (x_2, y_2),\ldots,(x_n,y_n)\)</span> we define Pearson’s correlation coeffcient to be
+<span class="math display">\[
+r_{xy}=\frac{s_{xy}}{s_xs_y},
+\]</span>
+with <span class="math inline">\(s_{xy}\)</span> the covariance defined above, and
+<span class="math display">\[
+s_x = \sqrt{\frac{1}{n-1}\sum_{i=1}^n(x_i - \bar{x})^2},
+\]</span>
+<span class="math display">\[ s_y = \sqrt{\frac{1}{n-1}\sum_{i=1}^n(y_i - \bar{y})^2}
+\]</span></p>
+</div>
+<hr>
+<p>Pearson’s correlation coefficient measures the strength of the <em>linear</em> association between the two variables, and is bounded between -1 and 1. A positive correlation implies that as one quantity increases, the other is expected to increase, and a negative correlation implies that as one quantity increases, the other is expected to <em>decrease</em>.</p>
+</div>
+<div id="calculating-pearsons-correlation-coefficient-in-r" class="section level3 hasAnchor" number="1.9.3">
+<h3><span class="header-section-number">1.9.3</span> Calculating Pearson’s correlation coefficient in R<a href="exploratory-data-analysis-using-r.html#calculating-pearsons-correlation-coefficient-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To calculate Pearson’s correlation coefficient between the variables <code>score</code> and <code>gdp</code> in the data frame <code>maths</code>, we use the command</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="exploratory-data-analysis-using-r.html#cb63-1" tabindex="-1"></a><span class="fu">cor</span>(maths<span class="sc">$</span>score, maths<span class="sc">$</span>gdp)</span></code></pre></div>
+<pre><code>## [1] 0.5947452</code></pre>
+<p>and so <span class="math inline">\(r_{xy}=0.59\)</span> to 2 d.p. We will discuss interpreting correlation coefficients shortly, but for now, we will just comment that this value is fairly large, and certainly suggests a relationship between the two variables.</p>
+</div>
+<div id="spearmans-correlation-coefficient" class="section level3 hasAnchor" number="1.9.4">
+<h3><span class="header-section-number">1.9.4</span> Spearman’s correlation coefficient<a href="exploratory-data-analysis-using-r.html#spearmans-correlation-coefficient" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+An alternative to Pearson’s correlation coefficient is <strong>Spearman’s</strong> correlation coefficient.
+<hr>
+<div class="definition">
+<p><span id="def:defSpearman" class="definition"><strong>Definition 1.7  (Spearman's correlation coefficient) </strong></span>For pairs of observations <span class="math inline">\((x_1,y_1), (x_2, y_2),\ldots,(x_n,y_n)\)</span> we define Spearman’s correlation coefficient to be Pearson’s correlation coefficient calculated on the the <em>ranks</em> of observations.</p>
+</div>
+<hr>
+<div id="example" class="section level4 hasAnchor" number="1.9.4.1">
+<h4><span class="header-section-number">1.9.4.1</span> Example<a href="exploratory-data-analysis-using-r.html#example" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>For illustration, suppose we have the following data</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline">\(i\)</span></th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+<th align="center">6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(x_i\)</span></td>
+<td align="center">68</td>
+<td align="center">2</td>
+<td align="center">40</td>
+<td align="center">20</td>
+<td align="center">85</td>
+<td align="center">97</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(y_i\)</span></td>
+<td align="center">73</td>
+<td align="center">26</td>
+<td align="center">37</td>
+<td align="center">1</td>
+<td align="center">63</td>
+<td align="center">68</td>
+</tr>
+</tbody>
+</table>
+<p>We first calculate the ranks of the observations (if <span class="math inline">\(x_i\)</span> gets a rank of 1, it means <span class="math inline">\(x_i\)</span> was the smallest out of <span class="math inline">\(x_1,\ldots,x_n\)</span>):</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline">\(i\)</span></th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+<th align="center">6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">rank(<span class="math inline">\(x_i\)</span>)</td>
+<td align="center">4</td>
+<td align="center">1</td>
+<td align="center">3</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">6</td>
+</tr>
+<tr class="even">
+<td align="center">rank(<span class="math inline">\(y_i\)</span>)</td>
+<td align="center">6</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+</tbody>
+</table>
+<p>We then calculate Pearson’s correlation coefficient on the ranks, as if we have six pairs of observations (4, 6), (1, 2), <span class="math inline">\(\ldots\)</span> (6, 5).</p>
+</div>
+</div>
+<div id="calculating-spearmans-correlation-coefficient-in-r" class="section level3 hasAnchor" number="1.9.5">
+<h3><span class="header-section-number">1.9.5</span> Calculating Spearman’s correlation coefficient in R<a href="exploratory-data-analysis-using-r.html#calculating-spearmans-correlation-coefficient-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In R, we just include an extra argument in the <code>cor()</code> command:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="exploratory-data-analysis-using-r.html#cb65-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">68</span>, <span class="dv">2</span>, <span class="dv">40</span>, <span class="dv">20</span>, <span class="dv">85</span>, <span class="dv">97</span>)</span>
+<span id="cb65-2"><a href="exploratory-data-analysis-using-r.html#cb65-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">73</span>, <span class="dv">26</span>, <span class="dv">37</span>, <span class="dv">1</span>, <span class="dv">63</span>, <span class="dv">68</span>)</span>
+<span id="cb65-3"><a href="exploratory-data-analysis-using-r.html#cb65-3" tabindex="-1"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">&#39;spearman&#39;</span>)</span></code></pre></div>
+<pre><code>## [1] 0.7714286</code></pre>
+<p>(If we don’t specify a <code>method</code>, the default is to use Pearson’s). To illustrate that this is just Pearson’s correlation coefficient calculate on the ranks, we can obtain the rankings in R with the command <code>rank()</code>, and then compare the above with</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="exploratory-data-analysis-using-r.html#cb67-1" tabindex="-1"></a><span class="fu">rank</span>(x)</span></code></pre></div>
+<pre><code>## [1] 4 1 3 2 5 6</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="exploratory-data-analysis-using-r.html#cb69-1" tabindex="-1"></a><span class="fu">rank</span>(y)</span></code></pre></div>
+<pre><code>## [1] 6 2 3 1 4 5</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="exploratory-data-analysis-using-r.html#cb71-1" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">rank</span>(x), <span class="fu">rank</span>(y))</span></code></pre></div>
+<pre><code>## [1] 0.7714286</code></pre>
+</div>
+<div id="interpreting-correlation-coefficients" class="section level3 hasAnchor" number="1.9.6">
+<h3><span class="header-section-number">1.9.6</span> Interpreting correlation coefficients<a href="exploratory-data-analysis-using-r.html#interpreting-correlation-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To help interpret and visualise correlation coefficients, four examples are plotted in Figure <a href="exploratory-data-analysis-using-r.html#fig:plot-correlation">1.1</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-correlation"></span>
+<img src="MAS109-Data-Science_files/figure-html/plot-correlation-1.png" alt="Correlation coefficients and linear trends. In (a), the correlation is quite large, even though there is fair amount of 'random variation' in the data. In (b), the two variables were generated independently, but still resulted in a Pearson correlation of -0.19: 'moderate' correlation values can be observed purely by luck. In (c), $x$ and $y$ are clearly related, but the Pearson correlation is 0: there is no \textit{linear} trend. In (d), the relationship between $x$ and $y$ is monotone, but nonlinear, and the Spearman correlation is greater than Pearson's." width="576" />
+<p class="caption">
+Figure 1.1: Correlation coefficients and linear trends. In (a), the correlation is quite large, even though there is fair amount of ‘random variation’ in the data. In (b), the two variables were generated independently, but still resulted in a Pearson correlation of -0.19: ‘moderate’ correlation values can be observed purely by luck. In (c), <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are clearly related, but the Pearson correlation is 0: there is no trend. In (d), the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is monotone, but nonlinear, and the Spearman correlation is greater than Pearson’s.
+</p>
+</div>
+</div>
+<div id="correlations-for-the-maths-data-set" class="section level3 hasAnchor" number="1.9.7">
+<h3><span class="header-section-number">1.9.7</span> Correlations for the <code>maths</code> data set<a href="exploratory-data-analysis-using-r.html#correlations-for-the-maths-data-set" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We calculate the Pearson correlations between the variables of interest:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="exploratory-data-analysis-using-r.html#cb73-1" tabindex="-1"></a>maths <span class="sc">%&gt;%</span></span>
+<span id="cb73-2"><a href="exploratory-data-analysis-using-r.html#cb73-2" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb73-3"><a href="exploratory-data-analysis-using-r.html#cb73-3" tabindex="-1"></a>  <span class="fu">select</span>(score, gdp, homework, start.age, gini) <span class="sc">%&gt;%</span></span>
+<span id="cb73-4"><a href="exploratory-data-analysis-using-r.html#cb73-4" tabindex="-1"></a>  <span class="fu">cor</span>(<span class="at">method =</span> <span class="st">&quot;pearson&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb73-5"><a href="exploratory-data-analysis-using-r.html#cb73-5" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
+<ul>
+<li>the second line excludes any rows with missing values (the <code>cor()</code> command won’t work otherwise);</li>
+<li>the third line selects the columns for which we wish to calculate correlations;</li>
+<li>the fourth line will produce a matrix of Pearson correlations, in the form above;</li>
+<li>the fifth line rounds all the numbers to two decimal places.</li>
+</ul>
+<p>The code above produces the following output.</p>
+<pre><code>##           score   gdp homework start.age  gini
+## score      1.00  0.58     0.26      0.06 -0.56
+## gdp        0.58  1.00    -0.14     -0.19 -0.40
+## homework   0.26 -0.14     1.00      0.13  0.07
+## start.age  0.06 -0.19     0.13      1.00 -0.11
+## gini      -0.56 -0.40     0.07     -0.11  1.00</code></pre>
+<p>(Note that the correlation of any variable with itself is always 1). By looking at the largest correlations (in absolute value), tentatively, we may conclude the following:</p>
+<ul>
+<li>countries with larger GDP per capita tend to have higher maths scores (correlation of 0.58);</li>
+<li>countries with more inequality tend to have lower maths scores (correlation of -0.56);</li>
+<li>the association between hours of homework per week and maths score looks weak (correlation of 0.26);</li>
+<li>there doesn’t appear to be much of a linear association between school starting age and maths score (correlation of 0.06).</li>
+</ul>
+<p>(The correlations are all fairly similar if we use Spearman’s correlation instead). We will check these visually shortly. There is one complication, however: countries with higher GDP per capita tend to have less inequality (correlation of -0.4). Could this be the reason countries with more inequality tend to have lower maths scores?</p>
+</div>
+</div>
+<div id="drawing-a-scatter-plot-in-r" class="section level2 hasAnchor" number="1.10">
+<h2><span class="header-section-number">1.10</span> Drawing a scatter plot in R<a href="exploratory-data-analysis-using-r.html#drawing-a-scatter-plot-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s first plot maths score against GDP per capita:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="exploratory-data-analysis-using-r.html#cb75-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths, <span class="fu">aes</span>(<span class="at">x =</span> gdp, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb75-2"><a href="exploratory-data-analysis-using-r.html#cb75-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-43-1.png" width="384" style="display: block; margin: auto;" />
+Again, although there are two lines, with the <code>+</code> symbol, this is really just one command.</p>
+<ul>
+<li>The first line <code>ggplot(data = maths, aes(x = gdp, y = score))</code> sets up the axes, and tells R that we will be plotting data from the <code>maths</code> dataframe, with the dataframe column <code>gdp</code> represented on the <span class="math inline">\(x\)</span>-axis, and the column <code>score</code> represented on the <span class="math inline">\(y\)</span>-axis.</li>
+<li>Both <code>gdp</code> and <code>score</code> are columns in a data frame, so they are used inside an <code>aes()</code> command here.</li>
+<li>The second line <code>geom_point()</code> tells R to draw a scatter plot for the axes specified in the first line.</li>
+</ul>
+<div id="customising-a-scatter-plot-in-r" class="section level3 hasAnchor" number="1.10.1">
+<h3><span class="header-section-number">1.10.1</span> Customising a scatter plot in R<a href="exploratory-data-analysis-using-r.html#customising-a-scatter-plot-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will tidy up the plot by specifying proper axes labels, and labeling the UK. Here, the simplest way to do it is to manually add another point.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="exploratory-data-analysis-using-r.html#cb76-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths, <span class="fu">aes</span>(<span class="at">x =</span> gdp, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb76-2"><a href="exploratory-data-analysis-using-r.html#cb76-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb76-3"><a href="exploratory-data-analysis-using-r.html#cb76-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;GDP per capita (US$)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>) <span class="sc">+</span></span>
+<span id="cb76-4"><a href="exploratory-data-analysis-using-r.html#cb76-4" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;point&quot;</span>, <span class="at">x =</span> <span class="dv">39899</span>, <span class="at">y =</span> <span class="dv">492</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb76-5"><a href="exploratory-data-analysis-using-r.html#cb76-5" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">label =</span> <span class="st">&quot;UK&quot;</span>, <span class="at">x =</span> <span class="dv">39899</span>, <span class="at">y =</span> <span class="dv">492</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>, </span>
+<span id="cb76-6"><a href="exploratory-data-analysis-using-r.html#cb76-6" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">vjust =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-44-1.png" width="384" style="display: block; margin: auto;" />
+Note that you can break up long lines of code after a comma <code>,</code> which makes your code easier to read.</p>
+<ul>
+<li>The third line (<code>labs</code>) specifies labels for both the <span class="math inline">\(x\)</span>-axis and <span class="math inline">\(y\)</span>-axis;</li>
+<li>the fourth line adds a red circle (<code>"point"</code>) at the coordinates <span class="math inline">\(x=39899\)</span>, <span class="math inline">\(y=492\)</span> (corresponding to the UK), with the <code>size</code> set to 2 to make it a little larger.</li>
+<li>the fifth line adds some red text (UK) at the coordinates <span class="math inline">\(x=39899\)</span>, <span class="math inline">\(y=492\)</span>, with the arguments <code>hjust</code> and <code>vjust</code> shifting the text slightly horizontally and vertically, so that it appears next to, rather than on top of the red dot. It can take a little trial and error to find the values for <code>hjust</code> and <code>vjust</code> that you are happy with.</li>
+</ul>
+</div>
+<div id="adding-a-nonlinear-trend-to-a-scatter-plot-in-r" class="section level3 hasAnchor" number="1.10.2">
+<h3><span class="header-section-number">1.10.2</span> Adding a nonlinear trend to a scatter plot in R<a href="exploratory-data-analysis-using-r.html#adding-a-nonlinear-trend-to-a-scatter-plot-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can see clearly that maths scores tend to increase as GDP per capita increases, but the relationship doesn’t look linear. If we want to emphasise such a relationship, we can add the trend to the plot, using the extra line <code>geom_smooth()</code> in the plot command:</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="exploratory-data-analysis-using-r.html#cb77-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths, <span class="fu">aes</span>(<span class="at">x =</span> gdp, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb77-2"><a href="exploratory-data-analysis-using-r.html#cb77-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb77-3"><a href="exploratory-data-analysis-using-r.html#cb77-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;GDP per capita (US$)&quot;</span>, </span>
+<span id="cb77-4"><a href="exploratory-data-analysis-using-r.html#cb77-4" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>) <span class="sc">+</span></span>
+<span id="cb77-5"><a href="exploratory-data-analysis-using-r.html#cb77-5" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;point&quot;</span>, <span class="at">x =</span> <span class="dv">39899</span>, </span>
+<span id="cb77-6"><a href="exploratory-data-analysis-using-r.html#cb77-6" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">492</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>, </span>
+<span id="cb77-7"><a href="exploratory-data-analysis-using-r.html#cb77-7" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb77-8"><a href="exploratory-data-analysis-using-r.html#cb77-8" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">label =</span> <span class="st">&quot;UK&quot;</span>, </span>
+<span id="cb77-9"><a href="exploratory-data-analysis-using-r.html#cb77-9" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">39899</span>, <span class="at">y =</span> <span class="dv">492</span>, </span>
+<span id="cb77-10"><a href="exploratory-data-analysis-using-r.html#cb77-10" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>, </span>
+<span id="cb77-11"><a href="exploratory-data-analysis-using-r.html#cb77-11" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">vjust =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb77-12"><a href="exploratory-data-analysis-using-r.html#cb77-12" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-45-1.png" width="384" style="display: block; margin: auto;" />
+The blue line shows the estimated trend. The grey shaded area indicates uncertainty about this trend: it’s wider on the right hand side, because we have less data there. (You can learn more about how this is all done in MAS223).</p>
+</div>
+<div id="adding-a-linear-trend-to-a-scatter-plot-in-r" class="section level3 hasAnchor" number="1.10.3">
+<h3><span class="header-section-number">1.10.3</span> Adding a linear trend to a scatter plot in R<a href="exploratory-data-analysis-using-r.html#adding-a-linear-trend-to-a-scatter-plot-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To include a linear trend, we add the argument <code>method = "lm"</code> to <code>geom_smooth()</code>:</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="exploratory-data-analysis-using-r.html#cb78-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths,  </span>
+<span id="cb78-2"><a href="exploratory-data-analysis-using-r.html#cb78-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> gini, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb78-3"><a href="exploratory-data-analysis-using-r.html#cb78-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb78-4"><a href="exploratory-data-analysis-using-r.html#cb78-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb78-5"><a href="exploratory-data-analysis-using-r.html#cb78-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Gini coeffcient&quot;</span>, </span>
+<span id="cb78-6"><a href="exploratory-data-analysis-using-r.html#cb78-6" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>) </span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-46-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>The grey shaded region represents uncertainty in the trend. We’ll do the same for the homework variable.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="exploratory-data-analysis-using-r.html#cb79-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths,  </span>
+<span id="cb79-2"><a href="exploratory-data-analysis-using-r.html#cb79-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> homework, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb79-3"><a href="exploratory-data-analysis-using-r.html#cb79-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb79-4"><a href="exploratory-data-analysis-using-r.html#cb79-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb79-5"><a href="exploratory-data-analysis-using-r.html#cb79-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Mean hours of homework per week&quot;</span>)<span class="sc">+</span></span>
+<span id="cb79-6"><a href="exploratory-data-analysis-using-r.html#cb79-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>) </span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-47-1.png" width="384" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="box-plots" class="section level2 hasAnchor" number="1.11">
+<h2><span class="header-section-number">1.11</span> Box plots<a href="exploratory-data-analysis-using-r.html#box-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If we want to compare groups of observations, we can use a box plot. Box plots are useful for comparing several groups simultaneously: we can fit a lot of information into a single plot. To explain how to interpret a box plot, we’ll first consider the European countries only, and show a box plot directly above a histogram of the same data.</p>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-48-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>In the box plot above:</p>
+<ul>
+<li>the thick vertical black line shows the median;</li>
+<li>the ends of the box show the 25th and 75th percentiles (so that the box shows the interquartile range);</li>
+<li>the two horizontal lines (known as “whiskers”) extend to the most extreme observed values that are no more than 1.5 <span class="math inline">\(\times\)</span> the inter-quartile range from the edge of the box;</li>
+<li>individual observations not covered by the whiskers are shown as points on the plot, referred to as <strong>outliers</strong>.</li>
+</ul>
+<p>Lining up the box plot with the histogram, we can see that it gives an indication of the shape of the distribution.</p>
+<p>We’ll now produce a box plot (drawn vertically instead of horizontally) to compare maths scores between the continents.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="exploratory-data-analysis-using-r.html#cb80-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb80-2"><a href="exploratory-data-analysis-using-r.html#cb80-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb80-3"><a href="exploratory-data-analysis-using-r.html#cb80-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>) </span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-49-1.png" width="576" style="display: block; margin: auto;" /></p>
+<ul>
+<li>The first line <code>ggplot(data = maths, aes(x = continent, y = score))</code> sets up the axes, and tells R that we will be plotting data from the <code>maths</code> dataframe, with the dataframe column <code>continent</code> represented on the <span class="math inline">\(x\)</span>-axis, and the column <code>score</code> represented on the <span class="math inline">\(y\)</span>-axis.</li>
+<li>The second line <code>geom_boxplot()</code> tells R to draw a box plot for the axes specified in the first line.</li>
+</ul>
+<p>If we have long names on the <span class="math inline">\(x\)</span>-axis, we may need to rotate them. We can do this as with an extra line at the end (which will rotate and shift the text slightly):</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="exploratory-data-analysis-using-r.html#cb81-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb81-2"><a href="exploratory-data-analysis-using-r.html#cb81-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb81-3"><a href="exploratory-data-analysis-using-r.html#cb81-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>) <span class="sc">+</span></span>
+<span id="cb81-4"><a href="exploratory-data-analysis-using-r.html#cb81-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, </span>
+<span id="cb81-5"><a href="exploratory-data-analysis-using-r.html#cb81-5" tabindex="-1"></a>                                 <span class="at">hjust =</span> <span class="dv">1</span>, </span>
+<span id="cb81-6"><a href="exploratory-data-analysis-using-r.html#cb81-6" tabindex="-1"></a>                                 <span class="at">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-50-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>Let’s now investigate the relationship between maths score and school starting age:</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="exploratory-data-analysis-using-r.html#cb82-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths, <span class="fu">aes</span>(<span class="at">x =</span> start.age, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb82-2"><a href="exploratory-data-analysis-using-r.html#cb82-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-51-1.png" width="384" style="display: block; margin: auto;" />
+The problem here is that there are only three distinct starting ages: 5, 6 and 7, so the scatter plot isn’t very clear. A box plot might work better: we think of the three starting ages as three groups. In R, we have to convert <code>start.age</code> to a <code>factor</code> variable. If we try the following command</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="exploratory-data-analysis-using-r.html#cb83-1" tabindex="-1"></a><span class="fu">factor</span>(maths<span class="sc">$</span>start.age)</span></code></pre></div>
+<pre><code>##  [1] 6 6 6 5 6 6 6 6 7 6 6 6 6 7 6 6 6 6 7 7 6 6 6 6 6 7 6 7 5 6 6 6 6 7 6 7 6 7
+## [39] 6 6 6 6 5 6 7 6 6 5 6 6 7 6 6 6 7 6 6 6 6 7 7 6 5 6 6 6 5 6 6 6
+## Levels: 5 6 7</code></pre>
+<p>this doesn’t appear to have done anything, but the text <code>Levels: 5 6 7</code> at the bottom tells us that the output is a factor variable, taking one of three levels. We can try the box plot, where on the <span class="math inline">\(x\)</span>-axis, we specify that we want to use the factor variable <code>factor(start.age)</code>:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="exploratory-data-analysis-using-r.html#cb85-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(start.age), <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb85-2"><a href="exploratory-data-analysis-using-r.html#cb85-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb85-3"><a href="exploratory-data-analysis-using-r.html#cb85-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;School starting age&quot;</span>, </span>
+<span id="cb85-4"><a href="exploratory-data-analysis-using-r.html#cb85-4" tabindex="-1"></a>       <span class="at">y =</span>  <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>)</span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-53-1.png" width="384" style="display: block; margin: auto;" />
+The median score is highest in those countries where children start school at age 5, but we can see there is a lot of variation within each group of countries.</p>
+</div>
+<div id="scatter-plots-to-represent-three-variables" class="section level2 hasAnchor" number="1.12">
+<h2><span class="header-section-number">1.12</span> Scatter plots to represent three variables<a href="exploratory-data-analysis-using-r.html#scatter-plots-to-represent-three-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sometimes, we may wish to visualise the relationship between several variables simultaneously. One way to do this is with a scatter plot, using the colour of each point to represent a third variable.</p>
+<p>We’ll plot score against GDP as before, but now indicate the school starting age with different colours (after first converting <code>start.age</code> to a factor variable):</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="exploratory-data-analysis-using-r.html#cb86-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths, </span>
+<span id="cb86-2"><a href="exploratory-data-analysis-using-r.html#cb86-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> gdp, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb86-3"><a href="exploratory-data-analysis-using-r.html#cb86-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> <span class="fu">factor</span>(start.age))) <span class="sc">+</span></span>
+<span id="cb86-4"><a href="exploratory-data-analysis-using-r.html#cb86-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;GDP per capita (US$)&quot;</span>, </span>
+<span id="cb86-5"><a href="exploratory-data-analysis-using-r.html#cb86-5" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>) <span class="sc">+</span></span>
+<span id="cb86-6"><a href="exploratory-data-analysis-using-r.html#cb86-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">&quot;School starting age&quot;</span>)</span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-54-1.png" width="576" style="display: block; margin: auto;" /></p>
+<ul>
+<li>we want <code>start.age</code> to be treated as a factor, so we convert it to a factor with <code>factor(start.age)</code></li>
+<li>in the <code>geom_point()</code> command, we want the <code>colour</code> of the points to be determined by <code>factor(start.age)</code></li>
+<li><code>factor(start.age)</code> refers to a column in a data frame, so it must be used inside an <code>aes()</code> command.</li>
+<li>the command <code>labs(colour = "School starting age")</code> sets the title for plot legend, where the legend explains what <code>colour</code> represents in the scatter plot.</li>
+</ul>
+<p>Some conclusions:</p>
+<ul>
+<li>in most of the poorer countries, children either start school at age 6 or 7: this has brought down the median compared with starting age 5 group;</li>
+<li>within the poorer countries, scores do appear to be higher where children have started at age 7;</li>
+<li>within the wealthier countries, there is no obvious effect of school starting age.</li>
+</ul>
+<p>Now we’ll consider the effect of income inequality. We first do a simple scatter plot with a linear trend</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="exploratory-data-analysis-using-r.html#cb87-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths,  <span class="fu">aes</span>(<span class="at">x =</span> gini, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb87-2"><a href="exploratory-data-analysis-using-r.html#cb87-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb87-3"><a href="exploratory-data-analysis-using-r.html#cb87-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb87-4"><a href="exploratory-data-analysis-using-r.html#cb87-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Gini coefficient&quot;</span>, </span>
+<span id="cb87-5"><a href="exploratory-data-analysis-using-r.html#cb87-5" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>) </span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-55-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>It does appear that score decreases with increasing income inequality (as we saw when we calculated the correlations). We also noted before that income inequality is negatively correlated with GDP. We would like to take account for this. Recall that the new variable <code>wealthiest</code> indicates whether each country is in the top half of the wealthiest countries, as measured by GDP.</p>
+<pre><code>## # A tibble: 6 × 5
+##   country         score   gdp  gini wealthiest
+##   &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;     
+## 1 Albania           413  4147  29   FALSE     
+## 2 Algeria           360  3844  27.6 FALSE     
+## 3 Argentina         409 12449  42.7 FALSE     
+## 4 Australia         494 49928  34.7 TRUE      
+## 5 Austria           497 44177  30.5 TRUE      
+## 6 B-S-J-G (China)   531  8123  42.2 FALSE</code></pre>
+<p>One possibility is to draw
+another scatter plot, but this time using the variable <code>wealthiest</code> to determine both the colour and to display separate fitted trends: we look to see if the relationship between income equality and maths score is still there within each group:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="exploratory-data-analysis-using-r.html#cb89-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maths,  <span class="fu">aes</span>(<span class="at">x =</span> gini, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb89-2"><a href="exploratory-data-analysis-using-r.html#cb89-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> wealthiest))<span class="sc">+</span></span>
+<span id="cb89-3"><a href="exploratory-data-analysis-using-r.html#cb89-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">group =</span> wealthiest, </span>
+<span id="cb89-4"><a href="exploratory-data-analysis-using-r.html#cb89-4" tabindex="-1"></a>                  <span class="at">colour =</span> wealthiest), </span>
+<span id="cb89-5"><a href="exploratory-data-analysis-using-r.html#cb89-5" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb89-6"><a href="exploratory-data-analysis-using-r.html#cb89-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Gini coefficient&quot;</span>, </span>
+<span id="cb89-7"><a href="exploratory-data-analysis-using-r.html#cb89-7" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Mean PISA mathematics score, 2015&quot;</span>) </span></code></pre></div>
+<p><img src="MAS109-Data-Science_files/figure-html/unnamed-chunk-57-1.png" width="576" style="display: block; margin: auto;" /></p>
+<ul>
+<li>in the <code>geom_point</code> command, we want the <code>colour</code> of the points to be determined by the value of <code>wealthiest</code>;</li>
+<li><code>wealthiest</code> is a column in a dataframe, so the argument <code>colour = wealthiest</code> has to go inside an <code>aes()</code> command;</li>
+<li>in the <code>geom_smooth</code> command, we want separate trends displayed for the two groups determined by the variable <code>wealthiest</code>, so we specify <code>group = wealthiest</code> inside an <code>aes()</code> command;</li>
+<li>in the <code>geom_smooth</code> command, we also want the lines to have different colours, so the colours are specified via <code>colour = wealthiest</code> inside an <code>aes()</code> command.</li>
+<li>the argument <code>method = lm</code> specifies that a linear trend should be displayed.</li>
+</ul>
+<p>The gradients aren’t quite as steep, but the relationship is still there. A more formal statistical modelling approach can also be used to investigate this: you can learn about this in MAS223.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="machine-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
