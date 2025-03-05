@@ -23,7 +23,7 @@
 <meta name="author" content="Dr Jill Johnson" />
 
 
-<meta name="date" content="2025-02-27" />
+<meta name="date" content="2025-03-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -256,7 +256,7 @@ Markdown document, with one code chunk per task.
 </ol>
 <div class="fold">
 <ul>
-<li>Copy and modify <a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html#importing-data-into-r-csv-and-.xlsx-files" target="_blank">this lecture notes example: importing data</a></li>
+<li>Copy and modify <a href="https://johnsonj11.github.io/MAS109-Notes/exploratory-data-analysis-using-r.html#importing-data-into-r-csv-and-.xlsx-files" target="_blank">this lecture notes example: importing data</a></li>
 <li>Here, rather than <code>maths.csv</code>, you are importing a file called <code>Brexit.csv</code>.</li>
 <li>You need to store the result as <code>brexit</code> rather than <code>maths</code>.</li>
 </ul>
@@ -266,21 +266,21 @@ Markdown document, with one code chunk per task.
 <li>What were the lower quartile, median and upper quartile of percentage of remain voters in the 380 districts?</li>
 </ol>
 <div class="fold">
-<p>You can get the median and quartiles using the <code>summary()</code> command. <a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html#calculating-summary-statistics-with-the-summary-command" target="_blank">Here is an example.</a></p>
+<p>You can get the median and quartiles using the <code>summary()</code> command. <a href="https://johnsonj11.github.io/MAS109-Notes/exploratory-data-analysis-using-r.html#calculating-summary-statistics-with-the-summary-command" target="_blank">Here is an example.</a></p>
 </div>
 <hr>
 <ol start="6" style="list-style-type: decimal">
 <li>Find the percentage of the remain voters in <code>Sheffield</code>. (You will need to select the row from the <code>Brexit</code> data frame in which the <code>Area</code> column takes the value <code>Sheffield</code>).</li>
 </ol>
 <div class="fold">
-<p>You could just search through the spreadsheet, but you should practise using the <code>filter()</code> command to select rows from a data frame. <a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html#selecting-rows-with-the-filter-command" target="_blank">Here is an example.</a></p>
+<p>You could just search through the spreadsheet, but you should practise using the <code>filter()</code> command to select rows from a data frame. <a href="https://johnsonj11.github.io/MAS109-Notes/exploratory-data-analysis-using-r.html#selecting-rows-with-the-filter-command" target="_blank">Here is an example.</a></p>
 </div>
 <hr>
 <ol start="7" style="list-style-type: decimal">
 <li>Find the districts with the highest 10 percentages of remain voters and lowest 10 percentages of remain votes. What do you notice about the regions?</li>
 </ol>
 <div class="fold">
-<p>You can use the <code>arrange()</code> command to arrange the rows of the data frame in order of the <code>remain</code> variable. <a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html#ordering-the-rows-by-a-variable-with-the-arrange-command" target="_blank">Here is an example.</a></p>
+<p>You can use the <code>arrange()</code> command to arrange the rows of the data frame in order of the <code>remain</code> variable. <a href="https://johnsonj11.github.io/MAS109-Notes/exploratory-data-analysis-using-r.html#ordering-the-rows-by-a-variable-with-the-arrange-command" target="_blank">Here is an example.</a></p>
 </div>
 <hr>
 <ol start="8" style="list-style-type: decimal">
@@ -295,10 +295,10 @@ Markdown document, with one code chunk per task.
 <div class="fold">
 <ul>
 <li>Use a separate code chunk for each plot.</li>
-<li>To produce a basic scatter plot, look at the example <a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html#drawing-a-scatter-plot-in-r" target="_blank">here.</a></li>
-<li>To use different colours per region, and to add proper axes labels, see this <a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html#customising-a-scatter-plot-in-r" target="_blank">example on customising a scatter plot.</a></li>
-<li><a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html#adding-a-linear-trend-to-a-scatter-plot-in-r" target="_blank">Here’s an example of adding a linear trend</a></li>
-<li>Use the <code>cor()</code> command to compute Pearson’s correlation. <a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html#calculating-pearsons-correlation-coefficient-in-r" target="_blank">Here’s an example</a>.
+<li>To produce a basic scatter plot, look at the example <a href="https://johnsonj11.github.io/MAS109-Notes/exploratory-data-analysis-using-r.html#drawing-a-scatter-plot-in-r" target="_blank">here.</a></li>
+<li>To use different colours per region, and to add proper axes labels, see this <a href="https://johnsonj11.github.io/MAS109-Notes/exploratory-data-analysis-using-r.html#customising-a-scatter-plot-in-r" target="_blank">example on customising a scatter plot.</a></li>
+<li><a href="https://johnsonj11.github.io/MAS109-Notes/exploratory-data-analysis-using-r.html#adding-a-linear-trend-to-a-scatter-plot-in-r" target="_blank">Here’s an example of adding a linear trend</a></li>
+<li>Use the <code>cor()</code> command to compute Pearson’s correlation. <a href="https://johnsonj11.github.io/MAS109-Notes/exploratory-data-analysis-using-r.html#calculating-pearsons-correlation-coefficient-in-r" target="_blank">Here’s an example</a>.
 <ul>
 <li>To add the caption, you need to include an argument <code>fig.cap = "Put your caption here"</code> as a chunk option in your R Markdown document.</li>
 </ul></li>
@@ -312,8 +312,8 @@ Markdown document, with one code chunk per task.
 <ul>
 <li>You’ll need to make use of the <code>group_by()</code> and <code>arrange()</code> commands.<br />
 </li>
-<li><a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html#computing-summaries-per-group" target="_blank">Here is an example of computing summaries per group</a></li>
-<li>Make sure you understand how the “pipe operator” <code>%&gt;%</code> works for chaining commands together. <a href="https://oakleyj.github.io/MAS5052Part1/exploratory-data-analysis-using-r.html#chaining-commands-together-with-the-pipe-operator" target="_blank">Here is an example.</a></li>
+<li><a href="https://johnsonj11.github.io/MAS109-Notes/exploratory-data-analysis-using-r.html#computing-summaries-per-group" target="_blank">Here is an example of computing summaries per group</a></li>
+<li>Make sure you understand how the “pipe operator” <code>%&gt;%</code> works for chaining commands together. <a href="https://johnsonj11.github.io/MAS109-Notes/exploratory-data-analysis-using-r.html#chaining-commands-together-with-the-pipe-operator" target="_blank">Here is an example.</a></li>
 </ul>
 </div>
 <hr>
