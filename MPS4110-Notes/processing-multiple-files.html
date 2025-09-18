@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 15 Processing multiple files | Data handling, exploratory analysis, and reporting in R</title>
+  <meta name="description" content="An introduction to R for students on MPS4110" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 15 Processing multiple files | Data handling, exploratory analysis, and reporting in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="An introduction to R for students on MPS4110" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 15 Processing multiple files | Data handling, exploratory analysis, and reporting in R" />
+  
+  <meta name="twitter:description" content="An introduction to R for students on MPS4110" />
+  
+
+<meta name="author" content="Author: Jeremy Oakley" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="strings.html"/>
+<link rel="next" href="apis.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EDA with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-these-notes"><i class="fa fa-check"></i><b>1.1</b> About these notes</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#books"><i class="fa fa-check"></i><b>1.2</b> Books</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="part"><span><b>I The basics</b></span></li>
+<li class="chapter" data-level="2" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#starting-rstudio-on-the-university-network"><i class="fa fa-check"></i><b>2.1</b> Starting RStudio on the university network</a></li>
+<li class="chapter" data-level="2.2" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#the-rstudio-interface"><i class="fa fa-check"></i><b>2.2</b> The RStudio interface</a></li>
+<li class="chapter" data-level="2.3" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#inputs-and-outputs"><i class="fa fa-check"></i><b>2.3</b> Inputs and outputs</a></li>
+<li class="chapter" data-level="2.4" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#get-comfortable"><i class="fa fa-check"></i><b>2.4</b> Get comfortable!</a></li>
+<li class="chapter" data-level="2.5" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#change-your-workspace-settings"><i class="fa fa-check"></i><b>2.5</b> Change your Workspace settings</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="using-r-as-a-calculator.html"><a href="using-r-as-a-calculator.html"><i class="fa fa-check"></i><b>3</b> Using R as a calculator</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="using-r-as-a-calculator.html"><a href="using-r-as-a-calculator.html#scientific-notation"><i class="fa fa-check"></i><b>3.1</b> Scientific notation</a></li>
+<li class="chapter" data-level="3.2" data-path="using-r-as-a-calculator.html"><a href="using-r-as-a-calculator.html#order-of-operations"><i class="fa fa-check"></i><b>3.2</b> Order of operations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html"><i class="fa fa-check"></i><b>4</b> Variables and vectors</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#vectors"><i class="fa fa-check"></i><b>4.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#sequences-of-integers"><i class="fa fa-check"></i><b>4.1.1</b> Sequences of integers</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#subsetting-vectors"><i class="fa fa-check"></i><b>4.2</b> Subsetting vectors</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#logical-subsetting"><i class="fa fa-check"></i><b>4.2.1</b> Logical subsetting</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#character-strings"><i class="fa fa-check"></i><b>4.3</b> Character strings</a></li>
+<li class="chapter" data-level="4.4" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#factors"><i class="fa fa-check"></i><b>4.4</b> Factors</a></li>
+<li class="chapter" data-level="4.5" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#the-environment-window"><i class="fa fa-check"></i><b>4.5</b> The Environment window</a></li>
+<li class="chapter" data-level="4.6" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#further-reading"><i class="fa fa-check"></i><b>4.6</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#introducing-functions"><i class="fa fa-check"></i><b>5.1</b> Introducing functions</a></li>
+<li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#arguments"><i class="fa fa-check"></i><b>5.2</b> Arguments</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="functions.html"><a href="functions.html#experiment"><i class="fa fa-check"></i><b>5.2.1</b> Experiment!</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#help-files"><i class="fa fa-check"></i><b>5.3</b> Help files</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html"><i class="fa fa-check"></i><b>6</b> Data frames, tibbles and lists</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#data-frames"><i class="fa fa-check"></i><b>6.1</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#making-data-frames"><i class="fa fa-check"></i><b>6.1.1</b> Making data frames</a></li>
+<li class="chapter" data-level="6.1.2" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#extracting-rows-and-columns"><i class="fa fa-check"></i><b>6.1.2</b> Extracting rows and columns</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#tibbles"><i class="fa fa-check"></i><b>6.2</b> tibbles</a></li>
+<li class="chapter" data-level="6.3" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#inspecting-large-data-frames-and-tibbles"><i class="fa fa-check"></i><b>6.3</b> Inspecting large data frames and tibbles</a></li>
+<li class="chapter" data-level="6.4" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#lists"><i class="fa fa-check"></i><b>6.4</b> Lists</a></li>
+<li class="chapter" data-level="6.5" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#further-reading-1"><i class="fa fa-check"></i><b>6.5</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="scripts.html"><a href="scripts.html"><i class="fa fa-check"></i><b>7</b> Scripts</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="scripts.html"><a href="scripts.html#creating-a-new-script"><i class="fa fa-check"></i><b>7.1</b> Creating a new script</a></li>
+<li class="chapter" data-level="7.2" data-path="scripts.html"><a href="scripts.html#entering-and-running-commands"><i class="fa fa-check"></i><b>7.2</b> Entering and running commands</a></li>
+<li class="chapter" data-level="7.3" data-path="scripts.html"><a href="scripts.html#adding-comments-and-sections-in-scripts"><i class="fa fa-check"></i><b>7.3</b> Adding comments and sections in scripts</a></li>
+<li class="chapter" data-level="7.4" data-path="scripts.html"><a href="scripts.html#line-breaks-in-scripts"><i class="fa fa-check"></i><b>7.4</b> Line breaks in scripts</a></li>
+<li class="chapter" data-level="7.5" data-path="scripts.html"><a href="scripts.html#saving-a-script"><i class="fa fa-check"></i><b>7.5</b> Saving a script</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="a-tip-for-understanding-r-code.html"><a href="a-tip-for-understanding-r-code.html"><i class="fa fa-check"></i><b>8</b> A tip for understanding R code</a></li>
+<li class="chapter" data-level="9" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>9</b> Packages</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="packages.html"><a href="packages.html#installing-a-package"><i class="fa fa-check"></i><b>9.1</b> Installing a package</a></li>
+<li class="chapter" data-level="9.2" data-path="packages.html"><a href="packages.html#updating-packages"><i class="fa fa-check"></i><b>9.2</b> Updating packages</a></li>
+<li class="chapter" data-level="9.3" data-path="packages.html"><a href="packages.html#using-packages"><i class="fa fa-check"></i><b>9.3</b> Using packages</a></li>
+<li class="chapter" data-level="9.4" data-path="packages.html"><a href="packages.html#is-there-a-package-for"><i class="fa fa-check"></i><b>9.4</b> Is there a package for…?</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="rstudio-projects.html"><a href="rstudio-projects.html"><i class="fa fa-check"></i><b>10</b> RStudio Projects</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="rstudio-projects.html"><a href="rstudio-projects.html#file-paths-and-working-directories"><i class="fa fa-check"></i><b>10.1</b> File paths and working directories</a></li>
+<li class="chapter" data-level="10.2" data-path="rstudio-projects.html"><a href="rstudio-projects.html#creating-a-new-project"><i class="fa fa-check"></i><b>10.2</b> Creating a new project</a></li>
+<li class="chapter" data-level="10.3" data-path="rstudio-projects.html"><a href="rstudio-projects.html#opening-an-existing-project"><i class="fa fa-check"></i><b>10.3</b> Opening an existing project</a></li>
+<li class="chapter" data-level="10.4" data-path="rstudio-projects.html"><a href="rstudio-projects.html#using-your-project-folder"><i class="fa fa-check"></i><b>10.4</b> Using your project folder</a></li>
+</ul></li>
+<li class="part"><span><b>II Data handling</b></span></li>
+<li class="chapter" data-level="11" data-path="the-tidyverse.html"><a href="the-tidyverse.html"><i class="fa fa-check"></i><b>11</b> The Tidyverse</a></li>
+<li class="chapter" data-level="12" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html"><i class="fa fa-check"></i><b>12</b> Importing, combining, and reshaping data</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-a-.csv-file"><i class="fa fa-check"></i><b>12.1</b> Importing a .csv file</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#additional-arguments"><i class="fa fa-check"></i><b>12.1.1</b> Additional arguments</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-an-excel-.xlsx-file"><i class="fa fa-check"></i><b>12.2</b> Importing an Excel .xlsx file</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#additional-arguments-1"><i class="fa fa-check"></i><b>12.2.1</b> Additional arguments</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-a-plain-text-file"><i class="fa fa-check"></i><b>12.3</b> Importing a plain text file</a></li>
+<li class="chapter" data-level="12.4" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-online-data"><i class="fa fa-check"></i><b>12.4</b> Importing online data</a></li>
+<li class="chapter" data-level="12.5" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#working-with-column-names"><i class="fa fa-check"></i><b>12.5</b> Working with column names</a></li>
+<li class="chapter" data-level="12.6" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#combining-data-frames"><i class="fa fa-check"></i><b>12.6</b> Combining data frames</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#adding-columns"><i class="fa fa-check"></i><b>12.6.1</b> Adding columns</a></li>
+<li class="chapter" data-level="12.6.2" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#adding-rows"><i class="fa fa-check"></i><b>12.6.2</b> Adding rows</a></li>
+<li class="chapter" data-level="12.6.3" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#data-frames-from-lists"><i class="fa fa-check"></i><b>12.6.3</b> Data frames from lists</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#renaming-columns"><i class="fa fa-check"></i><b>12.7</b> Renaming columns</a></li>
+<li class="chapter" data-level="12.8" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-data-from-other-statistical-packages"><i class="fa fa-check"></i><b>12.8</b> Importing data from other statistical packages</a></li>
+<li class="chapter" data-level="12.9" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#reshaping-data-frames"><i class="fa fa-check"></i><b>12.9</b> Reshaping data frames</a></li>
+<li class="chapter" data-level="12.10" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#exBrexit"><i class="fa fa-check"></i><b>12.10</b> Exercises</a></li>
+<li class="chapter" data-level="12.11" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#data-sources"><i class="fa fa-check"></i><b>12.11</b> Data sources</a></li>
+<li class="chapter" data-level="12.12" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#further-reading-2"><i class="fa fa-check"></i><b>12.12</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html"><i class="fa fa-check"></i><b>13</b> Data handling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>13.1</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="13.2" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#example"><i class="fa fa-check"></i><b>13.2</b> Example</a></li>
+<li class="chapter" data-level="13.3" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>13.3</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="13.4" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>13.4</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="13.5" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>13.5</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="13.6" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>13.6</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+<li class="chapter" data-level="13.7" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>13.7</b> Computing summaries per group</a></li>
+<li class="chapter" data-level="13.8" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#counting-observations-within-groups"><i class="fa fa-check"></i><b>13.8</b> Counting observations within groups</a></li>
+<li class="chapter" data-level="13.9" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#further-reading-3"><i class="fa fa-check"></i><b>13.9</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="strings.html"><a href="strings.html"><i class="fa fa-check"></i><b>14</b> Strings</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="strings.html"><a href="strings.html#example-fictitous-exam-mark-data"><i class="fa fa-check"></i><b>14.1</b> Example: (fictitous) exam mark data</a></li>
+<li class="chapter" data-level="14.2" data-path="strings.html"><a href="strings.html#importing-text-data-with-read_lines"><i class="fa fa-check"></i><b>14.2</b> Importing text data with <code>read_lines()</code></a></li>
+<li class="chapter" data-level="14.3" data-path="strings.html"><a href="strings.html#finding-and-replacing-characters-in-strings"><i class="fa fa-check"></i><b>14.3</b> Finding (and replacing) characters in strings</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="strings.html"><a href="strings.html#finding-text-with-str_which"><i class="fa fa-check"></i><b>14.3.1</b> Finding text with <code>str_which()</code></a></li>
+<li class="chapter" data-level="14.3.2" data-path="strings.html"><a href="strings.html#escape-characters-and-regular-expressions"><i class="fa fa-check"></i><b>14.3.2</b> Escape characters and regular expressions</a></li>
+<li class="chapter" data-level="14.3.3" data-path="strings.html"><a href="strings.html#replacing-or-removing-text"><i class="fa fa-check"></i><b>14.3.3</b> Replacing or removing text</a></li>
+<li class="chapter" data-level="14.3.4" data-path="strings.html"><a href="strings.html#removing-white-space-at-startend-of-strings"><i class="fa fa-check"></i><b>14.3.4</b> Removing white space at start/end of strings</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="strings.html"><a href="strings.html#subsetting-strings"><i class="fa fa-check"></i><b>14.4</b> Subsetting strings</a></li>
+<li class="chapter" data-level="14.5" data-path="strings.html"><a href="strings.html#making-a-data-frame"><i class="fa fa-check"></i><b>14.5</b> Making a data frame</a></li>
+<li class="chapter" data-level="14.6" data-path="strings.html"><a href="strings.html#further-reading-4"><i class="fa fa-check"></i><b>14.6</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html"><i class="fa fa-check"></i><b>15</b> Processing multiple files</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#repeating-a-process-with-a-for-loop"><i class="fa fa-check"></i><b>15.1</b> Repeating a process with a <code>for</code> loop</a></li>
+<li class="chapter" data-level="15.2" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#example-cleaning-two-text-files"><i class="fa fa-check"></i><b>15.2</b> Example: cleaning two text files</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#the-core-code-block"><i class="fa fa-check"></i><b>15.2.1</b> The core code block</a></li>
+<li class="chapter" data-level="15.2.2" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#identify-the-variables-we-need-to-specify"><i class="fa fa-check"></i><b>15.2.2</b> Identify the variables we need to specify</a></li>
+<li class="chapter" data-level="15.2.3" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#create-an-empty-list-to-store-the-results"><i class="fa fa-check"></i><b>15.2.3</b> Create an empty list to store the results</a></li>
+<li class="chapter" data-level="15.2.4" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#use-a-for-loop-to-run-the-code-block-multiple-times"><i class="fa fa-check"></i><b>15.2.4</b> Use a for loop to run the code block multiple times</a></li>
+<li class="chapter" data-level="15.2.5" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#convert-the-list-to-a-data-frame"><i class="fa fa-check"></i><b>15.2.5</b> Convert the list to a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#exercise"><i class="fa fa-check"></i><b>15.3</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="apis.html"><a href="apis.html"><i class="fa fa-check"></i><b>16</b> APIs</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="apis.html"><a href="apis.html#example-obtaining-covid-19-case-data-data-in-json-format"><i class="fa fa-check"></i><b>16.1</b> Example: obtaining Covid-19 case data (data in JSON format)</a></li>
+<li class="chapter" data-level="16.2" data-path="apis.html"><a href="apis.html#exExcel"><i class="fa fa-check"></i><b>16.2</b> Example: obtaining an .xlsx file</a></li>
+<li class="chapter" data-level="16.3" data-path="apis.html"><a href="apis.html#exercise-1"><i class="fa fa-check"></i><b>16.3</b> Exercise</a></li>
+<li class="chapter" data-level="16.4" data-path="apis.html"><a href="apis.html#acknowledgements-1"><i class="fa fa-check"></i><b>16.4</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>17</b> Missing data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="missing-data.html"><a href="missing-data.html#na"><i class="fa fa-check"></i><b>17.1</b> <code>NA</code></a></li>
+<li class="chapter" data-level="17.2" data-path="missing-data.html"><a href="missing-data.html#functions-and-na"><i class="fa fa-check"></i><b>17.2</b> Functions and <code>NA</code></a></li>
+<li class="chapter" data-level="17.3" data-path="missing-data.html"><a href="missing-data.html#imputation"><i class="fa fa-check"></i><b>17.3</b> Imputation</a></li>
+<li class="chapter" data-level="17.4" data-path="missing-data.html"><a href="missing-data.html#visualising-missing-data"><i class="fa fa-check"></i><b>17.4</b> Visualising missing data</a></li>
+<li class="chapter" data-level="17.5" data-path="missing-data.html"><a href="missing-data.html#exercise-2"><i class="fa fa-check"></i><b>17.5</b> Exercise</a></li>
+<li class="chapter" data-level="17.6" data-path="missing-data.html"><a href="missing-data.html#further-reading-5"><i class="fa fa-check"></i><b>17.6</b> Further reading</a></li>
+</ul></li>
+<li class="part"><span><b>III Plotting data</b></span></li>
+<li class="chapter" data-level="18" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html"><i class="fa fa-check"></i><b>18</b> Making plots with <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#the-general-syntax"><i class="fa fa-check"></i><b>18.1</b> The general syntax</a></li>
+<li class="chapter" data-level="18.2" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#scatter-plots"><i class="fa fa-check"></i><b>18.2</b> Scatter plots</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#annotating-a-scatter-plot"><i class="fa fa-check"></i><b>18.2.1</b> Annotating a scatter plot</a></li>
+<li class="chapter" data-level="18.2.2" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#adding-a-trend"><i class="fa fa-check"></i><b>18.2.2</b> Adding a trend</a></li>
+<li class="chapter" data-level="18.2.3" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#representing-more-than-two-variables-on-a-scatter-plot"><i class="fa fa-check"></i><b>18.2.3</b> Representing more than two variables on a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#histograms"><i class="fa fa-check"></i><b>18.3</b> Histograms</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>18.3.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>18.4</b> Box plots</a>
+<ul>
+<li class="chapter" data-level="18.4.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#adding-the-observations-to-a-box-plot"><i class="fa fa-check"></i><b>18.4.1</b> Adding the observations to a box plot</a></li>
+<li class="chapter" data-level="18.4.2" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#violin-plots"><i class="fa fa-check"></i><b>18.4.2</b> Violin plots</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#global-aesthetics"><i class="fa fa-check"></i><b>18.5</b> ‘Global’ aesthetics</a></li>
+<li class="chapter" data-level="18.6" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#facets"><i class="fa fa-check"></i><b>18.6</b> Facets</a></li>
+<li class="chapter" data-level="18.7" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#exBrexitPlots"><i class="fa fa-check"></i><b>18.7</b> Exercises</a></li>
+<li class="chapter" data-level="18.8" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#further-reading-6"><i class="fa fa-check"></i><b>18.8</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html"><i class="fa fa-check"></i><b>19</b> Presentation of plots</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-basics"><i class="fa fa-check"></i><b>19.1</b> The basics</a></li>
+<li class="chapter" data-level="19.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-caption-test"><i class="fa fa-check"></i><b>19.2</b> The caption test</a></li>
+<li class="chapter" data-level="19.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#caption-or-title"><i class="fa fa-check"></i><b>19.3</b> Caption or title?</a></li>
+<li class="chapter" data-level="19.4" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#customising-the-appearance-of-a-plot"><i class="fa fa-check"></i><b>19.4</b> Customising the appearance of a plot</a></li>
+<li class="chapter" data-level="19.5" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#refining-a-plot-an-example"><i class="fa fa-check"></i><b>19.5</b> Refining a plot: an example</a>
+<ul>
+<li class="chapter" data-level="19.5.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-data-to-plot"><i class="fa fa-check"></i><b>19.5.1</b> The data to plot</a></li>
+<li class="chapter" data-level="19.5.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#a-first-attempt-four-histograms"><i class="fa fa-check"></i><b>19.5.2</b> A first attempt: four histograms</a></li>
+<li class="chapter" data-level="19.5.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#using-a-box-plot"><i class="fa fa-check"></i><b>19.5.3</b> Using a box plot</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#exercises"><i class="fa fa-check"></i><b>19.6</b> Exercises</a></li>
+<li class="chapter" data-level="19.7" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#data-sources-1"><i class="fa fa-check"></i><b>19.7</b> Data sources</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html"><i class="fa fa-check"></i><b>20</b> Maps with <code>leaflet</code></a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#a-basic-map"><i class="fa fa-check"></i><b>20.1</b> A basic map</a></li>
+<li class="chapter" data-level="20.2" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#indicating-points-on-a-map"><i class="fa fa-check"></i><b>20.2</b> Indicating points on a map</a></li>
+<li class="chapter" data-level="20.3" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#plotting-region-boundaries"><i class="fa fa-check"></i><b>20.3</b> Plotting region boundaries</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#shapefiles"><i class="fa fa-check"></i><b>20.3.1</b> shapefiles</a></li>
+<li class="chapter" data-level="20.3.2" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#importing-and-simplifying-shapefiles"><i class="fa fa-check"></i><b>20.3.2</b> Importing and simplifying shapefiles</a></li>
+<li class="chapter" data-level="20.3.3" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#plotting-the-boundaries"><i class="fa fa-check"></i><b>20.3.3</b> Plotting the boundaries</a></li>
+<li class="chapter" data-level="20.3.4" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#using-different-colours-for-regions"><i class="fa fa-check"></i><b>20.3.4</b> Using different colours for regions</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#further-reading-7"><i class="fa fa-check"></i><b>20.4</b> Further reading</a></li>
+<li class="chapter" data-level="20.5" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#acknowledgement"><i class="fa fa-check"></i><b>20.5</b> Acknowledgement</a></li>
+<li class="chapter" data-level="20.6" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#references"><i class="fa fa-check"></i><b>20.6</b> References:</a></li>
+</ul></li>
+<li class="part"><span><b>IV Presenting your results</b></span></li>
+<li class="chapter" data-level="21" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>21</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="r-markdown.html"><a href="r-markdown.html#a-five-minute-video-tutorial"><i class="fa fa-check"></i><b>21.1</b> A five minute video tutorial</a></li>
+<li class="chapter" data-level="21.2" data-path="r-markdown.html"><a href="r-markdown.html#working-directories-for-r-markdown-documents"><i class="fa fa-check"></i><b>21.2</b> Working directories for R Markdown documents</a></li>
+<li class="chapter" data-level="21.3" data-path="r-markdown.html"><a href="r-markdown.html#code-chunk-options"><i class="fa fa-check"></i><b>21.3</b> Code chunk options</a>
+<ul>
+<li class="chapter" data-level="21.3.1" data-path="r-markdown.html"><a href="r-markdown.html#code-chunk-options-for-figures"><i class="fa fa-check"></i><b>21.3.1</b> Code chunk options for figures</a></li>
+</ul></li>
+<li class="chapter" data-level="21.4" data-path="r-markdown.html"><a href="r-markdown.html#tables"><i class="fa fa-check"></i><b>21.4</b> Tables</a>
+<ul>
+<li class="chapter" data-level="21.4.1" data-path="r-markdown.html"><a href="r-markdown.html#using-markdown"><i class="fa fa-check"></i><b>21.4.1</b> Using Markdown</a></li>
+<li class="chapter" data-level="21.4.2" data-path="r-markdown.html"><a href="r-markdown.html#using-knitrkable"><i class="fa fa-check"></i><b>21.4.2</b> Using <code>knitr::kable()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="21.5" data-path="r-markdown.html"><a href="r-markdown.html#caching-results-for-slow-running-code"><i class="fa fa-check"></i><b>21.5</b> Caching results for slow-running code</a></li>
+<li class="chapter" data-level="21.6" data-path="r-markdown.html"><a href="r-markdown.html#spell-checking"><i class="fa fa-check"></i><b>21.6</b> Spell checking</a></li>
+<li class="chapter" data-level="21.7" data-path="r-markdown.html"><a href="r-markdown.html#the-yaml-header"><i class="fa fa-check"></i><b>21.7</b> The YAML header</a></li>
+<li class="chapter" data-level="21.8" data-path="r-markdown.html"><a href="r-markdown.html#latex-markdown-and-html"><i class="fa fa-check"></i><b>21.8</b> LaTeX, Markdown and html</a></li>
+<li class="chapter" data-level="21.9" data-path="r-markdown.html"><a href="r-markdown.html#bookdown"><i class="fa fa-check"></i><b>21.9</b> bookdown</a></li>
+<li class="chapter" data-level="21.10" data-path="r-markdown.html"><a href="r-markdown.html#quarto"><i class="fa fa-check"></i><b>21.10</b> Quarto</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="referencing.html"><a href="referencing.html"><i class="fa fa-check"></i><b>22</b> Referencing</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="referencing.html"><a href="referencing.html#referencing-data-sets"><i class="fa fa-check"></i><b>22.1</b> Referencing data sets</a>
+<ul>
+<li class="chapter" data-level="22.1.1" data-path="referencing.html"><a href="referencing.html#attribution-statements-and-conditions-of-use"><i class="fa fa-check"></i><b>22.1.1</b> Attribution statements and conditions of use</a></li>
+</ul></li>
+<li class="chapter" data-level="22.2" data-path="referencing.html"><a href="referencing.html#citing-r-and-r-packages"><i class="fa fa-check"></i><b>22.2</b> Citing R and R packages</a></li>
+<li class="chapter" data-level="22.3" data-path="referencing.html"><a href="referencing.html#using-someone-elses-figures-in-your-work"><i class="fa fa-check"></i><b>22.3</b> Using someone else’s figures in your work</a></li>
+<li class="chapter" data-level="22.4" data-path="referencing.html"><a href="referencing.html#further-reading."><i class="fa fa-check"></i><b>22.4</b> Further reading.</a></li>
+<li class="chapter" data-level="22.5" data-path="referencing.html"><a href="referencing.html#exercise-3"><i class="fa fa-check"></i><b>22.5</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="shiny.html"><a href="shiny.html"><i class="fa fa-check"></i><b>23</b> Shiny</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="shiny.html"><a href="shiny.html#some-example-r-code-for-inclusion-in-an-app"><i class="fa fa-check"></i><b>23.1</b> Some example R code, for inclusion in an app</a></li>
+<li class="chapter" data-level="23.2" data-path="shiny.html"><a href="shiny.html#putting-the-code-inside-an-app"><i class="fa fa-check"></i><b>23.2</b> Putting the code inside an app</a></li>
+<li class="chapter" data-level="23.3" data-path="shiny.html"><a href="shiny.html#the-user-interface-ui"><i class="fa fa-check"></i><b>23.3</b> The user interface <code>ui</code></a>
+<ul>
+<li class="chapter" data-level="23.3.1" data-path="shiny.html"><a href="shiny.html#commands-widgets-for-creating-user-controls-and-inputs"><i class="fa fa-check"></i><b>23.3.1</b> Commands (“widgets”) for creating user controls and inputs</a></li>
+<li class="chapter" data-level="23.3.2" data-path="shiny.html"><a href="shiny.html#commands-for-producing-outputs"><i class="fa fa-check"></i><b>23.3.2</b> Commands for producing outputs</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="shiny.html"><a href="shiny.html#the-server"><i class="fa fa-check"></i><b>23.4</b> The <code>server</code></a>
+<ul>
+<li class="chapter" data-level="23.4.1" data-path="shiny.html"><a href="shiny.html#making-a-plot"><i class="fa fa-check"></i><b>23.4.1</b> Making a plot</a></li>
+<li class="chapter" data-level="23.4.2" data-path="shiny.html"><a href="shiny.html#making-a-table"><i class="fa fa-check"></i><b>23.4.2</b> Making a table</a></li>
+</ul></li>
+<li class="chapter" data-level="23.5" data-path="shiny.html"><a href="shiny.html#reactivity"><i class="fa fa-check"></i><b>23.5</b> Reactivity</a></li>
+<li class="chapter" data-level="23.6" data-path="shiny.html"><a href="shiny.html#customising-the-appearance-of-your-app"><i class="fa fa-check"></i><b>23.6</b> Customising the appearance of your app</a></li>
+<li class="chapter" data-level="23.7" data-path="shiny.html"><a href="shiny.html#shiny-with-r-markdown"><i class="fa fa-check"></i><b>23.7</b> Shiny with R Markdown</a></li>
+<li class="chapter" data-level="23.8" data-path="shiny.html"><a href="shiny.html#further-reading-8"><i class="fa fa-check"></i><b>23.8</b> Further reading</a></li>
+</ul></li>
+<li class="part"><span><b>V Miscellaneous</b></span></li>
+<li class="chapter" data-level="24" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html"><i class="fa fa-check"></i><b>24</b> EDA for logistic regression</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#example-a-balance-study"><i class="fa fa-check"></i><b>24.1</b> Example: a balance study</a>
+<ul>
+<li class="chapter" data-level="24.1.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#terminology"><i class="fa fa-check"></i><b>24.1.1</b> Terminology</a></li>
+</ul></li>
+<li class="chapter" data-level="24.2" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#what-to-look-for-in-an-eda"><i class="fa fa-check"></i><b>24.2</b> What to look for in an EDA</a>
+<ul>
+<li class="chapter" data-level="24.2.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#what-to-plot"><i class="fa fa-check"></i><b>24.2.1</b> What to plot</a></li>
+</ul></li>
+<li class="chapter" data-level="24.3" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#investigating-the-experimental-design"><i class="fa fa-check"></i><b>24.3</b> Investigating the experimental design</a></li>
+<li class="chapter" data-level="24.4" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#contingency-tables"><i class="fa fa-check"></i><b>24.4</b> Contingency tables</a></li>
+<li class="chapter" data-level="24.5" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#checking-for-identical-responses"><i class="fa fa-check"></i><b>24.5</b> Checking for identical responses</a></li>
+<li class="chapter" data-level="24.6" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#exploratory-plots"><i class="fa fa-check"></i><b>24.6</b> Exploratory plots</a>
+<ul>
+<li class="chapter" data-level="24.6.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#a-simple-box-plot"><i class="fa fa-check"></i><b>24.6.1</b> A simple box plot</a></li>
+<li class="chapter" data-level="24.6.2" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#interactions"><i class="fa fa-check"></i><b>24.6.2</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="24.7" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plotting-mean-proportions"><i class="fa fa-check"></i><b>24.7</b> Plotting mean proportions</a></li>
+<li class="chapter" data-level="24.8" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plotting-fitted-logistic-regression-lines"><i class="fa fa-check"></i><b>24.8</b> Plotting fitted logistic regression lines</a>
+<ul>
+<li class="chapter" data-level="24.8.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plots-with-bernoulli-data"><i class="fa fa-check"></i><b>24.8.1</b> Plots with Bernoulli data</a></li>
+<li class="chapter" data-level="24.8.2" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plots-with-binomial-n1-data"><i class="fa fa-check"></i><b>24.8.2</b> Plots with Binomial <span class="math inline">\((n&gt;1)\)</span> data</a></li>
+</ul></li>
+<li class="chapter" data-level="24.9" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#summary"><i class="fa fa-check"></i><b>24.9</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html"><i class="fa fa-check"></i><b>25</b> Example: working with strings</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#importing-the-two-data-files"><i class="fa fa-check"></i><b>25.1</b> Importing the two data files</a></li>
+<li class="chapter" data-level="25.2" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#preliminary-tidying"><i class="fa fa-check"></i><b>25.2</b> Preliminary tidying</a></li>
+<li class="chapter" data-level="25.3" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#approximately-matching-strings"><i class="fa fa-check"></i><b>25.3</b> Approximately matching strings</a></li>
+<li class="chapter" data-level="25.4" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#assembling-the-target-data-frame"><i class="fa fa-check"></i><b>25.4</b> Assembling the target data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data handling, exploratory analysis, and reporting in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="processing-multiple-files" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">Section 15</span> Processing multiple files<a href="processing-multiple-files.html#processing-multiple-files" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Sometimes, we may be working with data sets spread across multiple files, where the structure of the data within each file is the same or similar. It can be tempting to copy and paste a block of R code, once for each file, editing each block as necessary. Try to avoid this if you can! Your code may get messy/hard to read if you have lots of data files, and it may lead to bugs if you don’t edit each block correctly.</p>
+<div id="repeating-a-process-with-a-for-loop" class="section level2 hasAnchor" number="15.1">
+<h2><span class="header-section-number">15.1</span> Repeating a process with a <code>for</code> loop<a href="processing-multiple-files.html#repeating-a-process-with-a-for-loop" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are different ways we might get R to run the same block of code multiple times (with small changes each time). It may be a good idea to create your own function, but we’ll consider a simpler solution here, which is to put code inside a <code>for</code> loop. (There are more efficient methods, but <code>for</code> loops are easy to write and read, and will be sufficient for this module.)</p>
+<p>A <code>for</code> loop has the basic syntax</p>
+<pre><code>for(i in 1:n){
+ 
+}</code></pre>
+<ul>
+<li>Everything inside the curly brackets will be carried out <code>n</code> times;</li>
+<li>any instance of <code>i</code> will be replaced by <code>1</code>, then <code>2</code>, <code>3</code>,…,<code>n</code>. If, for example, there is an <code>x[i]</code> inside the curly brackets, this code will be run first using <code>x[1]</code>, then using <code>x[2]</code> and so on.</li>
+</ul>
+</div>
+<div id="example-cleaning-two-text-files" class="section level2 hasAnchor" number="15.2">
+<h2><span class="header-section-number">15.2</span> Example: cleaning two text files<a href="processing-multiple-files.html#example-cleaning-two-text-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As an example, we’ll continue with the fictitious student data, but now suppose there are two data files, <code>stat101.txt</code> and <code>stat102.txt</code>. We suppose each data set needs cleaning, and then we’d like to combine the two data frames.</p>
+<div id="the-core-code-block" class="section level3 hasAnchor" number="15.2.1">
+<h3><span class="header-section-number">15.2.1</span> The core code block<a href="processing-multiple-files.html#the-core-code-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We have a ‘core’ block of code that we want to use multiple times, making small changes each time. The code to get a single data file into a data frame was as follows. (We’ll add an extra <code>mutate()</code> command to store the module code).</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="processing-multiple-files.html#cb208-1" tabindex="-1"></a>examTextRaw <span class="ot">&lt;-</span> <span class="fu">read_lines</span>(<span class="st">&quot;data/stat101.txt&quot;</span>)</span>
+<span id="cb208-2"><a href="processing-multiple-files.html#cb208-2" tabindex="-1"></a></span>
+<span id="cb208-3"><a href="processing-multiple-files.html#cb208-3" tabindex="-1"></a>examTextClean <span class="ot">&lt;-</span> examTextRaw <span class="sc">%&gt;%</span></span>
+<span id="cb208-4"><a href="processing-multiple-files.html#cb208-4" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">*&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb208-5"><a href="processing-multiple-files.html#cb208-5" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> <span class="st">&quot;--&quot;</span>,</span>
+<span id="cb208-6"><a href="processing-multiple-files.html#cb208-6" tabindex="-1"></a>                  <span class="at">replacement =</span> <span class="st">&quot;NA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb208-7"><a href="processing-multiple-files.html#cb208-7" tabindex="-1"></a>  <span class="fu">str_trim</span>()</span>
+<span id="cb208-8"><a href="processing-multiple-files.html#cb208-8" tabindex="-1"></a></span>
+<span id="cb208-9"><a href="processing-multiple-files.html#cb208-9" tabindex="-1"></a>header <span class="ot">&lt;-</span> <span class="fu">str_which</span>(examTextClean, <span class="at">pattern =</span> <span class="st">&quot;student&quot;</span>)</span>
+<span id="cb208-10"><a href="processing-multiple-files.html#cb208-10" tabindex="-1"></a>endLine <span class="ot">&lt;-</span> <span class="fu">str_which</span>(examTextClean, <span class="at">pattern =</span> <span class="st">&quot;denotes&quot;</span>)</span>
+<span id="cb208-11"><a href="processing-multiple-files.html#cb208-11" tabindex="-1"></a></span>
+<span id="cb208-12"><a href="processing-multiple-files.html#cb208-12" tabindex="-1"></a><span class="fu">read_table</span>(examTextClean[header<span class="sc">:</span>(endLine <span class="sc">-</span> <span class="dv">1</span>)]) <span class="sc">%&gt;%</span></span>
+<span id="cb208-13"><a href="processing-multiple-files.html#cb208-13" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">module =</span> <span class="st">&quot;stat101&quot;</span>)</span></code></pre></div>
+<p>We want to run this block twice, once for the file <code>stat101.txt</code> and once for <code>stat102.txt</code>.</p>
+</div>
+<div id="identify-the-variables-we-need-to-specify" class="section level3 hasAnchor" number="15.2.2">
+<h3><span class="header-section-number">15.2.2</span> Identify the variables we need to specify<a href="processing-multiple-files.html#identify-the-variables-we-need-to-specify" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code block above needs to run twice, once using the file name <code>stat101.txt</code>, and once using the name <code>stat102.txt</code>. We will have to specify these in advance. We can actually just specify module codes:</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="processing-multiple-files.html#cb209-1" tabindex="-1"></a>modules <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;stat101&quot;</span>, <span class="st">&quot;stat102&quot;</span>)</span></code></pre></div>
+<p>and construct file paths using <code>paste0()</code>:</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="processing-multiple-files.html#cb210-1" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">&quot;data/&quot;</span>, modules, <span class="st">&quot;.txt&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;data/stat101.txt&quot; &quot;data/stat102.txt&quot;</code></pre>
+</div>
+<div id="create-an-empty-list-to-store-the-results" class="section level3 hasAnchor" number="15.2.3">
+<h3><span class="header-section-number">15.2.3</span> Create an empty list to store the results<a href="processing-multiple-files.html#create-an-empty-list-to-store-the-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Lists are useful here, as an element of a list can be any type of object. We make an empty one as follows:</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="processing-multiple-files.html#cb212-1" tabindex="-1"></a>moduleResults <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;list&quot;</span>, <span class="at">length =</span> <span class="fu">length</span>(modules))</span>
+<span id="cb212-2"><a href="processing-multiple-files.html#cb212-2" tabindex="-1"></a>moduleResults</span></code></pre></div>
+<pre><code>## [[1]]
+## NULL
+## 
+## [[2]]
+## NULL</code></pre>
+<p>(we could have just specified <code>length = 2</code>, but try to avoid specifying numerical values like this if they may change at some point, e.g. if another module was to be added.)</p>
+</div>
+<div id="use-a-for-loop-to-run-the-code-block-multiple-times" class="section level3 hasAnchor" number="15.2.4">
+<h3><span class="header-section-number">15.2.4</span> Use a for loop to run the code block multiple times<a href="processing-multiple-files.html#use-a-for-loop-to-run-the-code-block-multiple-times" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code to be repeated goes inside a for loop, with one element of the list <code>moduleResults</code> filled each time. (We’ll repeat the commands to set up the variables at the start.)</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="processing-multiple-files.html#cb214-1" tabindex="-1"></a>modules <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;stat101&quot;</span>, <span class="st">&quot;stat102&quot;</span>)</span>
+<span id="cb214-2"><a href="processing-multiple-files.html#cb214-2" tabindex="-1"></a>filePaths <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/&quot;</span>, modules, <span class="st">&quot;.txt&quot;</span>)</span>
+<span id="cb214-3"><a href="processing-multiple-files.html#cb214-3" tabindex="-1"></a>moduleResults <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;list&quot;</span>, <span class="at">length =</span> <span class="fu">length</span>(modules))</span>
+<span id="cb214-4"><a href="processing-multiple-files.html#cb214-4" tabindex="-1"></a></span>
+<span id="cb214-5"><a href="processing-multiple-files.html#cb214-5" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(modules)){</span>
+<span id="cb214-6"><a href="processing-multiple-files.html#cb214-6" tabindex="-1"></a>  examTextRaw <span class="ot">&lt;-</span> <span class="fu">read_lines</span>(filePaths[i])</span>
+<span id="cb214-7"><a href="processing-multiple-files.html#cb214-7" tabindex="-1"></a>  </span>
+<span id="cb214-8"><a href="processing-multiple-files.html#cb214-8" tabindex="-1"></a>  examTextClean <span class="ot">&lt;-</span> examTextRaw <span class="sc">%&gt;%</span></span>
+<span id="cb214-9"><a href="processing-multiple-files.html#cb214-9" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">*&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb214-10"><a href="processing-multiple-files.html#cb214-10" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> <span class="st">&quot;--&quot;</span>,</span>
+<span id="cb214-11"><a href="processing-multiple-files.html#cb214-11" tabindex="-1"></a>                    <span class="at">replacement =</span> <span class="st">&quot;NA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb214-12"><a href="processing-multiple-files.html#cb214-12" tabindex="-1"></a>    <span class="fu">str_trim</span>()</span>
+<span id="cb214-13"><a href="processing-multiple-files.html#cb214-13" tabindex="-1"></a>  </span>
+<span id="cb214-14"><a href="processing-multiple-files.html#cb214-14" tabindex="-1"></a>  header <span class="ot">&lt;-</span> <span class="fu">str_which</span>(examTextClean, <span class="at">pattern =</span> <span class="st">&quot;student&quot;</span>)</span>
+<span id="cb214-15"><a href="processing-multiple-files.html#cb214-15" tabindex="-1"></a>  endLine <span class="ot">&lt;-</span> <span class="fu">str_which</span>(examTextClean, <span class="at">pattern =</span> <span class="st">&quot;denotes&quot;</span>)</span>
+<span id="cb214-16"><a href="processing-multiple-files.html#cb214-16" tabindex="-1"></a>  </span>
+<span id="cb214-17"><a href="processing-multiple-files.html#cb214-17" tabindex="-1"></a>  moduleResults[[i]] <span class="ot">&lt;-</span> </span>
+<span id="cb214-18"><a href="processing-multiple-files.html#cb214-18" tabindex="-1"></a>    <span class="fu">read_table</span>(examTextClean[header<span class="sc">:</span>(endLine <span class="sc">-</span> <span class="dv">1</span>)]) <span class="sc">%&gt;%</span></span>
+<span id="cb214-19"><a href="processing-multiple-files.html#cb214-19" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">module =</span> modules[i])</span>
+<span id="cb214-20"><a href="processing-multiple-files.html#cb214-20" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="convert-the-list-to-a-data-frame" class="section level3 hasAnchor" number="15.2.5">
+<h3><span class="header-section-number">15.2.5</span> Convert the list to a data frame<a href="processing-multiple-files.html#convert-the-list-to-a-data-frame" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As each data frame in the list has the same column headings, we can convert the data frame to a list as follows</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="processing-multiple-files.html#cb215-1" tabindex="-1"></a><span class="fu">do.call</span>(rbind.data.frame, moduleResults)</span></code></pre></div>
+<pre><code>## # A tibble: 7 × 4
+##   student   cwk  exam module 
+##     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  
+## 1   12015    55    62 stat101
+## 2   12468    78    84 stat101
+## 3   11560    55    40 stat101
+## 4   12589    62    NA stat101
+## 5   12015    61    69 stat102
+## 6   12468    81    78 stat102
+## 7   11579    51    40 stat102</code></pre>
+</div>
+</div>
+<div id="exercise" class="section level2 hasAnchor" number="15.3">
+<h2><span class="header-section-number">15.3</span> Exercise<a href="processing-multiple-files.html#exercise" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="task">
+<div class="exercise">
+<p><span id="exr:unlabeled-div-11" class="exercise"><strong>Exercise 15.1  </strong></span>There is a third module data file, <code>stat103.txt</code>. Modify the code above, so that all three files are imported, cleaned, and combined into a single data frame. Unlike the other two files, this file does <em>not</em> end with the line</p>
+<pre><code>* denotes resit attempt - capped at 40</code></pre>
+<p>so some parts of the code above will not work! Modify the code so that the single block inside the <code>for</code> loop will correctly process each text file.</p>
+</div>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="strings.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="apis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

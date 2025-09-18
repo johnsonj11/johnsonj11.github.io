@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 12 Importing, combining, and reshaping data | Data handling, exploratory analysis, and reporting in R</title>
+  <meta name="description" content="An introduction to R for students on MPS4110" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 12 Importing, combining, and reshaping data | Data handling, exploratory analysis, and reporting in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="An introduction to R for students on MPS4110" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 12 Importing, combining, and reshaping data | Data handling, exploratory analysis, and reporting in R" />
+  
+  <meta name="twitter:description" content="An introduction to R for students on MPS4110" />
+  
+
+<meta name="author" content="Author: Jeremy Oakley" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="the-tidyverse.html"/>
+<link rel="next" href="data-handling-with-dplyr.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EDA with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-these-notes"><i class="fa fa-check"></i><b>1.1</b> About these notes</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#books"><i class="fa fa-check"></i><b>1.2</b> Books</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="part"><span><b>I The basics</b></span></li>
+<li class="chapter" data-level="2" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#starting-rstudio-on-the-university-network"><i class="fa fa-check"></i><b>2.1</b> Starting RStudio on the university network</a></li>
+<li class="chapter" data-level="2.2" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#the-rstudio-interface"><i class="fa fa-check"></i><b>2.2</b> The RStudio interface</a></li>
+<li class="chapter" data-level="2.3" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#inputs-and-outputs"><i class="fa fa-check"></i><b>2.3</b> Inputs and outputs</a></li>
+<li class="chapter" data-level="2.4" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#get-comfortable"><i class="fa fa-check"></i><b>2.4</b> Get comfortable!</a></li>
+<li class="chapter" data-level="2.5" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#change-your-workspace-settings"><i class="fa fa-check"></i><b>2.5</b> Change your Workspace settings</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="using-r-as-a-calculator.html"><a href="using-r-as-a-calculator.html"><i class="fa fa-check"></i><b>3</b> Using R as a calculator</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="using-r-as-a-calculator.html"><a href="using-r-as-a-calculator.html#scientific-notation"><i class="fa fa-check"></i><b>3.1</b> Scientific notation</a></li>
+<li class="chapter" data-level="3.2" data-path="using-r-as-a-calculator.html"><a href="using-r-as-a-calculator.html#order-of-operations"><i class="fa fa-check"></i><b>3.2</b> Order of operations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html"><i class="fa fa-check"></i><b>4</b> Variables and vectors</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#vectors"><i class="fa fa-check"></i><b>4.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#sequences-of-integers"><i class="fa fa-check"></i><b>4.1.1</b> Sequences of integers</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#subsetting-vectors"><i class="fa fa-check"></i><b>4.2</b> Subsetting vectors</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#logical-subsetting"><i class="fa fa-check"></i><b>4.2.1</b> Logical subsetting</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#character-strings"><i class="fa fa-check"></i><b>4.3</b> Character strings</a></li>
+<li class="chapter" data-level="4.4" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#factors"><i class="fa fa-check"></i><b>4.4</b> Factors</a></li>
+<li class="chapter" data-level="4.5" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#the-environment-window"><i class="fa fa-check"></i><b>4.5</b> The Environment window</a></li>
+<li class="chapter" data-level="4.6" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#further-reading"><i class="fa fa-check"></i><b>4.6</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#introducing-functions"><i class="fa fa-check"></i><b>5.1</b> Introducing functions</a></li>
+<li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#arguments"><i class="fa fa-check"></i><b>5.2</b> Arguments</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="functions.html"><a href="functions.html#experiment"><i class="fa fa-check"></i><b>5.2.1</b> Experiment!</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#help-files"><i class="fa fa-check"></i><b>5.3</b> Help files</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html"><i class="fa fa-check"></i><b>6</b> Data frames, tibbles and lists</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#data-frames"><i class="fa fa-check"></i><b>6.1</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#making-data-frames"><i class="fa fa-check"></i><b>6.1.1</b> Making data frames</a></li>
+<li class="chapter" data-level="6.1.2" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#extracting-rows-and-columns"><i class="fa fa-check"></i><b>6.1.2</b> Extracting rows and columns</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#tibbles"><i class="fa fa-check"></i><b>6.2</b> tibbles</a></li>
+<li class="chapter" data-level="6.3" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#inspecting-large-data-frames-and-tibbles"><i class="fa fa-check"></i><b>6.3</b> Inspecting large data frames and tibbles</a></li>
+<li class="chapter" data-level="6.4" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#lists"><i class="fa fa-check"></i><b>6.4</b> Lists</a></li>
+<li class="chapter" data-level="6.5" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#further-reading-1"><i class="fa fa-check"></i><b>6.5</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="scripts.html"><a href="scripts.html"><i class="fa fa-check"></i><b>7</b> Scripts</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="scripts.html"><a href="scripts.html#creating-a-new-script"><i class="fa fa-check"></i><b>7.1</b> Creating a new script</a></li>
+<li class="chapter" data-level="7.2" data-path="scripts.html"><a href="scripts.html#entering-and-running-commands"><i class="fa fa-check"></i><b>7.2</b> Entering and running commands</a></li>
+<li class="chapter" data-level="7.3" data-path="scripts.html"><a href="scripts.html#adding-comments-and-sections-in-scripts"><i class="fa fa-check"></i><b>7.3</b> Adding comments and sections in scripts</a></li>
+<li class="chapter" data-level="7.4" data-path="scripts.html"><a href="scripts.html#line-breaks-in-scripts"><i class="fa fa-check"></i><b>7.4</b> Line breaks in scripts</a></li>
+<li class="chapter" data-level="7.5" data-path="scripts.html"><a href="scripts.html#saving-a-script"><i class="fa fa-check"></i><b>7.5</b> Saving a script</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="a-tip-for-understanding-r-code.html"><a href="a-tip-for-understanding-r-code.html"><i class="fa fa-check"></i><b>8</b> A tip for understanding R code</a></li>
+<li class="chapter" data-level="9" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>9</b> Packages</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="packages.html"><a href="packages.html#installing-a-package"><i class="fa fa-check"></i><b>9.1</b> Installing a package</a></li>
+<li class="chapter" data-level="9.2" data-path="packages.html"><a href="packages.html#updating-packages"><i class="fa fa-check"></i><b>9.2</b> Updating packages</a></li>
+<li class="chapter" data-level="9.3" data-path="packages.html"><a href="packages.html#using-packages"><i class="fa fa-check"></i><b>9.3</b> Using packages</a></li>
+<li class="chapter" data-level="9.4" data-path="packages.html"><a href="packages.html#is-there-a-package-for"><i class="fa fa-check"></i><b>9.4</b> Is there a package for…?</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="rstudio-projects.html"><a href="rstudio-projects.html"><i class="fa fa-check"></i><b>10</b> RStudio Projects</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="rstudio-projects.html"><a href="rstudio-projects.html#file-paths-and-working-directories"><i class="fa fa-check"></i><b>10.1</b> File paths and working directories</a></li>
+<li class="chapter" data-level="10.2" data-path="rstudio-projects.html"><a href="rstudio-projects.html#creating-a-new-project"><i class="fa fa-check"></i><b>10.2</b> Creating a new project</a></li>
+<li class="chapter" data-level="10.3" data-path="rstudio-projects.html"><a href="rstudio-projects.html#opening-an-existing-project"><i class="fa fa-check"></i><b>10.3</b> Opening an existing project</a></li>
+<li class="chapter" data-level="10.4" data-path="rstudio-projects.html"><a href="rstudio-projects.html#using-your-project-folder"><i class="fa fa-check"></i><b>10.4</b> Using your project folder</a></li>
+</ul></li>
+<li class="part"><span><b>II Data handling</b></span></li>
+<li class="chapter" data-level="11" data-path="the-tidyverse.html"><a href="the-tidyverse.html"><i class="fa fa-check"></i><b>11</b> The Tidyverse</a></li>
+<li class="chapter" data-level="12" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html"><i class="fa fa-check"></i><b>12</b> Importing, combining, and reshaping data</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-a-.csv-file"><i class="fa fa-check"></i><b>12.1</b> Importing a .csv file</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#additional-arguments"><i class="fa fa-check"></i><b>12.1.1</b> Additional arguments</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-an-excel-.xlsx-file"><i class="fa fa-check"></i><b>12.2</b> Importing an Excel .xlsx file</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#additional-arguments-1"><i class="fa fa-check"></i><b>12.2.1</b> Additional arguments</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-a-plain-text-file"><i class="fa fa-check"></i><b>12.3</b> Importing a plain text file</a></li>
+<li class="chapter" data-level="12.4" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-online-data"><i class="fa fa-check"></i><b>12.4</b> Importing online data</a></li>
+<li class="chapter" data-level="12.5" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#working-with-column-names"><i class="fa fa-check"></i><b>12.5</b> Working with column names</a></li>
+<li class="chapter" data-level="12.6" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#combining-data-frames"><i class="fa fa-check"></i><b>12.6</b> Combining data frames</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#adding-columns"><i class="fa fa-check"></i><b>12.6.1</b> Adding columns</a></li>
+<li class="chapter" data-level="12.6.2" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#adding-rows"><i class="fa fa-check"></i><b>12.6.2</b> Adding rows</a></li>
+<li class="chapter" data-level="12.6.3" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#data-frames-from-lists"><i class="fa fa-check"></i><b>12.6.3</b> Data frames from lists</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#renaming-columns"><i class="fa fa-check"></i><b>12.7</b> Renaming columns</a></li>
+<li class="chapter" data-level="12.8" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-data-from-other-statistical-packages"><i class="fa fa-check"></i><b>12.8</b> Importing data from other statistical packages</a></li>
+<li class="chapter" data-level="12.9" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#reshaping-data-frames"><i class="fa fa-check"></i><b>12.9</b> Reshaping data frames</a></li>
+<li class="chapter" data-level="12.10" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#exBrexit"><i class="fa fa-check"></i><b>12.10</b> Exercises</a></li>
+<li class="chapter" data-level="12.11" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#data-sources"><i class="fa fa-check"></i><b>12.11</b> Data sources</a></li>
+<li class="chapter" data-level="12.12" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#further-reading-2"><i class="fa fa-check"></i><b>12.12</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html"><i class="fa fa-check"></i><b>13</b> Data handling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>13.1</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="13.2" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#example"><i class="fa fa-check"></i><b>13.2</b> Example</a></li>
+<li class="chapter" data-level="13.3" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>13.3</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="13.4" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>13.4</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="13.5" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>13.5</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="13.6" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>13.6</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+<li class="chapter" data-level="13.7" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>13.7</b> Computing summaries per group</a></li>
+<li class="chapter" data-level="13.8" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#counting-observations-within-groups"><i class="fa fa-check"></i><b>13.8</b> Counting observations within groups</a></li>
+<li class="chapter" data-level="13.9" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#further-reading-3"><i class="fa fa-check"></i><b>13.9</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="strings.html"><a href="strings.html"><i class="fa fa-check"></i><b>14</b> Strings</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="strings.html"><a href="strings.html#example-fictitous-exam-mark-data"><i class="fa fa-check"></i><b>14.1</b> Example: (fictitous) exam mark data</a></li>
+<li class="chapter" data-level="14.2" data-path="strings.html"><a href="strings.html#importing-text-data-with-read_lines"><i class="fa fa-check"></i><b>14.2</b> Importing text data with <code>read_lines()</code></a></li>
+<li class="chapter" data-level="14.3" data-path="strings.html"><a href="strings.html#finding-and-replacing-characters-in-strings"><i class="fa fa-check"></i><b>14.3</b> Finding (and replacing) characters in strings</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="strings.html"><a href="strings.html#finding-text-with-str_which"><i class="fa fa-check"></i><b>14.3.1</b> Finding text with <code>str_which()</code></a></li>
+<li class="chapter" data-level="14.3.2" data-path="strings.html"><a href="strings.html#escape-characters-and-regular-expressions"><i class="fa fa-check"></i><b>14.3.2</b> Escape characters and regular expressions</a></li>
+<li class="chapter" data-level="14.3.3" data-path="strings.html"><a href="strings.html#replacing-or-removing-text"><i class="fa fa-check"></i><b>14.3.3</b> Replacing or removing text</a></li>
+<li class="chapter" data-level="14.3.4" data-path="strings.html"><a href="strings.html#removing-white-space-at-startend-of-strings"><i class="fa fa-check"></i><b>14.3.4</b> Removing white space at start/end of strings</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="strings.html"><a href="strings.html#subsetting-strings"><i class="fa fa-check"></i><b>14.4</b> Subsetting strings</a></li>
+<li class="chapter" data-level="14.5" data-path="strings.html"><a href="strings.html#making-a-data-frame"><i class="fa fa-check"></i><b>14.5</b> Making a data frame</a></li>
+<li class="chapter" data-level="14.6" data-path="strings.html"><a href="strings.html#further-reading-4"><i class="fa fa-check"></i><b>14.6</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html"><i class="fa fa-check"></i><b>15</b> Processing multiple files</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#repeating-a-process-with-a-for-loop"><i class="fa fa-check"></i><b>15.1</b> Repeating a process with a <code>for</code> loop</a></li>
+<li class="chapter" data-level="15.2" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#example-cleaning-two-text-files"><i class="fa fa-check"></i><b>15.2</b> Example: cleaning two text files</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#the-core-code-block"><i class="fa fa-check"></i><b>15.2.1</b> The core code block</a></li>
+<li class="chapter" data-level="15.2.2" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#identify-the-variables-we-need-to-specify"><i class="fa fa-check"></i><b>15.2.2</b> Identify the variables we need to specify</a></li>
+<li class="chapter" data-level="15.2.3" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#create-an-empty-list-to-store-the-results"><i class="fa fa-check"></i><b>15.2.3</b> Create an empty list to store the results</a></li>
+<li class="chapter" data-level="15.2.4" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#use-a-for-loop-to-run-the-code-block-multiple-times"><i class="fa fa-check"></i><b>15.2.4</b> Use a for loop to run the code block multiple times</a></li>
+<li class="chapter" data-level="15.2.5" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#convert-the-list-to-a-data-frame"><i class="fa fa-check"></i><b>15.2.5</b> Convert the list to a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#exercise"><i class="fa fa-check"></i><b>15.3</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="apis.html"><a href="apis.html"><i class="fa fa-check"></i><b>16</b> APIs</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="apis.html"><a href="apis.html#example-obtaining-covid-19-case-data-data-in-json-format"><i class="fa fa-check"></i><b>16.1</b> Example: obtaining Covid-19 case data (data in JSON format)</a></li>
+<li class="chapter" data-level="16.2" data-path="apis.html"><a href="apis.html#exExcel"><i class="fa fa-check"></i><b>16.2</b> Example: obtaining an .xlsx file</a></li>
+<li class="chapter" data-level="16.3" data-path="apis.html"><a href="apis.html#exercise-1"><i class="fa fa-check"></i><b>16.3</b> Exercise</a></li>
+<li class="chapter" data-level="16.4" data-path="apis.html"><a href="apis.html#acknowledgements-1"><i class="fa fa-check"></i><b>16.4</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>17</b> Missing data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="missing-data.html"><a href="missing-data.html#na"><i class="fa fa-check"></i><b>17.1</b> <code>NA</code></a></li>
+<li class="chapter" data-level="17.2" data-path="missing-data.html"><a href="missing-data.html#functions-and-na"><i class="fa fa-check"></i><b>17.2</b> Functions and <code>NA</code></a></li>
+<li class="chapter" data-level="17.3" data-path="missing-data.html"><a href="missing-data.html#imputation"><i class="fa fa-check"></i><b>17.3</b> Imputation</a></li>
+<li class="chapter" data-level="17.4" data-path="missing-data.html"><a href="missing-data.html#visualising-missing-data"><i class="fa fa-check"></i><b>17.4</b> Visualising missing data</a></li>
+<li class="chapter" data-level="17.5" data-path="missing-data.html"><a href="missing-data.html#exercise-2"><i class="fa fa-check"></i><b>17.5</b> Exercise</a></li>
+<li class="chapter" data-level="17.6" data-path="missing-data.html"><a href="missing-data.html#further-reading-5"><i class="fa fa-check"></i><b>17.6</b> Further reading</a></li>
+</ul></li>
+<li class="part"><span><b>III Plotting data</b></span></li>
+<li class="chapter" data-level="18" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html"><i class="fa fa-check"></i><b>18</b> Making plots with <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#the-general-syntax"><i class="fa fa-check"></i><b>18.1</b> The general syntax</a></li>
+<li class="chapter" data-level="18.2" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#scatter-plots"><i class="fa fa-check"></i><b>18.2</b> Scatter plots</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#annotating-a-scatter-plot"><i class="fa fa-check"></i><b>18.2.1</b> Annotating a scatter plot</a></li>
+<li class="chapter" data-level="18.2.2" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#adding-a-trend"><i class="fa fa-check"></i><b>18.2.2</b> Adding a trend</a></li>
+<li class="chapter" data-level="18.2.3" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#representing-more-than-two-variables-on-a-scatter-plot"><i class="fa fa-check"></i><b>18.2.3</b> Representing more than two variables on a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#histograms"><i class="fa fa-check"></i><b>18.3</b> Histograms</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>18.3.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>18.4</b> Box plots</a>
+<ul>
+<li class="chapter" data-level="18.4.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#adding-the-observations-to-a-box-plot"><i class="fa fa-check"></i><b>18.4.1</b> Adding the observations to a box plot</a></li>
+<li class="chapter" data-level="18.4.2" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#violin-plots"><i class="fa fa-check"></i><b>18.4.2</b> Violin plots</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#global-aesthetics"><i class="fa fa-check"></i><b>18.5</b> ‘Global’ aesthetics</a></li>
+<li class="chapter" data-level="18.6" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#facets"><i class="fa fa-check"></i><b>18.6</b> Facets</a></li>
+<li class="chapter" data-level="18.7" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#exBrexitPlots"><i class="fa fa-check"></i><b>18.7</b> Exercises</a></li>
+<li class="chapter" data-level="18.8" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#further-reading-6"><i class="fa fa-check"></i><b>18.8</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html"><i class="fa fa-check"></i><b>19</b> Presentation of plots</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-basics"><i class="fa fa-check"></i><b>19.1</b> The basics</a></li>
+<li class="chapter" data-level="19.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-caption-test"><i class="fa fa-check"></i><b>19.2</b> The caption test</a></li>
+<li class="chapter" data-level="19.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#caption-or-title"><i class="fa fa-check"></i><b>19.3</b> Caption or title?</a></li>
+<li class="chapter" data-level="19.4" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#customising-the-appearance-of-a-plot"><i class="fa fa-check"></i><b>19.4</b> Customising the appearance of a plot</a></li>
+<li class="chapter" data-level="19.5" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#refining-a-plot-an-example"><i class="fa fa-check"></i><b>19.5</b> Refining a plot: an example</a>
+<ul>
+<li class="chapter" data-level="19.5.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-data-to-plot"><i class="fa fa-check"></i><b>19.5.1</b> The data to plot</a></li>
+<li class="chapter" data-level="19.5.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#a-first-attempt-four-histograms"><i class="fa fa-check"></i><b>19.5.2</b> A first attempt: four histograms</a></li>
+<li class="chapter" data-level="19.5.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#using-a-box-plot"><i class="fa fa-check"></i><b>19.5.3</b> Using a box plot</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#exercises"><i class="fa fa-check"></i><b>19.6</b> Exercises</a></li>
+<li class="chapter" data-level="19.7" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#data-sources-1"><i class="fa fa-check"></i><b>19.7</b> Data sources</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html"><i class="fa fa-check"></i><b>20</b> Maps with <code>leaflet</code></a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#a-basic-map"><i class="fa fa-check"></i><b>20.1</b> A basic map</a></li>
+<li class="chapter" data-level="20.2" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#indicating-points-on-a-map"><i class="fa fa-check"></i><b>20.2</b> Indicating points on a map</a></li>
+<li class="chapter" data-level="20.3" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#plotting-region-boundaries"><i class="fa fa-check"></i><b>20.3</b> Plotting region boundaries</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#shapefiles"><i class="fa fa-check"></i><b>20.3.1</b> shapefiles</a></li>
+<li class="chapter" data-level="20.3.2" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#importing-and-simplifying-shapefiles"><i class="fa fa-check"></i><b>20.3.2</b> Importing and simplifying shapefiles</a></li>
+<li class="chapter" data-level="20.3.3" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#plotting-the-boundaries"><i class="fa fa-check"></i><b>20.3.3</b> Plotting the boundaries</a></li>
+<li class="chapter" data-level="20.3.4" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#using-different-colours-for-regions"><i class="fa fa-check"></i><b>20.3.4</b> Using different colours for regions</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#further-reading-7"><i class="fa fa-check"></i><b>20.4</b> Further reading</a></li>
+<li class="chapter" data-level="20.5" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#acknowledgement"><i class="fa fa-check"></i><b>20.5</b> Acknowledgement</a></li>
+<li class="chapter" data-level="20.6" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#references"><i class="fa fa-check"></i><b>20.6</b> References:</a></li>
+</ul></li>
+<li class="part"><span><b>IV Presenting your results</b></span></li>
+<li class="chapter" data-level="21" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>21</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="r-markdown.html"><a href="r-markdown.html#a-five-minute-video-tutorial"><i class="fa fa-check"></i><b>21.1</b> A five minute video tutorial</a></li>
+<li class="chapter" data-level="21.2" data-path="r-markdown.html"><a href="r-markdown.html#working-directories-for-r-markdown-documents"><i class="fa fa-check"></i><b>21.2</b> Working directories for R Markdown documents</a></li>
+<li class="chapter" data-level="21.3" data-path="r-markdown.html"><a href="r-markdown.html#code-chunk-options"><i class="fa fa-check"></i><b>21.3</b> Code chunk options</a>
+<ul>
+<li class="chapter" data-level="21.3.1" data-path="r-markdown.html"><a href="r-markdown.html#code-chunk-options-for-figures"><i class="fa fa-check"></i><b>21.3.1</b> Code chunk options for figures</a></li>
+</ul></li>
+<li class="chapter" data-level="21.4" data-path="r-markdown.html"><a href="r-markdown.html#tables"><i class="fa fa-check"></i><b>21.4</b> Tables</a>
+<ul>
+<li class="chapter" data-level="21.4.1" data-path="r-markdown.html"><a href="r-markdown.html#using-markdown"><i class="fa fa-check"></i><b>21.4.1</b> Using Markdown</a></li>
+<li class="chapter" data-level="21.4.2" data-path="r-markdown.html"><a href="r-markdown.html#using-knitrkable"><i class="fa fa-check"></i><b>21.4.2</b> Using <code>knitr::kable()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="21.5" data-path="r-markdown.html"><a href="r-markdown.html#caching-results-for-slow-running-code"><i class="fa fa-check"></i><b>21.5</b> Caching results for slow-running code</a></li>
+<li class="chapter" data-level="21.6" data-path="r-markdown.html"><a href="r-markdown.html#spell-checking"><i class="fa fa-check"></i><b>21.6</b> Spell checking</a></li>
+<li class="chapter" data-level="21.7" data-path="r-markdown.html"><a href="r-markdown.html#the-yaml-header"><i class="fa fa-check"></i><b>21.7</b> The YAML header</a></li>
+<li class="chapter" data-level="21.8" data-path="r-markdown.html"><a href="r-markdown.html#latex-markdown-and-html"><i class="fa fa-check"></i><b>21.8</b> LaTeX, Markdown and html</a></li>
+<li class="chapter" data-level="21.9" data-path="r-markdown.html"><a href="r-markdown.html#bookdown"><i class="fa fa-check"></i><b>21.9</b> bookdown</a></li>
+<li class="chapter" data-level="21.10" data-path="r-markdown.html"><a href="r-markdown.html#quarto"><i class="fa fa-check"></i><b>21.10</b> Quarto</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="referencing.html"><a href="referencing.html"><i class="fa fa-check"></i><b>22</b> Referencing</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="referencing.html"><a href="referencing.html#referencing-data-sets"><i class="fa fa-check"></i><b>22.1</b> Referencing data sets</a>
+<ul>
+<li class="chapter" data-level="22.1.1" data-path="referencing.html"><a href="referencing.html#attribution-statements-and-conditions-of-use"><i class="fa fa-check"></i><b>22.1.1</b> Attribution statements and conditions of use</a></li>
+</ul></li>
+<li class="chapter" data-level="22.2" data-path="referencing.html"><a href="referencing.html#citing-r-and-r-packages"><i class="fa fa-check"></i><b>22.2</b> Citing R and R packages</a></li>
+<li class="chapter" data-level="22.3" data-path="referencing.html"><a href="referencing.html#using-someone-elses-figures-in-your-work"><i class="fa fa-check"></i><b>22.3</b> Using someone else’s figures in your work</a></li>
+<li class="chapter" data-level="22.4" data-path="referencing.html"><a href="referencing.html#further-reading."><i class="fa fa-check"></i><b>22.4</b> Further reading.</a></li>
+<li class="chapter" data-level="22.5" data-path="referencing.html"><a href="referencing.html#exercise-3"><i class="fa fa-check"></i><b>22.5</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="shiny.html"><a href="shiny.html"><i class="fa fa-check"></i><b>23</b> Shiny</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="shiny.html"><a href="shiny.html#some-example-r-code-for-inclusion-in-an-app"><i class="fa fa-check"></i><b>23.1</b> Some example R code, for inclusion in an app</a></li>
+<li class="chapter" data-level="23.2" data-path="shiny.html"><a href="shiny.html#putting-the-code-inside-an-app"><i class="fa fa-check"></i><b>23.2</b> Putting the code inside an app</a></li>
+<li class="chapter" data-level="23.3" data-path="shiny.html"><a href="shiny.html#the-user-interface-ui"><i class="fa fa-check"></i><b>23.3</b> The user interface <code>ui</code></a>
+<ul>
+<li class="chapter" data-level="23.3.1" data-path="shiny.html"><a href="shiny.html#commands-widgets-for-creating-user-controls-and-inputs"><i class="fa fa-check"></i><b>23.3.1</b> Commands (“widgets”) for creating user controls and inputs</a></li>
+<li class="chapter" data-level="23.3.2" data-path="shiny.html"><a href="shiny.html#commands-for-producing-outputs"><i class="fa fa-check"></i><b>23.3.2</b> Commands for producing outputs</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="shiny.html"><a href="shiny.html#the-server"><i class="fa fa-check"></i><b>23.4</b> The <code>server</code></a>
+<ul>
+<li class="chapter" data-level="23.4.1" data-path="shiny.html"><a href="shiny.html#making-a-plot"><i class="fa fa-check"></i><b>23.4.1</b> Making a plot</a></li>
+<li class="chapter" data-level="23.4.2" data-path="shiny.html"><a href="shiny.html#making-a-table"><i class="fa fa-check"></i><b>23.4.2</b> Making a table</a></li>
+</ul></li>
+<li class="chapter" data-level="23.5" data-path="shiny.html"><a href="shiny.html#reactivity"><i class="fa fa-check"></i><b>23.5</b> Reactivity</a></li>
+<li class="chapter" data-level="23.6" data-path="shiny.html"><a href="shiny.html#customising-the-appearance-of-your-app"><i class="fa fa-check"></i><b>23.6</b> Customising the appearance of your app</a></li>
+<li class="chapter" data-level="23.7" data-path="shiny.html"><a href="shiny.html#shiny-with-r-markdown"><i class="fa fa-check"></i><b>23.7</b> Shiny with R Markdown</a></li>
+<li class="chapter" data-level="23.8" data-path="shiny.html"><a href="shiny.html#further-reading-8"><i class="fa fa-check"></i><b>23.8</b> Further reading</a></li>
+</ul></li>
+<li class="part"><span><b>V Miscellaneous</b></span></li>
+<li class="chapter" data-level="24" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html"><i class="fa fa-check"></i><b>24</b> EDA for logistic regression</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#example-a-balance-study"><i class="fa fa-check"></i><b>24.1</b> Example: a balance study</a>
+<ul>
+<li class="chapter" data-level="24.1.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#terminology"><i class="fa fa-check"></i><b>24.1.1</b> Terminology</a></li>
+</ul></li>
+<li class="chapter" data-level="24.2" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#what-to-look-for-in-an-eda"><i class="fa fa-check"></i><b>24.2</b> What to look for in an EDA</a>
+<ul>
+<li class="chapter" data-level="24.2.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#what-to-plot"><i class="fa fa-check"></i><b>24.2.1</b> What to plot</a></li>
+</ul></li>
+<li class="chapter" data-level="24.3" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#investigating-the-experimental-design"><i class="fa fa-check"></i><b>24.3</b> Investigating the experimental design</a></li>
+<li class="chapter" data-level="24.4" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#contingency-tables"><i class="fa fa-check"></i><b>24.4</b> Contingency tables</a></li>
+<li class="chapter" data-level="24.5" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#checking-for-identical-responses"><i class="fa fa-check"></i><b>24.5</b> Checking for identical responses</a></li>
+<li class="chapter" data-level="24.6" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#exploratory-plots"><i class="fa fa-check"></i><b>24.6</b> Exploratory plots</a>
+<ul>
+<li class="chapter" data-level="24.6.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#a-simple-box-plot"><i class="fa fa-check"></i><b>24.6.1</b> A simple box plot</a></li>
+<li class="chapter" data-level="24.6.2" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#interactions"><i class="fa fa-check"></i><b>24.6.2</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="24.7" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plotting-mean-proportions"><i class="fa fa-check"></i><b>24.7</b> Plotting mean proportions</a></li>
+<li class="chapter" data-level="24.8" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plotting-fitted-logistic-regression-lines"><i class="fa fa-check"></i><b>24.8</b> Plotting fitted logistic regression lines</a>
+<ul>
+<li class="chapter" data-level="24.8.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plots-with-bernoulli-data"><i class="fa fa-check"></i><b>24.8.1</b> Plots with Bernoulli data</a></li>
+<li class="chapter" data-level="24.8.2" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plots-with-binomial-n1-data"><i class="fa fa-check"></i><b>24.8.2</b> Plots with Binomial <span class="math inline">\((n&gt;1)\)</span> data</a></li>
+</ul></li>
+<li class="chapter" data-level="24.9" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#summary"><i class="fa fa-check"></i><b>24.9</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html"><i class="fa fa-check"></i><b>25</b> Example: working with strings</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#importing-the-two-data-files"><i class="fa fa-check"></i><b>25.1</b> Importing the two data files</a></li>
+<li class="chapter" data-level="25.2" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#preliminary-tidying"><i class="fa fa-check"></i><b>25.2</b> Preliminary tidying</a></li>
+<li class="chapter" data-level="25.3" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#approximately-matching-strings"><i class="fa fa-check"></i><b>25.3</b> Approximately matching strings</a></li>
+<li class="chapter" data-level="25.4" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#assembling-the-target-data-frame"><i class="fa fa-check"></i><b>25.4</b> Assembling the target data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data handling, exploratory analysis, and reporting in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="importing-combining-and-reshaping-data" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Section 12</span> Importing, combining, and reshaping data<a href="importing-combining-and-reshaping-data.html#importing-combining-and-reshaping-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this section we look at how to</p>
+<ul>
+<li>import data such as Excel spreadsheets and .csv files;</li>
+<li>combine different data sets into a single data frame;</li>
+<li>reshape data frames between ‘long’ and ‘wide’ formats (this is useful for plots with <code>ggplot2</code>)</li>
+</ul>
+<div class="rmdnote">
+<p>
+When working with someone else’s data, the data almost certainly
+won’t be in the format that you need; you’ll need to do some
+editing/re-arranging of the data. If possible, <strong>do not</strong>
+make any edits to the original data file: do any editing you need inside
+R. That way, you will have a record of how you got from the original
+data file to the data you actually worked with in your analysis.
+</p>
+</div>
+<p>As an example, we’ll import the two files <code>RIOolympics.csv</code> and <code>population.xlsx</code>, and make a single data frame with medal results and population size for each country.</p>
+<p>We suppose that in your current working directory, you have a folder called <code>data</code>, and the two files we want to import are in that folder. First load the <code>tidyverse</code> library</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="importing-combining-and-reshaping-data.html#cb109-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div id="importing-a-.csv-file" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Importing a .csv file<a href="importing-combining-and-reshaping-data.html#importing-a-.csv-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Use the command <code>read_csv()</code>, with the path to your target file in quotes (if you can, use the path relative to your project directory). This command is from the <code>readr</code> package <span class="citation">(<a href="#ref-R-readr">Wickham, Hester, and Francois 2018</a>)</span>. We’ll import the <code>RIOolympics.csv</code> file and store it as a data frame called <code>medals</code>.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="importing-combining-and-reshaping-data.html#cb110-1" tabindex="-1"></a>medals <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/RIOolympics.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 87 Columns: 6
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (2): code, country
+## dbl (4): gold, silver, bronze, total
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>To view the first few rows:</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="importing-combining-and-reshaping-data.html#cb112-1" tabindex="-1"></a><span class="fu">head</span>(medals)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 6
+##   code  country             gold silver bronze total
+##   &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 USA   UNITED STATES         46     37     38   121
+## 2 GBR   GREAT BRITAIN         27     23     17    67
+## 3 CHN   CHINA                 26     18     26    70
+## 4 RUS   RUSSIAN FEDERATION    19     18     19    56
+## 5 DEU   GERMANY               17     10     15    42
+## 6 JPN   JAPAN                 12      8     21    41</code></pre>
+<div id="additional-arguments" class="section level3 hasAnchor" number="12.1.1">
+<h3><span class="header-section-number">12.1.1</span> Additional arguments<a href="importing-combining-and-reshaping-data.html#additional-arguments" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use <code>?read_csv</code> to see the full list of arguments. Two useful ones are</p>
+<ul>
+<li><code>skip</code>: use this to skip lines at the start of the <code>.csv</code> file, for example if there’s some text that you need to ignore;</li>
+<li><code>col_names</code>: you will normally use the default value <code>TRUE</code>, but you can specify a character vector of column names if you want/need to.</li>
+</ul>
+</div>
+</div>
+<div id="importing-an-excel-.xlsx-file" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Importing an Excel .xlsx file<a href="importing-combining-and-reshaping-data.html#importing-an-excel-.xlsx-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can import Excel files with the command <code>readxl::read_excel()</code>. The <code>readxl</code> package <span class="citation">(<a href="#ref-R-readxl">Wickham and Bryan 2019</a>)</span> is installed as part of the tidyverse, but <em>not</em> loaded by the command <code>library(tidyverse)</code>.</p>
+<p>We’ll import the <code>population.xlsx</code> file and store it as a data frame called <code>population</code>:</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="importing-combining-and-reshaping-data.html#cb114-1" tabindex="-1"></a>population <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;data/population.xlsx&quot;</span>)</span>
+<span id="cb114-2"><a href="importing-combining-and-reshaping-data.html#cb114-2" tabindex="-1"></a><span class="fu">head</span>(population)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+##   `Country Name` `Country Code`    `2015`
+##   &lt;chr&gt;          &lt;chr&gt;              &lt;dbl&gt;
+## 1 Aruba          ABW               103889
+## 2 Andorra        AND                70473
+## 3 Afghanistan    AFG             32526562
+## 4 Angola         AGO             25021974
+## 5 Albania        ALB              2889167
+## 6 Arab World     ARB            392022276</code></pre>
+<div id="additional-arguments-1" class="section level3 hasAnchor" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Additional arguments<a href="importing-combining-and-reshaping-data.html#additional-arguments-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Again, there are lots of extra arguments, but two particularly useful ones are</p>
+<ul>
+<li><code>sheet</code>, for specifying which sheet to import, if the Excel file contains multiple sheets;</li>
+<li><code>range</code>, for specifying which cells to import, e.g. <code>"B3:G10"</code>, if we want to ignore the first column and first two rows.</li>
+</ul>
+</div>
+</div>
+<div id="importing-a-plain-text-file" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> Importing a plain text file<a href="importing-combining-and-reshaping-data.html#importing-a-plain-text-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can import plain text files (typically files with a <code>.txt</code> extension) with the command <code>read_table()</code>. For example, in the MPS4110Data.zip file, there is a file <code>flintsdata.txt</code>. Although the file is a plain text file, the data appear formatted as a two-column table, with headers <code>breadth</code> and <code>length</code>. We import the data (and create a new data frame called <code>flints</code>) as follows.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="importing-combining-and-reshaping-data.html#cb116-1" tabindex="-1"></a>flints <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">&quot;data/flintsdata.txt&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## cols(
+##   breadth = col_double(),
+##   length = col_double()
+## )</code></pre>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="importing-combining-and-reshaping-data.html#cb118-1" tabindex="-1"></a><span class="fu">head</span>(flints)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##   breadth length
+##     &lt;dbl&gt;  &lt;dbl&gt;
+## 1    1.97   4.37
+## 2    2.44   5.43
+## 3    2.22   5   
+## 4    2.1    4.38
+## 5    2.43   5.45
+## 6    2.5    5.8</code></pre>
+<p>As with the other functions for importing data, there are useful arguments for skipping lines, defining column names and so on. See <code>?read_table</code> for details.</p>
+</div>
+<div id="importing-online-data" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Importing online data<a href="importing-combining-and-reshaping-data.html#importing-online-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If you are online, R can read in data directly from the web: you just give the full web address as the file name, e.g.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="importing-combining-and-reshaping-data.html#cb120-1" tabindex="-1"></a>maths <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://oakleyj.github.io/exampledata/maths.csv&quot;</span>)</span></code></pre></div>
+<p>This can be convenient, though it may slow down your code if the file is large, and there is a risk that your code won’t run in the future: you can’t be sure that the file will always be there!</p>
+<p>Nevertheless, downloading a data file via R (or another language) is preferable to clicking buttons/links on a website, as you will have a record of where you got the data from. We recommend that you download your data with R, but then save a copy on your computer, and that your analysis uses your copied version.</p>
+<p>We can export data from R to a external file, e.g. csv format with the <code>write_csv()</code> command, e.g.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="importing-combining-and-reshaping-data.html#cb121-1" tabindex="-1"></a><span class="fu">write_csv</span>(maths, <span class="at">path =</span> <span class="st">&quot;data/myCopyOfMaths.csv&quot;</span>)</span></code></pre></div>
+<p>We can also use the <code>download.file()</code> command, which downloads and saves the file, but doesn’t keep the data within R:</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="importing-combining-and-reshaping-data.html#cb122-1" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> <span class="st">&quot;https://oakleyj.github.io/exampledata/maths.csv&quot;</span>,</span>
+<span id="cb122-2"><a href="importing-combining-and-reshaping-data.html#cb122-2" tabindex="-1"></a>              <span class="at">destfile =</span> <span class="st">&quot;data/myCopyOfMaths.csv&quot;</span>)</span></code></pre></div>
+</div>
+<div id="working-with-column-names" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> Working with column names<a href="importing-combining-and-reshaping-data.html#working-with-column-names" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>All three column names in <code>population</code> are awkward to work with! Two of them have spaces in, and third is a number. If we wanted to access individual columns, none of the following commands would work!</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="importing-combining-and-reshaping-data.html#cb123-1" tabindex="-1"></a>population<span class="sc">$</span>Country Name</span>
+<span id="cb123-2"><a href="importing-combining-and-reshaping-data.html#cb123-2" tabindex="-1"></a>population<span class="sc">$</span>Country Code</span>
+<span id="cb123-3"><a href="importing-combining-and-reshaping-data.html#cb123-3" tabindex="-1"></a>population<span class="sc">$</span><span class="dv">2015</span></span></code></pre></div>
+<p>Use backticks around any awkward column names:</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="importing-combining-and-reshaping-data.html#cb124-1" tabindex="-1"></a>population<span class="sc">$</span><span class="st">`</span><span class="at">Country Name</span><span class="st">`</span></span>
+<span id="cb124-2"><a href="importing-combining-and-reshaping-data.html#cb124-2" tabindex="-1"></a>population<span class="sc">$</span><span class="st">`</span><span class="at">Country Code</span><span class="st">`</span></span>
+<span id="cb124-3"><a href="importing-combining-and-reshaping-data.html#cb124-3" tabindex="-1"></a>population<span class="sc">$</span><span class="st">`</span><span class="at">2015</span><span class="st">`</span></span></code></pre></div>
+</div>
+<div id="combining-data-frames" class="section level2 hasAnchor" number="12.6">
+<h2><span class="header-section-number">12.6</span> Combining data frames<a href="importing-combining-and-reshaping-data.html#combining-data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When we combine two data frames, we will either be</p>
+<ol style="list-style-type: decimal">
+<li>adding variables to a data set; we add <em>columns</em> to a data frame;</li>
+<li>adding observations of the same variables to a data set; we add <em>rows</em> to a data frame.</li>
+</ol>
+<div id="adding-columns" class="section level3 hasAnchor" number="12.6.1">
+<h3><span class="header-section-number">12.6.1</span> Adding columns<a href="importing-combining-and-reshaping-data.html#adding-columns" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose we want to add the population sizes to the data in the medal table: we want to combine the <code>olympics</code> and <code>population</code> data frames. To do this, we need one column in each data frame where the same values are used to identify the countries.</p>
+<p>We can use the columns</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="importing-combining-and-reshaping-data.html#cb125-1" tabindex="-1"></a>population<span class="sc">$</span><span class="st">`</span><span class="at">Country Code</span><span class="st">`</span></span>
+<span id="cb125-2"><a href="importing-combining-and-reshaping-data.html#cb125-2" tabindex="-1"></a>medals<span class="sc">$</span>code</span></code></pre></div>
+<p>(both columns use “ISO 3166-1 alpha-3” for identifying countries).</p>
+<p>We will use the function <code>inner_join()</code> which will look for countries present in both data frames (there are variations: see <code>?inner_join</code> for details), storing the result in a new data frame called <code>olympics</code>:</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="importing-combining-and-reshaping-data.html#cb126-1" tabindex="-1"></a>olympics <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(medals, population,</span>
+<span id="cb126-2"><a href="importing-combining-and-reshaping-data.html#cb126-2" tabindex="-1"></a>                       <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;code&quot;</span> <span class="ot">=</span> <span class="st">&quot;Country Code&quot;</span>))</span>
+<span id="cb126-3"><a href="importing-combining-and-reshaping-data.html#cb126-3" tabindex="-1"></a></span>
+<span id="cb126-4"><a href="importing-combining-and-reshaping-data.html#cb126-4" tabindex="-1"></a><span class="fu">head</span>(olympics)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 8
+##   code  country             gold silver bronze total `Country Name`       `2015`
+##   &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                 &lt;dbl&gt;
+## 1 USA   UNITED STATES         46     37     38   121 United States        3.21e8
+## 2 GBR   GREAT BRITAIN         27     23     17    67 United Kingdom       6.51e7
+## 3 CHN   CHINA                 26     18     26    70 China                1.37e9
+## 4 RUS   RUSSIAN FEDERATION    19     18     19    56 Russian Federation   1.44e8
+## 5 DEU   GERMANY               17     10     15    42 Germany              8.14e7
+## 6 JPN   JAPAN                 12      8     21    41 Japan                1.27e8</code></pre>
+<div class="rmdnote">
+<p>
+We used the argument <code>by = c(“code” = “Country Code”)</code> to
+specify which columns in the two data frames to use for matching the
+observations. If both columns already had the same name,
+e.g. <code>code</code>, we could just use the argument
+<code>by = “code”</code>.
+</p>
+</div>
+</div>
+<div id="adding-rows" class="section level3 hasAnchor" number="12.6.2">
+<h3><span class="header-section-number">12.6.2</span> Adding rows<a href="importing-combining-and-reshaping-data.html#adding-rows" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>rbind()</code> function can be used to combine data frames with the same column headings. Here’s a simple example:</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="importing-combining-and-reshaping-data.html#cb128-1" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">11</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">101</span>))</span>
+<span id="cb128-2"><a href="importing-combining-and-reshaping-data.html#cb128-2" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">13</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">102</span>, <span class="dv">103</span>))</span>
+<span id="cb128-3"><a href="importing-combining-and-reshaping-data.html#cb128-3" tabindex="-1"></a><span class="fu">rbind</span>(df1, df2)</span></code></pre></div>
+<pre><code>##    x   y
+## 1 10 100
+## 2 11 101
+## 3 12 102
+## 4 13 103</code></pre>
+</div>
+<div id="data-frames-from-lists" class="section level3 hasAnchor" number="12.6.3">
+<h3><span class="header-section-number">12.6.3</span> Data frames from lists<a href="importing-combining-and-reshaping-data.html#data-frames-from-lists" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Continuing the example above, if we have a <code>list</code> of data frames, again with the same column headings, these can be assembled into a data frame as follows.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="importing-combining-and-reshaping-data.html#cb130-1" tabindex="-1"></a>myList <span class="ot">&lt;-</span> <span class="fu">list</span>(df1, df1)</span>
+<span id="cb130-2"><a href="importing-combining-and-reshaping-data.html#cb130-2" tabindex="-1"></a><span class="fu">do.call</span>(rbind.data.frame, myList)</span></code></pre></div>
+<pre><code>##    x   y
+## 1 10 100
+## 2 11 101
+## 3 10 100
+## 4 11 101</code></pre>
+</div>
+</div>
+<div id="renaming-columns" class="section level2 hasAnchor" number="12.7">
+<h2><span class="header-section-number">12.7</span> Renaming columns<a href="importing-combining-and-reshaping-data.html#renaming-columns" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The column name 2015 isn’t very descriptive, so we may wish to change the name, for example to <code>population2015</code>. We can do this with the <code>rename()</code> command.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="importing-combining-and-reshaping-data.html#cb132-1" tabindex="-1"></a>olympics <span class="ot">&lt;-</span> <span class="fu">rename</span>(olympics, <span class="at">population2015 =</span> <span class="st">`</span><span class="at">2015</span><span class="st">`</span>)</span>
+<span id="cb132-2"><a href="importing-combining-and-reshaping-data.html#cb132-2" tabindex="-1"></a><span class="fu">head</span>(olympics)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 8
+##   code  country           gold silver bronze total `Country Name` population2015
+##   &lt;chr&gt; &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;
+## 1 USA   UNITED STATES       46     37     38   121 United States       321418820
+## 2 GBR   GREAT BRITAIN       27     23     17    67 United Kingdom       65138232
+## 3 CHN   CHINA               26     18     26    70 China              1371220000
+## 4 RUS   RUSSIAN FEDERAT…    19     18     19    56 Russian Feder…      144096812
+## 5 DEU   GERMANY             17     10     15    42 Germany              81413145
+## 6 JPN   JAPAN               12      8     21    41 Japan               126958472</code></pre>
+<p>(Note that in assigning the result to a data frame called <code>olympics</code>, we’ve overwritten our earlier version of the <code>olympics</code> data frame. In general, be careful when you do this: the command will work the first time we use it, but not the second!)</p>
+</div>
+<div id="importing-data-from-other-statistical-packages" class="section level2 hasAnchor" number="12.8">
+<h2><span class="header-section-number">12.8</span> Importing data from other statistical packages<a href="importing-combining-and-reshaping-data.html#importing-data-from-other-statistical-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You may come across data sets stored in a format specific to another statistical package (SAS, SPSS, Stata). The <code>haven</code> package <span class="citation">(<a href="#ref-R-haven">Wickham and Miller 2020</a>)</span> can be used to import these. See <a href="haven.tidyverse.org">https://haven.tidyverse.org/</a> for more details.</p>
+</div>
+<div id="reshaping-data-frames" class="section level2 hasAnchor" number="12.9">
+<h2><span class="header-section-number">12.9</span> Reshaping data frames<a href="importing-combining-and-reshaping-data.html#reshaping-data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sometimes a data set may be in the wrong ‘shape’ for the analysis or plot that we want to do. As an example, we’ll use an extended data set on populations, with observations in multiple years:</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="importing-combining-and-reshaping-data.html#cb134-1" tabindex="-1"></a>countries <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/populationMultiple.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 264 Columns: 4
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): Country Name
+## dbl (3): 2013, 2014, 2015
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="importing-combining-and-reshaping-data.html#cb136-1" tabindex="-1"></a><span class="fu">head</span>(countries)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 4
+##   `Country Name`    `2013`    `2014`    `2015`
+##   &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Aruba             102921    103441    103889
+## 2 Andorra            75902     72786     70473
+## 3 Afghanistan     30682500  31627506  32526562
+## 4 Angola          23448202  24227524  25021974
+## 5 Albania          2896652   2893654   2889167
+## 6 Arab World     376504253 384222592 392022276</code></pre>
+<p>For our analysis, we may need all population values in a single column, with another column indicating the year. We can use the function <code>pivot_longer()</code> from the <code>tidyr</code> package <span class="citation">(<a href="#ref-R-tidyr">Wickham and Henry 2020</a>)</span> to change the data frame from ‘wide’ to ‘long’ format:</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="importing-combining-and-reshaping-data.html#cb138-1" tabindex="-1"></a>countriesLong <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(countries,</span>
+<span id="cb138-2"><a href="importing-combining-and-reshaping-data.html#cb138-2" tabindex="-1"></a>                              <span class="at">cols =</span> <span class="sc">-</span><span class="st">`</span><span class="at">Country Name</span><span class="st">`</span>,</span>
+<span id="cb138-3"><a href="importing-combining-and-reshaping-data.html#cb138-3" tabindex="-1"></a>                              <span class="at">names_to =</span> <span class="st">&quot;year&quot;</span>,</span>
+<span id="cb138-4"><a href="importing-combining-and-reshaping-data.html#cb138-4" tabindex="-1"></a>                              <span class="at">values_to =</span> <span class="st">&quot;population&quot;</span>)</span>
+<span id="cb138-5"><a href="importing-combining-and-reshaping-data.html#cb138-5" tabindex="-1"></a><span class="fu">head</span>(countriesLong)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+##   `Country Name` year  population
+##   &lt;chr&gt;          &lt;chr&gt;      &lt;dbl&gt;
+## 1 Aruba          2013      102921
+## 2 Aruba          2014      103441
+## 3 Aruba          2015      103889
+## 4 Andorra        2013       75902
+## 5 Andorra        2014       72786
+## 6 Andorra        2015       70473</code></pre>
+<ul>
+<li>If we think of <code>population</code> as our ‘dependent variable’, the <code>cols</code> argument specifies which columns are used to create this dependent variable. Here, putting the <code>-</code> sign before <code>Country Name</code> means “use all columns <em>except</em> this one”.</li>
+<li>If every column represented a ‘dependent variable’, we could use the argument <code>cols = everything()</code>.</li>
+<li><code>names_to</code> and <code>values_to</code> refer to the column names we want to use in the <em>new</em> data frame, not column names in the current data frame we are reshaping.</li>
+</ul>
+<p>It’s worth looking at the help file for <code>pivot_longer()</code> to see more examples.</p>
+<p>We can go back from ‘long’ to ‘wide’ with the function <code>pivot_wider()</code></p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="importing-combining-and-reshaping-data.html#cb140-1" tabindex="-1"></a>countriesWide <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(countriesLong, </span>
+<span id="cb140-2"><a href="importing-combining-and-reshaping-data.html#cb140-2" tabindex="-1"></a>                             <span class="at">names_from =</span> year,</span>
+<span id="cb140-3"><a href="importing-combining-and-reshaping-data.html#cb140-3" tabindex="-1"></a>                             <span class="at">values_from =</span> population)</span>
+<span id="cb140-4"><a href="importing-combining-and-reshaping-data.html#cb140-4" tabindex="-1"></a><span class="fu">head</span>(countriesWide)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 4
+##   `Country Name`    `2013`    `2014`    `2015`
+##   &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Aruba             102921    103441    103889
+## 2 Andorra            75902     72786     70473
+## 3 Afghanistan     30682500  31627506  32526562
+## 4 Angola          23448202  24227524  25021974
+## 5 Albania          2896652   2893654   2889167
+## 6 Arab World     376504253 384222592 392022276</code></pre>
+</div>
+<div id="exBrexit" class="section level2 hasAnchor" number="12.10">
+<h2><span class="header-section-number">12.10</span> Exercises<a href="importing-combining-and-reshaping-data.html#exBrexit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="task">
+<div class="exercise">
+<p><span id="exr:unlabeled-div-9" class="exercise"><strong>Exercise 12.1  </strong></span>Merging and reshaping data.</p>
+<ol style="list-style-type: decimal">
+<li>The files <code>BrexitVotes.csv</code> and <code>education.csv</code> contain, respectively, data from the 2016 UK referendum on leaving the European Union, and data on proportions of adults with educational qualifications at ‘level 4’ and above (qualifications above A-level). Data are given for local authorities within the UK.
+<ul>
+<li>Import these two files into R, and combine them into a single data frame called <code>Brexit</code>, matching the observations by area codes.</li>
+</ul></li>
+<li>The file <code>cancer.xlsx</code> contains survival times for patients with cancers in different organs. Each number in each column corresponds to a different patient; the row number has no meaning here. Note that all columns are ‘dependent variables’ here.
+<ul>
+<li>Import the data into R.</li>
+<li>Reshape the data into ‘long format’: one column indicating the organ, and one column indicating the survival time.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<hr>
+<div class="rmdnote">
+<p>
+For any online data set you work with, make an R script/R Markdown
+document with a name such as <code>makeData.R</code> that imports the
+data file and does all the cleaning/editing. In this file, include the
+website details and url, and the date you accessed the data: you’ll need
+these for referencing.
+</p>
+</div>
+</div>
+<div id="data-sources" class="section level2 hasAnchor" number="12.11">
+<h2><span class="header-section-number">12.11</span> Data sources<a href="importing-combining-and-reshaping-data.html#data-sources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Brexit results obtained from the Electoral Commission (<a href="https://www.electoralcommission.org.uk/find-information-by-subject/elections-and-referendums/past-elections-and-referendums/eu-referendum" class="uri">https://www.electoralcommission.org.uk/find-information-by-subject/elections-and-referendums/past-elections-and-referendums/eu-referendum</a>), and Level 4 qualification data obtained from the Office for National Statistics (<a href="https://www.nomisweb.co.uk/" class="uri">https://www.nomisweb.co.uk/</a>). Accessed 12th December 2017.</p></li>
+<li><p>I downloaded the cancer data a long time ago (2009?) from the “Data and Story Library” at <a href="http://lib.stat.cmu.edu/DASL/DataArchive.html" class="uri">http://lib.stat.cmu.edu/DASL/DataArchive.html</a>. This link no longer works; I think the Data and Story Library has migrated to <a href="https://dasl.datadescription.com/" class="uri">https://dasl.datadescription.com/</a>, but I couldn’t find this data set there.</p></li>
+<li><p>Population data obtained from <a href="http://data.worldbank.org/indicator/SP.POP.TOTL?end=2015&amp;start=2000" target="_blank">The World Bank</a>. Accessed 6th October 2015.</p></li>
+<li><p>Medal table obtained from <a href="https://www.rio2016.com/en/medal-count-country" class="uri">https://www.rio2016.com/en/medal-count-country</a> [Accessed on 6th October 2016, but this link is no longer active.]</p></li>
+</ul>
+</div>
+<div id="further-reading-2" class="section level2 hasAnchor" number="12.12">
+<h2><span class="header-section-number">12.12</span> Further reading<a href="importing-combining-and-reshaping-data.html#further-reading-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The concepts of “long” and “wide” data formats are related to the idea of <strong>tidy data</strong>, which is an important theme in the Tidyverse. For more discussion, see <a href="https://tidyr.tidyverse.org/articles/tidy-data.html#defining-tidy-data" target="_blank">this vignette</a>, and <a href="https://r4ds.had.co.nz/tidy-data.html" target="_blank">Chapter 12 of R for Data Science</a>.</p>
+
+</div>
+</div>
+<h3>References<a href="references-1.html#references-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-R-readxl" class="csl-entry">
+Wickham, Hadley, and Jennifer Bryan. 2019. <em>Readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
+</div>
+<div id="ref-R-tidyr" class="csl-entry">
+Wickham, Hadley, and Lionel Henry. 2020. <em>Tidyr: Tidy Messy Data</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.
+</div>
+<div id="ref-R-readr" class="csl-entry">
+Wickham, Hadley, Jim Hester, and Romain Francois. 2018. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
+</div>
+<div id="ref-R-haven" class="csl-entry">
+Wickham, Hadley, and Evan Miller. 2020. <em>Haven: Import and Export ’SPSS’, ’Stata’ and ’SAS’ Files</em>. <a href="https://CRAN.R-project.org/package=haven">https://CRAN.R-project.org/package=haven</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="the-tidyverse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-handling-with-dplyr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

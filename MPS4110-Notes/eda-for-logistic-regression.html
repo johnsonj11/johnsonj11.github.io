@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 24 EDA for logistic regression | Data handling, exploratory analysis, and reporting in R</title>
+  <meta name="description" content="An introduction to R for students on MPS4110" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 24 EDA for logistic regression | Data handling, exploratory analysis, and reporting in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="An introduction to R for students on MPS4110" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 24 EDA for logistic regression | Data handling, exploratory analysis, and reporting in R" />
+  
+  <meta name="twitter:description" content="An introduction to R for students on MPS4110" />
+  
+
+<meta name="author" content="Author: Jeremy Oakley" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="shiny.html"/>
+<link rel="next" href="example-working-with-strings.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EDA with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-these-notes"><i class="fa fa-check"></i><b>1.1</b> About these notes</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#books"><i class="fa fa-check"></i><b>1.2</b> Books</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="part"><span><b>I The basics</b></span></li>
+<li class="chapter" data-level="2" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#starting-rstudio-on-the-university-network"><i class="fa fa-check"></i><b>2.1</b> Starting RStudio on the university network</a></li>
+<li class="chapter" data-level="2.2" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#the-rstudio-interface"><i class="fa fa-check"></i><b>2.2</b> The RStudio interface</a></li>
+<li class="chapter" data-level="2.3" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#inputs-and-outputs"><i class="fa fa-check"></i><b>2.3</b> Inputs and outputs</a></li>
+<li class="chapter" data-level="2.4" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#get-comfortable"><i class="fa fa-check"></i><b>2.4</b> Get comfortable!</a></li>
+<li class="chapter" data-level="2.5" data-path="r-and-rstudio.html"><a href="r-and-rstudio.html#change-your-workspace-settings"><i class="fa fa-check"></i><b>2.5</b> Change your Workspace settings</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="using-r-as-a-calculator.html"><a href="using-r-as-a-calculator.html"><i class="fa fa-check"></i><b>3</b> Using R as a calculator</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="using-r-as-a-calculator.html"><a href="using-r-as-a-calculator.html#scientific-notation"><i class="fa fa-check"></i><b>3.1</b> Scientific notation</a></li>
+<li class="chapter" data-level="3.2" data-path="using-r-as-a-calculator.html"><a href="using-r-as-a-calculator.html#order-of-operations"><i class="fa fa-check"></i><b>3.2</b> Order of operations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html"><i class="fa fa-check"></i><b>4</b> Variables and vectors</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#vectors"><i class="fa fa-check"></i><b>4.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#sequences-of-integers"><i class="fa fa-check"></i><b>4.1.1</b> Sequences of integers</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#subsetting-vectors"><i class="fa fa-check"></i><b>4.2</b> Subsetting vectors</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#logical-subsetting"><i class="fa fa-check"></i><b>4.2.1</b> Logical subsetting</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#character-strings"><i class="fa fa-check"></i><b>4.3</b> Character strings</a></li>
+<li class="chapter" data-level="4.4" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#factors"><i class="fa fa-check"></i><b>4.4</b> Factors</a></li>
+<li class="chapter" data-level="4.5" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#the-environment-window"><i class="fa fa-check"></i><b>4.5</b> The Environment window</a></li>
+<li class="chapter" data-level="4.6" data-path="variables-and-vectors.html"><a href="variables-and-vectors.html#further-reading"><i class="fa fa-check"></i><b>4.6</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#introducing-functions"><i class="fa fa-check"></i><b>5.1</b> Introducing functions</a></li>
+<li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#arguments"><i class="fa fa-check"></i><b>5.2</b> Arguments</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="functions.html"><a href="functions.html#experiment"><i class="fa fa-check"></i><b>5.2.1</b> Experiment!</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#help-files"><i class="fa fa-check"></i><b>5.3</b> Help files</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html"><i class="fa fa-check"></i><b>6</b> Data frames, tibbles and lists</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#data-frames"><i class="fa fa-check"></i><b>6.1</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#making-data-frames"><i class="fa fa-check"></i><b>6.1.1</b> Making data frames</a></li>
+<li class="chapter" data-level="6.1.2" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#extracting-rows-and-columns"><i class="fa fa-check"></i><b>6.1.2</b> Extracting rows and columns</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#tibbles"><i class="fa fa-check"></i><b>6.2</b> tibbles</a></li>
+<li class="chapter" data-level="6.3" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#inspecting-large-data-frames-and-tibbles"><i class="fa fa-check"></i><b>6.3</b> Inspecting large data frames and tibbles</a></li>
+<li class="chapter" data-level="6.4" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#lists"><i class="fa fa-check"></i><b>6.4</b> Lists</a></li>
+<li class="chapter" data-level="6.5" data-path="data-frames-tibbles-and-lists.html"><a href="data-frames-tibbles-and-lists.html#further-reading-1"><i class="fa fa-check"></i><b>6.5</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="scripts.html"><a href="scripts.html"><i class="fa fa-check"></i><b>7</b> Scripts</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="scripts.html"><a href="scripts.html#creating-a-new-script"><i class="fa fa-check"></i><b>7.1</b> Creating a new script</a></li>
+<li class="chapter" data-level="7.2" data-path="scripts.html"><a href="scripts.html#entering-and-running-commands"><i class="fa fa-check"></i><b>7.2</b> Entering and running commands</a></li>
+<li class="chapter" data-level="7.3" data-path="scripts.html"><a href="scripts.html#adding-comments-and-sections-in-scripts"><i class="fa fa-check"></i><b>7.3</b> Adding comments and sections in scripts</a></li>
+<li class="chapter" data-level="7.4" data-path="scripts.html"><a href="scripts.html#line-breaks-in-scripts"><i class="fa fa-check"></i><b>7.4</b> Line breaks in scripts</a></li>
+<li class="chapter" data-level="7.5" data-path="scripts.html"><a href="scripts.html#saving-a-script"><i class="fa fa-check"></i><b>7.5</b> Saving a script</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="a-tip-for-understanding-r-code.html"><a href="a-tip-for-understanding-r-code.html"><i class="fa fa-check"></i><b>8</b> A tip for understanding R code</a></li>
+<li class="chapter" data-level="9" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>9</b> Packages</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="packages.html"><a href="packages.html#installing-a-package"><i class="fa fa-check"></i><b>9.1</b> Installing a package</a></li>
+<li class="chapter" data-level="9.2" data-path="packages.html"><a href="packages.html#updating-packages"><i class="fa fa-check"></i><b>9.2</b> Updating packages</a></li>
+<li class="chapter" data-level="9.3" data-path="packages.html"><a href="packages.html#using-packages"><i class="fa fa-check"></i><b>9.3</b> Using packages</a></li>
+<li class="chapter" data-level="9.4" data-path="packages.html"><a href="packages.html#is-there-a-package-for"><i class="fa fa-check"></i><b>9.4</b> Is there a package for…?</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="rstudio-projects.html"><a href="rstudio-projects.html"><i class="fa fa-check"></i><b>10</b> RStudio Projects</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="rstudio-projects.html"><a href="rstudio-projects.html#file-paths-and-working-directories"><i class="fa fa-check"></i><b>10.1</b> File paths and working directories</a></li>
+<li class="chapter" data-level="10.2" data-path="rstudio-projects.html"><a href="rstudio-projects.html#creating-a-new-project"><i class="fa fa-check"></i><b>10.2</b> Creating a new project</a></li>
+<li class="chapter" data-level="10.3" data-path="rstudio-projects.html"><a href="rstudio-projects.html#opening-an-existing-project"><i class="fa fa-check"></i><b>10.3</b> Opening an existing project</a></li>
+<li class="chapter" data-level="10.4" data-path="rstudio-projects.html"><a href="rstudio-projects.html#using-your-project-folder"><i class="fa fa-check"></i><b>10.4</b> Using your project folder</a></li>
+</ul></li>
+<li class="part"><span><b>II Data handling</b></span></li>
+<li class="chapter" data-level="11" data-path="the-tidyverse.html"><a href="the-tidyverse.html"><i class="fa fa-check"></i><b>11</b> The Tidyverse</a></li>
+<li class="chapter" data-level="12" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html"><i class="fa fa-check"></i><b>12</b> Importing, combining, and reshaping data</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-a-.csv-file"><i class="fa fa-check"></i><b>12.1</b> Importing a .csv file</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#additional-arguments"><i class="fa fa-check"></i><b>12.1.1</b> Additional arguments</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-an-excel-.xlsx-file"><i class="fa fa-check"></i><b>12.2</b> Importing an Excel .xlsx file</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#additional-arguments-1"><i class="fa fa-check"></i><b>12.2.1</b> Additional arguments</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-a-plain-text-file"><i class="fa fa-check"></i><b>12.3</b> Importing a plain text file</a></li>
+<li class="chapter" data-level="12.4" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-online-data"><i class="fa fa-check"></i><b>12.4</b> Importing online data</a></li>
+<li class="chapter" data-level="12.5" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#working-with-column-names"><i class="fa fa-check"></i><b>12.5</b> Working with column names</a></li>
+<li class="chapter" data-level="12.6" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#combining-data-frames"><i class="fa fa-check"></i><b>12.6</b> Combining data frames</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#adding-columns"><i class="fa fa-check"></i><b>12.6.1</b> Adding columns</a></li>
+<li class="chapter" data-level="12.6.2" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#adding-rows"><i class="fa fa-check"></i><b>12.6.2</b> Adding rows</a></li>
+<li class="chapter" data-level="12.6.3" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#data-frames-from-lists"><i class="fa fa-check"></i><b>12.6.3</b> Data frames from lists</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#renaming-columns"><i class="fa fa-check"></i><b>12.7</b> Renaming columns</a></li>
+<li class="chapter" data-level="12.8" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#importing-data-from-other-statistical-packages"><i class="fa fa-check"></i><b>12.8</b> Importing data from other statistical packages</a></li>
+<li class="chapter" data-level="12.9" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#reshaping-data-frames"><i class="fa fa-check"></i><b>12.9</b> Reshaping data frames</a></li>
+<li class="chapter" data-level="12.10" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#exBrexit"><i class="fa fa-check"></i><b>12.10</b> Exercises</a></li>
+<li class="chapter" data-level="12.11" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#data-sources"><i class="fa fa-check"></i><b>12.11</b> Data sources</a></li>
+<li class="chapter" data-level="12.12" data-path="importing-combining-and-reshaping-data.html"><a href="importing-combining-and-reshaping-data.html#further-reading-2"><i class="fa fa-check"></i><b>12.12</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html"><i class="fa fa-check"></i><b>13</b> Data handling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>13.1</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="13.2" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#example"><i class="fa fa-check"></i><b>13.2</b> Example</a></li>
+<li class="chapter" data-level="13.3" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>13.3</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="13.4" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>13.4</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="13.5" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>13.5</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="13.6" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>13.6</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+<li class="chapter" data-level="13.7" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>13.7</b> Computing summaries per group</a></li>
+<li class="chapter" data-level="13.8" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#counting-observations-within-groups"><i class="fa fa-check"></i><b>13.8</b> Counting observations within groups</a></li>
+<li class="chapter" data-level="13.9" data-path="data-handling-with-dplyr.html"><a href="data-handling-with-dplyr.html#further-reading-3"><i class="fa fa-check"></i><b>13.9</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="strings.html"><a href="strings.html"><i class="fa fa-check"></i><b>14</b> Strings</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="strings.html"><a href="strings.html#example-fictitous-exam-mark-data"><i class="fa fa-check"></i><b>14.1</b> Example: (fictitous) exam mark data</a></li>
+<li class="chapter" data-level="14.2" data-path="strings.html"><a href="strings.html#importing-text-data-with-read_lines"><i class="fa fa-check"></i><b>14.2</b> Importing text data with <code>read_lines()</code></a></li>
+<li class="chapter" data-level="14.3" data-path="strings.html"><a href="strings.html#finding-and-replacing-characters-in-strings"><i class="fa fa-check"></i><b>14.3</b> Finding (and replacing) characters in strings</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="strings.html"><a href="strings.html#finding-text-with-str_which"><i class="fa fa-check"></i><b>14.3.1</b> Finding text with <code>str_which()</code></a></li>
+<li class="chapter" data-level="14.3.2" data-path="strings.html"><a href="strings.html#escape-characters-and-regular-expressions"><i class="fa fa-check"></i><b>14.3.2</b> Escape characters and regular expressions</a></li>
+<li class="chapter" data-level="14.3.3" data-path="strings.html"><a href="strings.html#replacing-or-removing-text"><i class="fa fa-check"></i><b>14.3.3</b> Replacing or removing text</a></li>
+<li class="chapter" data-level="14.3.4" data-path="strings.html"><a href="strings.html#removing-white-space-at-startend-of-strings"><i class="fa fa-check"></i><b>14.3.4</b> Removing white space at start/end of strings</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="strings.html"><a href="strings.html#subsetting-strings"><i class="fa fa-check"></i><b>14.4</b> Subsetting strings</a></li>
+<li class="chapter" data-level="14.5" data-path="strings.html"><a href="strings.html#making-a-data-frame"><i class="fa fa-check"></i><b>14.5</b> Making a data frame</a></li>
+<li class="chapter" data-level="14.6" data-path="strings.html"><a href="strings.html#further-reading-4"><i class="fa fa-check"></i><b>14.6</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html"><i class="fa fa-check"></i><b>15</b> Processing multiple files</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#repeating-a-process-with-a-for-loop"><i class="fa fa-check"></i><b>15.1</b> Repeating a process with a <code>for</code> loop</a></li>
+<li class="chapter" data-level="15.2" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#example-cleaning-two-text-files"><i class="fa fa-check"></i><b>15.2</b> Example: cleaning two text files</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#the-core-code-block"><i class="fa fa-check"></i><b>15.2.1</b> The core code block</a></li>
+<li class="chapter" data-level="15.2.2" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#identify-the-variables-we-need-to-specify"><i class="fa fa-check"></i><b>15.2.2</b> Identify the variables we need to specify</a></li>
+<li class="chapter" data-level="15.2.3" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#create-an-empty-list-to-store-the-results"><i class="fa fa-check"></i><b>15.2.3</b> Create an empty list to store the results</a></li>
+<li class="chapter" data-level="15.2.4" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#use-a-for-loop-to-run-the-code-block-multiple-times"><i class="fa fa-check"></i><b>15.2.4</b> Use a for loop to run the code block multiple times</a></li>
+<li class="chapter" data-level="15.2.5" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#convert-the-list-to-a-data-frame"><i class="fa fa-check"></i><b>15.2.5</b> Convert the list to a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="processing-multiple-files.html"><a href="processing-multiple-files.html#exercise"><i class="fa fa-check"></i><b>15.3</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="apis.html"><a href="apis.html"><i class="fa fa-check"></i><b>16</b> APIs</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="apis.html"><a href="apis.html#example-obtaining-covid-19-case-data-data-in-json-format"><i class="fa fa-check"></i><b>16.1</b> Example: obtaining Covid-19 case data (data in JSON format)</a></li>
+<li class="chapter" data-level="16.2" data-path="apis.html"><a href="apis.html#exExcel"><i class="fa fa-check"></i><b>16.2</b> Example: obtaining an .xlsx file</a></li>
+<li class="chapter" data-level="16.3" data-path="apis.html"><a href="apis.html#exercise-1"><i class="fa fa-check"></i><b>16.3</b> Exercise</a></li>
+<li class="chapter" data-level="16.4" data-path="apis.html"><a href="apis.html#acknowledgements-1"><i class="fa fa-check"></i><b>16.4</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>17</b> Missing data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="missing-data.html"><a href="missing-data.html#na"><i class="fa fa-check"></i><b>17.1</b> <code>NA</code></a></li>
+<li class="chapter" data-level="17.2" data-path="missing-data.html"><a href="missing-data.html#functions-and-na"><i class="fa fa-check"></i><b>17.2</b> Functions and <code>NA</code></a></li>
+<li class="chapter" data-level="17.3" data-path="missing-data.html"><a href="missing-data.html#imputation"><i class="fa fa-check"></i><b>17.3</b> Imputation</a></li>
+<li class="chapter" data-level="17.4" data-path="missing-data.html"><a href="missing-data.html#visualising-missing-data"><i class="fa fa-check"></i><b>17.4</b> Visualising missing data</a></li>
+<li class="chapter" data-level="17.5" data-path="missing-data.html"><a href="missing-data.html#exercise-2"><i class="fa fa-check"></i><b>17.5</b> Exercise</a></li>
+<li class="chapter" data-level="17.6" data-path="missing-data.html"><a href="missing-data.html#further-reading-5"><i class="fa fa-check"></i><b>17.6</b> Further reading</a></li>
+</ul></li>
+<li class="part"><span><b>III Plotting data</b></span></li>
+<li class="chapter" data-level="18" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html"><i class="fa fa-check"></i><b>18</b> Making plots with <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#the-general-syntax"><i class="fa fa-check"></i><b>18.1</b> The general syntax</a></li>
+<li class="chapter" data-level="18.2" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#scatter-plots"><i class="fa fa-check"></i><b>18.2</b> Scatter plots</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#annotating-a-scatter-plot"><i class="fa fa-check"></i><b>18.2.1</b> Annotating a scatter plot</a></li>
+<li class="chapter" data-level="18.2.2" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#adding-a-trend"><i class="fa fa-check"></i><b>18.2.2</b> Adding a trend</a></li>
+<li class="chapter" data-level="18.2.3" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#representing-more-than-two-variables-on-a-scatter-plot"><i class="fa fa-check"></i><b>18.2.3</b> Representing more than two variables on a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#histograms"><i class="fa fa-check"></i><b>18.3</b> Histograms</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>18.3.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>18.4</b> Box plots</a>
+<ul>
+<li class="chapter" data-level="18.4.1" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#adding-the-observations-to-a-box-plot"><i class="fa fa-check"></i><b>18.4.1</b> Adding the observations to a box plot</a></li>
+<li class="chapter" data-level="18.4.2" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#violin-plots"><i class="fa fa-check"></i><b>18.4.2</b> Violin plots</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#global-aesthetics"><i class="fa fa-check"></i><b>18.5</b> ‘Global’ aesthetics</a></li>
+<li class="chapter" data-level="18.6" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#facets"><i class="fa fa-check"></i><b>18.6</b> Facets</a></li>
+<li class="chapter" data-level="18.7" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#exBrexitPlots"><i class="fa fa-check"></i><b>18.7</b> Exercises</a></li>
+<li class="chapter" data-level="18.8" data-path="making-plots-with-ggplot2.html"><a href="making-plots-with-ggplot2.html#further-reading-6"><i class="fa fa-check"></i><b>18.8</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html"><i class="fa fa-check"></i><b>19</b> Presentation of plots</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-basics"><i class="fa fa-check"></i><b>19.1</b> The basics</a></li>
+<li class="chapter" data-level="19.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-caption-test"><i class="fa fa-check"></i><b>19.2</b> The caption test</a></li>
+<li class="chapter" data-level="19.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#caption-or-title"><i class="fa fa-check"></i><b>19.3</b> Caption or title?</a></li>
+<li class="chapter" data-level="19.4" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#customising-the-appearance-of-a-plot"><i class="fa fa-check"></i><b>19.4</b> Customising the appearance of a plot</a></li>
+<li class="chapter" data-level="19.5" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#refining-a-plot-an-example"><i class="fa fa-check"></i><b>19.5</b> Refining a plot: an example</a>
+<ul>
+<li class="chapter" data-level="19.5.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-data-to-plot"><i class="fa fa-check"></i><b>19.5.1</b> The data to plot</a></li>
+<li class="chapter" data-level="19.5.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#a-first-attempt-four-histograms"><i class="fa fa-check"></i><b>19.5.2</b> A first attempt: four histograms</a></li>
+<li class="chapter" data-level="19.5.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#using-a-box-plot"><i class="fa fa-check"></i><b>19.5.3</b> Using a box plot</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#exercises"><i class="fa fa-check"></i><b>19.6</b> Exercises</a></li>
+<li class="chapter" data-level="19.7" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#data-sources-1"><i class="fa fa-check"></i><b>19.7</b> Data sources</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html"><i class="fa fa-check"></i><b>20</b> Maps with <code>leaflet</code></a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#a-basic-map"><i class="fa fa-check"></i><b>20.1</b> A basic map</a></li>
+<li class="chapter" data-level="20.2" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#indicating-points-on-a-map"><i class="fa fa-check"></i><b>20.2</b> Indicating points on a map</a></li>
+<li class="chapter" data-level="20.3" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#plotting-region-boundaries"><i class="fa fa-check"></i><b>20.3</b> Plotting region boundaries</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#shapefiles"><i class="fa fa-check"></i><b>20.3.1</b> shapefiles</a></li>
+<li class="chapter" data-level="20.3.2" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#importing-and-simplifying-shapefiles"><i class="fa fa-check"></i><b>20.3.2</b> Importing and simplifying shapefiles</a></li>
+<li class="chapter" data-level="20.3.3" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#plotting-the-boundaries"><i class="fa fa-check"></i><b>20.3.3</b> Plotting the boundaries</a></li>
+<li class="chapter" data-level="20.3.4" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#using-different-colours-for-regions"><i class="fa fa-check"></i><b>20.3.4</b> Using different colours for regions</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#further-reading-7"><i class="fa fa-check"></i><b>20.4</b> Further reading</a></li>
+<li class="chapter" data-level="20.5" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#acknowledgement"><i class="fa fa-check"></i><b>20.5</b> Acknowledgement</a></li>
+<li class="chapter" data-level="20.6" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#references"><i class="fa fa-check"></i><b>20.6</b> References:</a></li>
+</ul></li>
+<li class="part"><span><b>IV Presenting your results</b></span></li>
+<li class="chapter" data-level="21" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>21</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="r-markdown.html"><a href="r-markdown.html#a-five-minute-video-tutorial"><i class="fa fa-check"></i><b>21.1</b> A five minute video tutorial</a></li>
+<li class="chapter" data-level="21.2" data-path="r-markdown.html"><a href="r-markdown.html#working-directories-for-r-markdown-documents"><i class="fa fa-check"></i><b>21.2</b> Working directories for R Markdown documents</a></li>
+<li class="chapter" data-level="21.3" data-path="r-markdown.html"><a href="r-markdown.html#code-chunk-options"><i class="fa fa-check"></i><b>21.3</b> Code chunk options</a>
+<ul>
+<li class="chapter" data-level="21.3.1" data-path="r-markdown.html"><a href="r-markdown.html#code-chunk-options-for-figures"><i class="fa fa-check"></i><b>21.3.1</b> Code chunk options for figures</a></li>
+</ul></li>
+<li class="chapter" data-level="21.4" data-path="r-markdown.html"><a href="r-markdown.html#tables"><i class="fa fa-check"></i><b>21.4</b> Tables</a>
+<ul>
+<li class="chapter" data-level="21.4.1" data-path="r-markdown.html"><a href="r-markdown.html#using-markdown"><i class="fa fa-check"></i><b>21.4.1</b> Using Markdown</a></li>
+<li class="chapter" data-level="21.4.2" data-path="r-markdown.html"><a href="r-markdown.html#using-knitrkable"><i class="fa fa-check"></i><b>21.4.2</b> Using <code>knitr::kable()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="21.5" data-path="r-markdown.html"><a href="r-markdown.html#caching-results-for-slow-running-code"><i class="fa fa-check"></i><b>21.5</b> Caching results for slow-running code</a></li>
+<li class="chapter" data-level="21.6" data-path="r-markdown.html"><a href="r-markdown.html#spell-checking"><i class="fa fa-check"></i><b>21.6</b> Spell checking</a></li>
+<li class="chapter" data-level="21.7" data-path="r-markdown.html"><a href="r-markdown.html#the-yaml-header"><i class="fa fa-check"></i><b>21.7</b> The YAML header</a></li>
+<li class="chapter" data-level="21.8" data-path="r-markdown.html"><a href="r-markdown.html#latex-markdown-and-html"><i class="fa fa-check"></i><b>21.8</b> LaTeX, Markdown and html</a></li>
+<li class="chapter" data-level="21.9" data-path="r-markdown.html"><a href="r-markdown.html#bookdown"><i class="fa fa-check"></i><b>21.9</b> bookdown</a></li>
+<li class="chapter" data-level="21.10" data-path="r-markdown.html"><a href="r-markdown.html#quarto"><i class="fa fa-check"></i><b>21.10</b> Quarto</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="referencing.html"><a href="referencing.html"><i class="fa fa-check"></i><b>22</b> Referencing</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="referencing.html"><a href="referencing.html#referencing-data-sets"><i class="fa fa-check"></i><b>22.1</b> Referencing data sets</a>
+<ul>
+<li class="chapter" data-level="22.1.1" data-path="referencing.html"><a href="referencing.html#attribution-statements-and-conditions-of-use"><i class="fa fa-check"></i><b>22.1.1</b> Attribution statements and conditions of use</a></li>
+</ul></li>
+<li class="chapter" data-level="22.2" data-path="referencing.html"><a href="referencing.html#citing-r-and-r-packages"><i class="fa fa-check"></i><b>22.2</b> Citing R and R packages</a></li>
+<li class="chapter" data-level="22.3" data-path="referencing.html"><a href="referencing.html#using-someone-elses-figures-in-your-work"><i class="fa fa-check"></i><b>22.3</b> Using someone else’s figures in your work</a></li>
+<li class="chapter" data-level="22.4" data-path="referencing.html"><a href="referencing.html#further-reading."><i class="fa fa-check"></i><b>22.4</b> Further reading.</a></li>
+<li class="chapter" data-level="22.5" data-path="referencing.html"><a href="referencing.html#exercise-3"><i class="fa fa-check"></i><b>22.5</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="shiny.html"><a href="shiny.html"><i class="fa fa-check"></i><b>23</b> Shiny</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="shiny.html"><a href="shiny.html#some-example-r-code-for-inclusion-in-an-app"><i class="fa fa-check"></i><b>23.1</b> Some example R code, for inclusion in an app</a></li>
+<li class="chapter" data-level="23.2" data-path="shiny.html"><a href="shiny.html#putting-the-code-inside-an-app"><i class="fa fa-check"></i><b>23.2</b> Putting the code inside an app</a></li>
+<li class="chapter" data-level="23.3" data-path="shiny.html"><a href="shiny.html#the-user-interface-ui"><i class="fa fa-check"></i><b>23.3</b> The user interface <code>ui</code></a>
+<ul>
+<li class="chapter" data-level="23.3.1" data-path="shiny.html"><a href="shiny.html#commands-widgets-for-creating-user-controls-and-inputs"><i class="fa fa-check"></i><b>23.3.1</b> Commands (“widgets”) for creating user controls and inputs</a></li>
+<li class="chapter" data-level="23.3.2" data-path="shiny.html"><a href="shiny.html#commands-for-producing-outputs"><i class="fa fa-check"></i><b>23.3.2</b> Commands for producing outputs</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="shiny.html"><a href="shiny.html#the-server"><i class="fa fa-check"></i><b>23.4</b> The <code>server</code></a>
+<ul>
+<li class="chapter" data-level="23.4.1" data-path="shiny.html"><a href="shiny.html#making-a-plot"><i class="fa fa-check"></i><b>23.4.1</b> Making a plot</a></li>
+<li class="chapter" data-level="23.4.2" data-path="shiny.html"><a href="shiny.html#making-a-table"><i class="fa fa-check"></i><b>23.4.2</b> Making a table</a></li>
+</ul></li>
+<li class="chapter" data-level="23.5" data-path="shiny.html"><a href="shiny.html#reactivity"><i class="fa fa-check"></i><b>23.5</b> Reactivity</a></li>
+<li class="chapter" data-level="23.6" data-path="shiny.html"><a href="shiny.html#customising-the-appearance-of-your-app"><i class="fa fa-check"></i><b>23.6</b> Customising the appearance of your app</a></li>
+<li class="chapter" data-level="23.7" data-path="shiny.html"><a href="shiny.html#shiny-with-r-markdown"><i class="fa fa-check"></i><b>23.7</b> Shiny with R Markdown</a></li>
+<li class="chapter" data-level="23.8" data-path="shiny.html"><a href="shiny.html#further-reading-8"><i class="fa fa-check"></i><b>23.8</b> Further reading</a></li>
+</ul></li>
+<li class="part"><span><b>V Miscellaneous</b></span></li>
+<li class="chapter" data-level="24" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html"><i class="fa fa-check"></i><b>24</b> EDA for logistic regression</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#example-a-balance-study"><i class="fa fa-check"></i><b>24.1</b> Example: a balance study</a>
+<ul>
+<li class="chapter" data-level="24.1.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#terminology"><i class="fa fa-check"></i><b>24.1.1</b> Terminology</a></li>
+</ul></li>
+<li class="chapter" data-level="24.2" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#what-to-look-for-in-an-eda"><i class="fa fa-check"></i><b>24.2</b> What to look for in an EDA</a>
+<ul>
+<li class="chapter" data-level="24.2.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#what-to-plot"><i class="fa fa-check"></i><b>24.2.1</b> What to plot</a></li>
+</ul></li>
+<li class="chapter" data-level="24.3" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#investigating-the-experimental-design"><i class="fa fa-check"></i><b>24.3</b> Investigating the experimental design</a></li>
+<li class="chapter" data-level="24.4" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#contingency-tables"><i class="fa fa-check"></i><b>24.4</b> Contingency tables</a></li>
+<li class="chapter" data-level="24.5" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#checking-for-identical-responses"><i class="fa fa-check"></i><b>24.5</b> Checking for identical responses</a></li>
+<li class="chapter" data-level="24.6" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#exploratory-plots"><i class="fa fa-check"></i><b>24.6</b> Exploratory plots</a>
+<ul>
+<li class="chapter" data-level="24.6.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#a-simple-box-plot"><i class="fa fa-check"></i><b>24.6.1</b> A simple box plot</a></li>
+<li class="chapter" data-level="24.6.2" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#interactions"><i class="fa fa-check"></i><b>24.6.2</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="24.7" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plotting-mean-proportions"><i class="fa fa-check"></i><b>24.7</b> Plotting mean proportions</a></li>
+<li class="chapter" data-level="24.8" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plotting-fitted-logistic-regression-lines"><i class="fa fa-check"></i><b>24.8</b> Plotting fitted logistic regression lines</a>
+<ul>
+<li class="chapter" data-level="24.8.1" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plots-with-bernoulli-data"><i class="fa fa-check"></i><b>24.8.1</b> Plots with Bernoulli data</a></li>
+<li class="chapter" data-level="24.8.2" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#plots-with-binomial-n1-data"><i class="fa fa-check"></i><b>24.8.2</b> Plots with Binomial <span class="math inline">\((n&gt;1)\)</span> data</a></li>
+</ul></li>
+<li class="chapter" data-level="24.9" data-path="eda-for-logistic-regression.html"><a href="eda-for-logistic-regression.html#summary"><i class="fa fa-check"></i><b>24.9</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html"><i class="fa fa-check"></i><b>25</b> Example: working with strings</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#importing-the-two-data-files"><i class="fa fa-check"></i><b>25.1</b> Importing the two data files</a></li>
+<li class="chapter" data-level="25.2" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#preliminary-tidying"><i class="fa fa-check"></i><b>25.2</b> Preliminary tidying</a></li>
+<li class="chapter" data-level="25.3" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#approximately-matching-strings"><i class="fa fa-check"></i><b>25.3</b> Approximately matching strings</a></li>
+<li class="chapter" data-level="25.4" data-path="example-working-with-strings.html"><a href="example-working-with-strings.html#assembling-the-target-data-frame"><i class="fa fa-check"></i><b>25.4</b> Assembling the target data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data handling, exploratory analysis, and reporting in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="eda-for-logistic-regression" class="section level1 hasAnchor" number="24">
+<h1><span class="header-section-number">Section 24</span> EDA for logistic regression<a href="eda-for-logistic-regression.html#eda-for-logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this section, we will illustrate an exploratory data analysis for a logistic regression modelling exercise. Two aims of an EDA would be</p>
+<ol style="list-style-type: decimal">
+<li>to understand what models can be fitted; to see what terms can and cannot be included in a model;</li>
+<li>to indicate what conclusions we might make from the modelling, so that we can be more alert to mistakes or problems later on.</li>
+</ol>
+<div id="example-a-balance-study" class="section level2 hasAnchor" number="24.1">
+<h2><span class="header-section-number">24.1</span> Example: a balance study<a href="eda-for-logistic-regression.html#example-a-balance-study" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will use an example given in <span class="citation">(<a href="#ref-Faraway2016">Faraway 2016a</a>)</span>, Section 13.3. (I have also used some of the code provided there). There is a chain of sources for these data! I obtained the data via the package <code>faraway</code> <span class="citation">(<a href="#ref-r-faraway">Faraway 2016b</a>)</span>, which in turn got the data from the “OzDasl”: <a href="http://www.statsci.org/data/oz/ctsib.html">the Australasian Data and Story Library</a>, and the original source for the data is <span class="citation">(<a href="#ref-Steele1998">Steele 1998</a>)</span>.</p>
+<p>For details, see the help file <code>?faraway::ctsib</code>. Quoting the description from the help file:</p>
+<blockquote>
+<p>An experiment was conducted to study the effects of surface and vision on balance. The balance of subjects were observed for two different surfaces and for restricted and unrestricted vision. Balance was assessed qualitatively on an ordinal four-point scale based on observation by the experimenter. Forty subjects were studied, twenty males and twenty females ranging in age from 18 to 38, with heights given in cm and weights in kg. The subjects were tested while standing on foam or a normal surface and with their eyes closed or open or with a dome placed over their head. Each subject was tested twice in each of the surface and eye combinations for a total of 12 measures per subject.</p>
+</blockquote>
+<p>The dependent variable <code>CTSIB</code> was on four point ordinal scale, with 1 meaning ‘stable’ and 4 meaning ‘unstable’. Faraway converted it to binary variable: 1 to represent the original level 1, and 0 to represent the original levels 2-4. I will do the same, and also add in a random, dummy covariate, which we will know for certain is independent of the response. I will also convert the <code>Subject</code> variable (representing the 40 participants in the experiment) to a factor variable:</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="eda-for-logistic-regression.html#cb334-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb334-2"><a href="eda-for-logistic-regression.html#cb334-2" tabindex="-1"></a>balance <span class="ot">&lt;-</span> faraway<span class="sc">::</span>ctsib <span class="sc">%&gt;%</span></span>
+<span id="cb334-3"><a href="eda-for-logistic-regression.html#cb334-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Stable =</span> <span class="fu">ifelse</span>(CTSIB <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb334-4"><a href="eda-for-logistic-regression.html#cb334-4" tabindex="-1"></a>         <span class="at">Subject =</span> <span class="fu">factor</span>(Subject),</span>
+<span id="cb334-5"><a href="eda-for-logistic-regression.html#cb334-5" tabindex="-1"></a>         <span class="at">Dummy =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">480</span>), <span class="dv">1</span>))</span></code></pre></div>
+<p>so the data for our EDA are in the data frame <code>balance</code>:</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="eda-for-logistic-regression.html#cb335-1" tabindex="-1"></a><span class="fu">head</span>(balance)</span></code></pre></div>
+<pre><code>##   Subject  Sex Age Height Weight Surface Vision CTSIB Stable Dummy
+## 1       1 male  22    176   68.2    norm   open     1      1  -0.6
+## 2       1 male  22    176   68.2    norm   open     1      1  -0.2
+## 3       1 male  22    176   68.2    norm closed     2      0   1.6
+## 4       1 male  22    176   68.2    norm closed     2      0   0.1
+## 5       1 male  22    176   68.2    norm   dome     1      1   0.1
+## 6       1 male  22    176   68.2    norm   dome     2      0   1.7</code></pre>
+<div id="terminology" class="section level3 hasAnchor" number="24.1.1">
+<h3><span class="header-section-number">24.1.1</span> Terminology<a href="eda-for-logistic-regression.html#terminology" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ll refer to</p>
+<ul>
+<li><code>Stable</code> as the <strong>dependent</strong> variable, with the observed value referred to as <strong>responses</strong>.</li>
+</ul>
+<p>All the other variables are referred to as <strong>independent</strong> variables, but we will additionally classify</p>
+<ul>
+<li><code>Surface</code> and <code>Vision</code> as <strong>design</strong> variables (these were controlled by the experimenter);</li>
+<li><code>Sex</code>, <code>Age</code>, <code>Height</code> and <code>Weight</code> as (participant-specific) <strong>covariates</strong>;</li>
+<li><code>Subject</code> as the <strong>grouping</strong> variable: we have 40 groups of observations, one group per participant.</li>
+</ul>
+<p>Note that <code>Surface</code>, <code>Vision</code>, <code>Sex</code> and <code>Subject</code> are all <strong>factor</strong> independent variables, as they are all qualitative rather than quantitative.</p>
+</div>
+</div>
+<div id="what-to-look-for-in-an-eda" class="section level2 hasAnchor" number="24.2">
+<h2><span class="header-section-number">24.2</span> What to look for in an EDA<a href="eda-for-logistic-regression.html#what-to-look-for-in-an-eda" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ll aim to develop a general understanding of the data, but there is one critical thing to check:</p>
+<div class="warning">
+<p>
+If there is a setting of the factor independent variables, for which
+the dependent variable is observed always to take the same value (always
+1 or always 0), we will have problems modelling that particular factor
+setting.
+</p>
+</div>
+<p>Suppose we have a model of the form</p>
+<p><span class="math display">\[
+Y_{ij} \sim Bernoulli(p_{i}),\quad \log\left(\frac{p_{i}}{1-p_{i}}\right) = \mu_i
+\]</span>
+where <span class="math inline">\(i=1,\ldots,I\)</span> represents a group, and <span class="math inline">\(j=1,\ldots,n_i\)</span> represents an observation within a group. If, for example, all our observations in group <span class="math inline">\(i=2\)</span> were 1s (so we have observations <span class="math inline">\(y_{2j}=1\)</span> for all <span class="math inline">\(j\)</span>), then the likelihood function would be maximised at <span class="math inline">\(p_2=1\)</span>, i.e. <span class="math inline">\(\mu_2=\infty\)</span>. We couldn’t fit this model with ordinary maximum likelihood, but a Bayesian approach might work (we’d need to supplement the data with other information about <span class="math inline">\(\mu_2\)</span>.)</p>
+<div id="what-to-plot" class="section level3 hasAnchor" number="24.2.1">
+<h3><span class="header-section-number">24.2.1</span> What to plot<a href="eda-for-logistic-regression.html#what-to-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When doing an EDA before ordinary linear modelling, we might make scatter plots of the response variable against each (continuous) independent variable, and box plots of the dependent variable against each factor independent variable. We have to think more carefully about what to plot here; the dependent variable can only be 0 or 1, so basic scatter plots/box plots won’t be helpful. Two possibilities are:</p>
+<ul>
+<li>box plots of continuous independent variable, with the <em>dependent</em> variable thought of as the group variable. This will help us see if a particular response (1 or 0) tends to be associated with low/high values of an independent variable.</li>
+<li>a scatter plot of the <em>proportion</em> of ‘1’ responses against a continuous independent variables, if there are groups of observations with the common values of the independent variable.</li>
+</ul>
+</div>
+</div>
+<div id="investigating-the-experimental-design" class="section level2 hasAnchor" number="24.3">
+<h2><span class="header-section-number">24.3</span> Investigating the experimental design<a href="eda-for-logistic-regression.html#investigating-the-experimental-design" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Firstly, we might look at the data for a single <code>Subject</code>, and just examine the response and design variables. (The data description in <code>?faraway::ctsib</code> tells us that we have a complete factorial design with respect to the design factors and participants, with two replications per combination, but we’ll check this anyway.)</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="eda-for-logistic-regression.html#cb337-1" tabindex="-1"></a>balance <span class="sc">%&gt;%</span></span>
+<span id="cb337-2"><a href="eda-for-logistic-regression.html#cb337-2" tabindex="-1"></a>  <span class="fu">filter</span>(Subject <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb337-3"><a href="eda-for-logistic-regression.html#cb337-3" tabindex="-1"></a>  <span class="fu">select</span>(Surface, Vision, Stable)</span></code></pre></div>
+<pre><code>##    Surface Vision Stable
+## 1     norm   open      1
+## 2     norm   open      1
+## 3     norm closed      0
+## 4     norm closed      0
+## 5     norm   dome      1
+## 6     norm   dome      0
+## 7     foam   open      0
+## 8     foam   open      0
+## 9     foam closed      0
+## 10    foam closed      0
+## 11    foam   dome      0
+## 12    foam   dome      0</code></pre>
+<p>We’ll check the levels of the factor variables <code>Surface</code> and <code>Vision</code>:</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="eda-for-logistic-regression.html#cb339-1" tabindex="-1"></a><span class="fu">levels</span>(balance<span class="sc">$</span>Surface)</span></code></pre></div>
+<pre><code>## [1] &quot;foam&quot; &quot;norm&quot;</code></pre>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="eda-for-logistic-regression.html#cb341-1" tabindex="-1"></a><span class="fu">levels</span>(balance<span class="sc">$</span>Vision)</span></code></pre></div>
+<pre><code>## [1] &quot;closed&quot; &quot;dome&quot;   &quot;open&quot;</code></pre>
+<p>So this confirms that we have each combination of factors, replicated twice, for the first subject.</p>
+<p>We can check all subjects have same number of observations for each surface and vision level, using the <code>count()</code> function to count the number of observations per combination, and then using the <code>summary()</code> function to check that this number is 2 for all combinations.</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="eda-for-logistic-regression.html#cb343-1" tabindex="-1"></a>balance <span class="sc">%&gt;%</span> </span>
+<span id="cb343-2"><a href="eda-for-logistic-regression.html#cb343-2" tabindex="-1"></a>  <span class="fu">count</span>(Subject, Vision, Surface) <span class="sc">%&gt;%</span></span>
+<span id="cb343-3"><a href="eda-for-logistic-regression.html#cb343-3" tabindex="-1"></a>  <span class="fu">pull</span>(n) <span class="sc">%&gt;%</span></span>
+<span id="cb343-4"><a href="eda-for-logistic-regression.html#cb343-4" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       2       2       2       2       2       2</code></pre>
+<p>This confirms that for every <code>Subject</code>, there are two replications for each combination of <code>Vision</code> and <code>Surface</code>.</p>
+</div>
+<div id="contingency-tables" class="section level2 hasAnchor" number="24.4">
+<h2><span class="header-section-number">24.4</span> Contingency tables<a href="eda-for-logistic-regression.html#contingency-tables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can use the <code>xtabs()</code> function to make contingency tables of responses. If the data were unbalanced we’d need to interpret these a little more cautiously, and be alert to Simpson’s paradox.</p>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="eda-for-logistic-regression.html#cb345-1" tabindex="-1"></a><span class="fu">xtabs</span>( <span class="sc">~</span> Sex <span class="sc">+</span> Stable, <span class="at">data =</span> balance)</span></code></pre></div>
+<pre><code>##         Stable
+## Sex        0   1
+##   female 193  47
+##   male   173  67</code></pre>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="eda-for-logistic-regression.html#cb347-1" tabindex="-1"></a><span class="fu">xtabs</span>( <span class="sc">~</span> Surface <span class="sc">+</span> Stable, <span class="at">data =</span> balance)</span></code></pre></div>
+<pre><code>##        Stable
+## Surface   0   1
+##    foam 230  10
+##    norm 136 104</code></pre>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="eda-for-logistic-regression.html#cb349-1" tabindex="-1"></a><span class="fu">xtabs</span>( <span class="sc">~</span> Vision <span class="sc">+</span> Stable, <span class="at">data =</span> balance)</span></code></pre></div>
+<pre><code>##         Stable
+## Vision     0   1
+##   closed 143  17
+##   dome   138  22
+##   open    85  75</code></pre>
+<p>So in conclusion, there appear to be clear effects of <code>Surface</code> and <code>Vision</code>, in the way that we would expect, but there does not appear to be an effect of <code>Sex</code>.</p>
+</div>
+<div id="checking-for-identical-responses" class="section level2 hasAnchor" number="24.5">
+<h2><span class="header-section-number">24.5</span> Checking for identical responses<a href="eda-for-logistic-regression.html#checking-for-identical-responses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will first examine the design factors, and see if there any combinations for which all the responses were stable (or all unstable.)</p>
+<p>We can compute the proportion of stable responses by calculating the mean of <code>Stable</code> for each combination of <code>Surface</code> and <code>Vision</code>:</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="eda-for-logistic-regression.html#cb351-1" tabindex="-1"></a>balance <span class="sc">%&gt;%</span></span>
+<span id="cb351-2"><a href="eda-for-logistic-regression.html#cb351-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Surface, Vision) <span class="sc">%&gt;%</span></span>
+<span id="cb351-3"><a href="eda-for-logistic-regression.html#cb351-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">proportion  =</span> <span class="fu">mean</span>(Stable), <span class="at">.groups =</span> <span class="st">&#39;drop&#39;</span>) </span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+##   Surface Vision proportion
+##   &lt;fct&gt;   &lt;fct&gt;       &lt;dbl&gt;
+## 1 foam    closed      0    
+## 2 foam    dome        0    
+## 3 foam    open        0.125
+## 4 norm    closed      0.212
+## 5 norm    dome        0.275
+## 6 norm    open        0.812</code></pre>
+<p>Alternatively, we can obtain a contingency table with the <code>xtabs()</code> command. We can count the total number of 1s for each combination of <code>Surface</code> and <code>Vision</code> levels, by specifying the dependent variable <code>Stable</code> in the formula argument:</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="eda-for-logistic-regression.html#cb353-1" tabindex="-1"></a><span class="fu">xtabs</span>(Stable <span class="sc">~</span> Surface <span class="sc">+</span> Vision, <span class="at">data =</span> balance)</span></code></pre></div>
+<pre><code>##        Vision
+## Surface closed dome open
+##    foam      0    0   10
+##    norm     17   22   65</code></pre>
+<p>All participants were unstable for <code>foam-closed</code> and <code>foam-dome</code> groups: this would cause problems if we tried to include interaction effects between the <code>Vision</code> and <code>Surface</code> variables.</p>
+<p>We’ll now see if there are any participants (<code>Subject</code>) who were always stable, or always unstable. We have 40 participants, so a contingency table would be quite large, but we can work out the proportion of 1s per <code>Subject</code>, and then make a contingency table of the proportions:</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="eda-for-logistic-regression.html#cb355-1" tabindex="-1"></a>balance <span class="sc">%&gt;%</span> </span>
+<span id="cb355-2"><a href="eda-for-logistic-regression.html#cb355-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Subject) <span class="sc">%&gt;%</span></span>
+<span id="cb355-3"><a href="eda-for-logistic-regression.html#cb355-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanStable =</span> <span class="fu">mean</span>(Stable), <span class="at">.groups =</span> <span class="st">&#39;drop&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb355-4"><a href="eda-for-logistic-regression.html#cb355-4" tabindex="-1"></a>  <span class="fu">count</span>(meanStable) </span></code></pre></div>
+<pre><code>## # A tibble: 8 × 2
+##   meanStable     n
+##        &lt;dbl&gt; &lt;int&gt;
+## 1     0          5
+## 2     0.0833     4
+## 3     0.167     15
+## 4     0.25       3
+## 5     0.333      4
+## 6     0.417      3
+## 7     0.5        4
+## 8     0.667      2</code></pre>
+<p>So there were five subjects who were always unstable. We’d have problems including <code>Subject</code> as a <em>fixed</em> effect, but we could incorporate it as a <em>random</em> effect, as there would be some shrinkage of the random effects towards 0.</p>
+</div>
+<div id="exploratory-plots" class="section level2 hasAnchor" number="24.6">
+<h2><span class="header-section-number">24.6</span> Exploratory plots<a href="eda-for-logistic-regression.html#exploratory-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="a-simple-box-plot" class="section level3 hasAnchor" number="24.6.1">
+<h3><span class="header-section-number">24.6.1</span> A simple box plot<a href="eda-for-logistic-regression.html#a-simple-box-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For continuous independent variables, we can try box plots of each independent variable with the dependent variable treated as a grouping factor. We will create a new variable <code>Stability</code>: the dependent variable <code>Stable</code>, re-defined as a factor variable; we’ll need this for the box plots.</p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="eda-for-logistic-regression.html#cb357-1" tabindex="-1"></a>balance <span class="ot">&lt;-</span> balance <span class="sc">%&gt;%</span></span>
+<span id="cb357-2"><a href="eda-for-logistic-regression.html#cb357-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Stability =</span> <span class="fu">factor</span>(balance<span class="sc">$</span>Stable))</span>
+<span id="cb357-3"><a href="eda-for-logistic-regression.html#cb357-3" tabindex="-1"></a><span class="fu">levels</span>(balance<span class="sc">$</span>Stability) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;unstable&quot;</span>, <span class="st">&quot;stable&quot;</span>)</span></code></pre></div>
+<p>We can then make a box plot, for example, of heights:</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="eda-for-logistic-regression.html#cb358-1" tabindex="-1"></a><span class="fu">ggplot</span>(balance, <span class="fu">aes</span>(<span class="at">x =</span> Stability, <span class="at">y =</span> Height)) <span class="sc">+</span> </span>
+<span id="cb358-2"><a href="eda-for-logistic-regression.html#cb358-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="EDA-R_files/figure-html/unnamed-chunk-287-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="interactions" class="section level3 hasAnchor" number="24.6.2">
+<h3><span class="header-section-number">24.6.2</span> Interactions<a href="eda-for-logistic-regression.html#interactions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can visualise possible interaction effects between a continuous independent variable and a factor independent variable, by setting additional aesthetics. We could map <code>Sex</code> to colour:</p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="eda-for-logistic-regression.html#cb359-1" tabindex="-1"></a><span class="fu">ggplot</span>(balance, <span class="fu">aes</span>(<span class="at">x =</span> Stability, <span class="at">y =</span> Height,</span>
+<span id="cb359-2"><a href="eda-for-logistic-regression.html#cb359-2" tabindex="-1"></a>                    <span class="at">colour =</span> Sex)) <span class="sc">+</span> </span>
+<span id="cb359-3"><a href="eda-for-logistic-regression.html#cb359-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="EDA-R_files/figure-html/unnamed-chunk-288-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>but this is perhaps a little confusing, because the main result this plot appears to present is the relationship between <code>Sex</code> and <code>Height</code>. It might be better to map the dependent variable onto colour here:</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="eda-for-logistic-regression.html#cb360-1" tabindex="-1"></a><span class="fu">ggplot</span>(balance, <span class="fu">aes</span>(<span class="at">x =</span> Sex, <span class="at">y =</span> Height,</span>
+<span id="cb360-2"><a href="eda-for-logistic-regression.html#cb360-2" tabindex="-1"></a>                    <span class="at">colour =</span> Stability)) <span class="sc">+</span> </span>
+<span id="cb360-3"><a href="eda-for-logistic-regression.html#cb360-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="EDA-R_files/figure-html/unnamed-chunk-289-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>We will now draw box plots for all four continuous independent variables, again, split by sex. The plot involving the <code>Dummy</code> variable can be useful here, to give us an idea of what we might see purely by chance.</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="eda-for-logistic-regression.html#cb361-1" tabindex="-1"></a>balance <span class="ot">&lt;-</span> balance <span class="sc">%&gt;%</span></span>
+<span id="cb361-2"><a href="eda-for-logistic-regression.html#cb361-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Stability =</span> <span class="fu">factor</span>(balance<span class="sc">$</span>Stable))</span>
+<span id="cb361-3"><a href="eda-for-logistic-regression.html#cb361-3" tabindex="-1"></a><span class="fu">levels</span>(balance<span class="sc">$</span>Stability) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;unstable&quot;</span>, <span class="st">&quot;stable&quot;</span>)</span>
+<span id="cb361-4"><a href="eda-for-logistic-regression.html#cb361-4" tabindex="-1"></a></span>
+<span id="cb361-5"><a href="eda-for-logistic-regression.html#cb361-5" tabindex="-1"></a></span>
+<span id="cb361-6"><a href="eda-for-logistic-regression.html#cb361-6" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(balance, <span class="fu">aes</span>(<span class="at">x =</span> Sex, <span class="at">y =</span> Height,</span>
+<span id="cb361-7"><a href="eda-for-logistic-regression.html#cb361-7" tabindex="-1"></a>                          <span class="at">colour =</span> Stability)) <span class="sc">+</span> </span>
+<span id="cb361-8"><a href="eda-for-logistic-regression.html#cb361-8" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb361-9"><a href="eda-for-logistic-regression.html#cb361-9" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(balance, <span class="fu">aes</span>(<span class="at">x =</span> Sex, <span class="at">y =</span> Weight,</span>
+<span id="cb361-10"><a href="eda-for-logistic-regression.html#cb361-10" tabindex="-1"></a>                          <span class="at">colour =</span> Stability)) <span class="sc">+</span> </span>
+<span id="cb361-11"><a href="eda-for-logistic-regression.html#cb361-11" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb361-12"><a href="eda-for-logistic-regression.html#cb361-12" tabindex="-1"></a></span>
+<span id="cb361-13"><a href="eda-for-logistic-regression.html#cb361-13" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(balance, <span class="fu">aes</span>(<span class="at">x =</span> Sex, <span class="at">y =</span> Age,</span>
+<span id="cb361-14"><a href="eda-for-logistic-regression.html#cb361-14" tabindex="-1"></a>                          <span class="at">colour =</span> Stability)) <span class="sc">+</span> </span>
+<span id="cb361-15"><a href="eda-for-logistic-regression.html#cb361-15" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb361-16"><a href="eda-for-logistic-regression.html#cb361-16" tabindex="-1"></a></span>
+<span id="cb361-17"><a href="eda-for-logistic-regression.html#cb361-17" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(balance, <span class="fu">aes</span>(<span class="at">x =</span> Sex, <span class="at">y =</span> Dummy,</span>
+<span id="cb361-18"><a href="eda-for-logistic-regression.html#cb361-18" tabindex="-1"></a>                          <span class="at">colour =</span> Stability)) <span class="sc">+</span> </span>
+<span id="cb361-19"><a href="eda-for-logistic-regression.html#cb361-19" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb361-20"><a href="eda-for-logistic-regression.html#cb361-20" tabindex="-1"></a></span>
+<span id="cb361-21"><a href="eda-for-logistic-regression.html#cb361-21" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(p1, p2, p3,p4,  <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="EDA-R_files/figure-html/unnamed-chunk-290-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="plotting-mean-proportions" class="section level2 hasAnchor" number="24.7">
+<h2><span class="header-section-number">24.7</span> Plotting mean proportions<a href="eda-for-logistic-regression.html#plotting-mean-proportions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If we compute the proportion of stable responses for each subject, that gives us a quantitative dependent variable that we can use in plots involving the participant-specific covariates. We’ll make a new data frame, and include the <code>height</code> variable as an example:</p>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="eda-for-logistic-regression.html#cb362-1" tabindex="-1"></a>balanceGrouped <span class="ot">&lt;-</span> balance <span class="sc">%&gt;%</span> </span>
+<span id="cb362-2"><a href="eda-for-logistic-regression.html#cb362-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Subject) <span class="sc">%&gt;%</span></span>
+<span id="cb362-3"><a href="eda-for-logistic-regression.html#cb362-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">proportionStable =</span> <span class="fu">mean</span>(Stable),</span>
+<span id="cb362-4"><a href="eda-for-logistic-regression.html#cb362-4" tabindex="-1"></a>            <span class="at">Sex =</span> Sex[<span class="dv">1</span>],</span>
+<span id="cb362-5"><a href="eda-for-logistic-regression.html#cb362-5" tabindex="-1"></a>            <span class="at">Height =</span> Height[<span class="dv">1</span>],</span>
+<span id="cb362-6"><a href="eda-for-logistic-regression.html#cb362-6" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">&#39;drop&#39;</span>)</span>
+<span id="cb362-7"><a href="eda-for-logistic-regression.html#cb362-7" tabindex="-1"></a><span class="fu">head</span>(balanceGrouped)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 4
+##   Subject proportionStable Sex    Height
+##   &lt;fct&gt;              &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;
+## 1 1                 0.25   male     176 
+## 2 2                 0.167  male     181 
+## 3 3                 0      male     176.
+## 4 4                 0.0833 male     180 
+## 5 5                 0.0833 female   166 
+## 6 6                 0.417  male     177</code></pre>
+<p>Now we can make a scatter plot (with points coloured by Sex):</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="eda-for-logistic-regression.html#cb364-1" tabindex="-1"></a><span class="fu">ggplot</span>(balanceGrouped, <span class="fu">aes</span>(<span class="at">x =</span> Height, <span class="at">y =</span> proportionStable,</span>
+<span id="cb364-2"><a href="eda-for-logistic-regression.html#cb364-2" tabindex="-1"></a>                           <span class="at">col =</span> Sex))<span class="sc">+</span></span>
+<span id="cb364-3"><a href="eda-for-logistic-regression.html#cb364-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span></code></pre></div>
+<p><img src="EDA-R_files/figure-html/unnamed-chunk-292-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plotting-fitted-logistic-regression-lines" class="section level2 hasAnchor" number="24.8">
+<h2><span class="header-section-number">24.8</span> Plotting fitted logistic regression lines<a href="eda-for-logistic-regression.html#plotting-fitted-logistic-regression-lines" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="plots-with-bernoulli-data" class="section level3 hasAnchor" number="24.8.1">
+<h3><span class="header-section-number">24.8.1</span> Plots with Bernoulli data<a href="eda-for-logistic-regression.html#plots-with-bernoulli-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can add fitted regression lines easily with the <code>geom_smooth</code> command. To visualise how this works more easily, we’ll generate a dataset from a logistic regression model
+<span class="math display">\[
+Y_i|x_i \sim Bernoulli(p_i),\quad\quad \log\left(\frac{p_i}{1-p_i}\right) = x_i.
+\]</span></p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="eda-for-logistic-regression.html#cb365-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb365-2"><a href="eda-for-logistic-regression.html#cb365-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">5</span>, <span class="at">to =</span> <span class="dv">5</span>, <span class="at">length =</span> <span class="dv">100</span>)</span>
+<span id="cb365-3"><a href="eda-for-logistic-regression.html#cb365-3" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">exp</span>(x) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(x))</span>
+<span id="cb365-4"><a href="eda-for-logistic-regression.html#cb365-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">100</span>, <span class="dv">1</span>, p)</span>
+<span id="cb365-5"><a href="eda-for-logistic-regression.html#cb365-5" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, y, p)</span></code></pre></div>
+<p>We can then draw a scatter plot as normal, and add in some extra arguments to <code>geom_smooth()</code> to specify the model. (This uses the syntax from the <code>glm</code> command: this will be covered in detail in Semester 2.) We’ll also add in the true regression line, as a red dashed line.</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="eda-for-logistic-regression.html#cb366-1" tabindex="-1"></a><span class="fu">ggplot</span>(df1, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y))<span class="sc">+</span></span>
+<span id="cb366-2"><a href="eda-for-logistic-regression.html#cb366-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb366-3"><a href="eda-for-logistic-regression.html#cb366-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;glm&quot;</span>, <span class="at">formula =</span> <span class="st">&#39;y~x&#39;</span>,</span>
+<span id="cb366-4"><a href="eda-for-logistic-regression.html#cb366-4" tabindex="-1"></a>              <span class="at">method.args=</span><span class="fu">list</span>(<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>),</span>
+<span id="cb366-5"><a href="eda-for-logistic-regression.html#cb366-5" tabindex="-1"></a>              <span class="at">se=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb366-6"><a href="eda-for-logistic-regression.html#cb366-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> p), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<p><img src="EDA-R_files/figure-html/unnamed-chunk-294-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plots-with-binomial-n1-data" class="section level3 hasAnchor" number="24.8.2">
+<h3><span class="header-section-number">24.8.2</span> Plots with Binomial <span class="math inline">\((n&gt;1)\)</span> data<a href="eda-for-logistic-regression.html#plots-with-binomial-n1-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If the data can be grouped by the covariate value, it may be preferable to plot proportions on the <span class="math inline">\(y\)</span> axis. Suppose our model is</p>
+<p><span class="math display">\[
+Y_{ij}|x_i \sim Bernoulli(p_i),\quad\quad \log\left(\frac{p_i}{1-p_i}\right) = x_i, \quad j= 1,\ldots,n_i,
+\]</span>
+so that
+<span class="math display">\[
+\sum_{j=1}^{n_i}Y_{ij}|x_i \sim Binomial(n_i, p_i)
+\]</span></p>
+<p>Given the observations <span class="math inline">\(y_{ij}\)</span>, we can plot <span class="math inline">\(\frac{1}{n_i}\sum_{j=1}^{n_i}y_{ij}\)</span> against <span class="math inline">\(x_i\)</span>. To illustrate this, first, we’ll make an example data set.</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="eda-for-logistic-regression.html#cb367-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb367-2"><a href="eda-for-logistic-regression.html#cb367-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">5</span>, <span class="at">to =</span> <span class="dv">5</span>, <span class="at">length =</span> <span class="dv">10</span>)</span>
+<span id="cb367-3"><a href="eda-for-logistic-regression.html#cb367-3" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">exp</span>(x) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(x))</span>
+<span id="cb367-4"><a href="eda-for-logistic-regression.html#cb367-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">10</span>, <span class="dv">10</span>, p)</span>
+<span id="cb367-5"><a href="eda-for-logistic-regression.html#cb367-5" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, <span class="at">proportion =</span> y <span class="sc">/</span> <span class="dv">10</span>, p, <span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p>We will need to map the sample sizes <span class="math inline">\(n_i\)</span> to an aesthetic <code>weight</code>.</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="eda-for-logistic-regression.html#cb368-1" tabindex="-1"></a><span class="fu">ggplot</span>(df2, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> proportion, <span class="at">weight =</span> n))<span class="sc">+</span></span>
+<span id="cb368-2"><a href="eda-for-logistic-regression.html#cb368-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb368-3"><a href="eda-for-logistic-regression.html#cb368-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;glm&quot;</span>, <span class="at">formula =</span> <span class="st">&#39;y~x&#39;</span>,</span>
+<span id="cb368-4"><a href="eda-for-logistic-regression.html#cb368-4" tabindex="-1"></a>              <span class="at">method.args=</span><span class="fu">list</span>(<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>),</span>
+<span id="cb368-5"><a href="eda-for-logistic-regression.html#cb368-5" tabindex="-1"></a>              <span class="at">se=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb368-6"><a href="eda-for-logistic-regression.html#cb368-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> p), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<p><img src="EDA-R_files/figure-html/unnamed-chunk-296-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>We can try this on the balance data. I’d leave out the standard errors in the <code>geom_smooth()</code>, as the model assumptions are (probably ) not valid here; this plot ignores <code>Subject</code>, <code>Vision</code> and <code>Surface</code> effects.</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="eda-for-logistic-regression.html#cb369-1" tabindex="-1"></a>balanceGrouped <span class="sc">%&gt;%</span></span>
+<span id="cb369-2"><a href="eda-for-logistic-regression.html#cb369-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">w =</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb369-3"><a href="eda-for-logistic-regression.html#cb369-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Height, <span class="at">y =</span> proportionStable,</span>
+<span id="cb369-4"><a href="eda-for-logistic-regression.html#cb369-4" tabindex="-1"></a>             <span class="at">weight =</span> w, <span class="at">col =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb369-5"><a href="eda-for-logistic-regression.html#cb369-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb369-6"><a href="eda-for-logistic-regression.html#cb369-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;glm&quot;</span>,</span>
+<span id="cb369-7"><a href="eda-for-logistic-regression.html#cb369-7" tabindex="-1"></a>              <span class="at">method.args=</span><span class="fu">list</span>(<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>),</span>
+<span id="cb369-8"><a href="eda-for-logistic-regression.html#cb369-8" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="EDA-R_files/figure-html/unnamed-chunk-297-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="summary" class="section level2 hasAnchor" number="24.9">
+<h2><span class="header-section-number">24.9</span> Summary<a href="eda-for-logistic-regression.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To summarise what we’ve learned from our EDA:</p>
+<ul>
+<li><code>Vision</code> and <code>Surface</code> clearly have an effect on the dependent variable;</li>
+<li>we would have problems fitting a logistic regression model with a <code>Vision</code>-<code>Surface</code> interaction, and/or fixed effects for <code>Subject</code> (unless we tried a Bayesian approach; priors could help here.)</li>
+<li>there does appear to be variability between <code>Subjects</code>; we should incorporate <code>Subject</code> as a random effect;</li>
+<li>the <code>Subject</code> specific covariates (<code>Age</code>, <code>Sex</code>, <code>Height</code>, <code>Weight</code>) don’t appear to have significant effects, perhaps with the exception of a <code>Sex</code>-<code>Height</code> interaction, though the evidence is likely to be weak.</li>
+</ul>
+
+</div>
+</div>
+<h3>References<a href="references-1.html#references-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-Faraway2016" class="csl-entry">
+Faraway, Julian J. 2016a. <em>Extending the Linear Model with r : Generalized Linear, Mixed Effects and Nonparametric Regression Models</em>. Second edition. A Chapman and Hall Book. Boca Raton, Florida ; London, [England] ; New York: CRC Press.
+</div>
+<div id="ref-r-faraway" class="csl-entry">
+———. 2016b. <em>Faraway: Functions and Datasets for Books by Julian Faraway</em>. <a href="https://CRAN.R-project.org/package=faraway">https://CRAN.R-project.org/package=faraway</a>.
+</div>
+<div id="ref-Steele1998" class="csl-entry">
+Steele, R. 1998. <span>“Effect of Surface and Vision on Balance.”</span> PhD thesis, University of Queensland: Department of Physiotherapy.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="shiny.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="example-working-with-strings.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
