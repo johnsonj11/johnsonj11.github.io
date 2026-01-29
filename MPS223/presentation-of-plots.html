@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 9 Presentation of plots | MPS223 - Mathematics and Statistics in Action</title>
+  <meta name="description" content="MPS223" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 9 Presentation of plots | MPS223 - Mathematics and Statistics in Action" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="MPS223" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 9 Presentation of plots | MPS223 - Mathematics and Statistics in Action" />
+  
+  <meta name="twitter:description" content="MPS223" />
+  
+
+<meta name="author" content="" />
+
+
+<meta name="date" content="2026-01-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="making-plots-with-ggplot2---recap.html"/>
+<link rel="next" href="maps-with-leaflet.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MPS223</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About these notes</a></li>
+<li class="chapter" data-level="1" data-path="set-up-your-r-environment.html"><a href="set-up-your-r-environment.html"><i class="fa fa-check"></i><b>1</b> Set up your R environment</a></li>
+<li class="chapter" data-level="2" data-path="project-overview.html"><a href="project-overview.html"><i class="fa fa-check"></i><b>2</b> Project overview</a></li>
+<li class="part"><span><b>I Data processing</b></span></li>
+<li class="chapter" data-level="3" data-path="importing-data.html"><a href="importing-data.html"><i class="fa fa-check"></i><b>3</b> Importing data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="importing-data.html"><a href="importing-data.html#importing-a-.csv-file"><i class="fa fa-check"></i><b>3.1</b> Importing a .csv file</a></li>
+<li class="chapter" data-level="3.2" data-path="importing-data.html"><a href="importing-data.html#importing-excel-.xlsx-files"><i class="fa fa-check"></i><b>3.2</b> Importing Excel .xlsx files</a></li>
+<li class="chapter" data-level="3.3" data-path="importing-data.html"><a href="importing-data.html#importing-a-plain-text-file"><i class="fa fa-check"></i><b>3.3</b> Importing a plain text file</a></li>
+<li class="chapter" data-level="3.4" data-path="importing-data.html"><a href="importing-data.html#importing-online-data"><i class="fa fa-check"></i><b>3.4</b> Importing online data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="strings.html"><a href="strings.html"><i class="fa fa-check"></i><b>4</b> Strings</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="strings.html"><a href="strings.html#example-fictitous-exam-mark-data"><i class="fa fa-check"></i><b>4.1</b> Example: (fictitous) exam mark data</a></li>
+<li class="chapter" data-level="4.2" data-path="strings.html"><a href="strings.html#importing-text-data-with-read_lines"><i class="fa fa-check"></i><b>4.2</b> Importing text data with <code>read_lines()</code></a></li>
+<li class="chapter" data-level="4.3" data-path="strings.html"><a href="strings.html#finding-and-replacing-characters-in-strings"><i class="fa fa-check"></i><b>4.3</b> Finding (and replacing) characters in strings</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="strings.html"><a href="strings.html#finding-text-with-str_which"><i class="fa fa-check"></i><b>4.3.1</b> Finding text with <code>str_which()</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="strings.html"><a href="strings.html#escape-characters-and-regular-expressions"><i class="fa fa-check"></i><b>4.3.2</b> Escape characters and regular expressions</a></li>
+<li class="chapter" data-level="4.3.3" data-path="strings.html"><a href="strings.html#replacing-or-removing-text"><i class="fa fa-check"></i><b>4.3.3</b> Replacing or removing text</a></li>
+<li class="chapter" data-level="4.3.4" data-path="strings.html"><a href="strings.html#removing-white-space-at-startend-of-strings"><i class="fa fa-check"></i><b>4.3.4</b> Removing white space at start/end of strings</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="strings.html"><a href="strings.html#subsetting-strings"><i class="fa fa-check"></i><b>4.4</b> Subsetting strings</a></li>
+<li class="chapter" data-level="4.5" data-path="strings.html"><a href="strings.html#making-a-data-frame"><i class="fa fa-check"></i><b>4.5</b> Making a data frame</a></li>
+<li class="chapter" data-level="4.6" data-path="strings.html"><a href="strings.html#exercise"><i class="fa fa-check"></i><b>4.6</b> Exercise</a></li>
+<li class="chapter" data-level="4.7" data-path="strings.html"><a href="strings.html#further-reading"><i class="fa fa-check"></i><b>4.7</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html"><i class="fa fa-check"></i><b>5</b> Manipulating data frames - recap</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>5.1</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="5.2" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>5.2</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="5.3" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>5.3</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="5.4" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>5.4</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="5.5" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>5.5</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html"><i class="fa fa-check"></i><b>6</b> Summary statistics - recap</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#calculating-summary-statistics-with-the-summary-command"><i class="fa fa-check"></i><b>6.1</b> Calculating summary statistics with the <code>summary()</code> command</a></li>
+<li class="chapter" data-level="6.2" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#calculating-individual-summary-statistics"><i class="fa fa-check"></i><b>6.2</b> Calculating individual summary statistics</a></li>
+<li class="chapter" data-level="6.3" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>6.3</b> Computing summaries per group</a></li>
+<li class="chapter" data-level="6.4" data-path="summary-statistics---recap.html"><a href="summary-statistics---recap.html#exercise-1"><i class="fa fa-check"></i><b>6.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>7</b> Missing data</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="missing-data.html"><a href="missing-data.html#na"><i class="fa fa-check"></i><b>7.1</b> <code>NA</code></a></li>
+<li class="chapter" data-level="7.2" data-path="missing-data.html"><a href="missing-data.html#functions-and-na"><i class="fa fa-check"></i><b>7.2</b> Functions and <code>NA</code></a></li>
+</ul></li>
+<li class="part"><span><b>II Plotting data</b></span></li>
+<li class="chapter" data-level="8" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html"><i class="fa fa-check"></i><b>8</b> Making plots with <code>ggplot2</code> - recap</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#the-general-syntax"><i class="fa fa-check"></i><b>8.1</b> The general syntax</a></li>
+<li class="chapter" data-level="8.2" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#scatter-plots"><i class="fa fa-check"></i><b>8.2</b> Scatter plots</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#annotating-a-scatter-plot"><i class="fa fa-check"></i><b>8.2.1</b> Annotating a scatter plot</a></li>
+<li class="chapter" data-level="8.2.2" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#adding-a-trend"><i class="fa fa-check"></i><b>8.2.2</b> Adding a trend</a></li>
+<li class="chapter" data-level="8.2.3" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#representing-more-than-two-variables-on-a-scatter-plot"><i class="fa fa-check"></i><b>8.2.3</b> Representing more than two variables on a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#histograms"><i class="fa fa-check"></i><b>8.3</b> Histograms</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>8.3.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#box-plots"><i class="fa fa-check"></i><b>8.4</b> Box plots</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#adding-the-observations-to-a-box-plot"><i class="fa fa-check"></i><b>8.4.1</b> Adding the observations to a box plot</a></li>
+<li class="chapter" data-level="8.4.2" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#violin-plots"><i class="fa fa-check"></i><b>8.4.2</b> Violin plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#global-aesthetics"><i class="fa fa-check"></i><b>8.5</b> ‘Global’ aesthetics</a></li>
+<li class="chapter" data-level="8.6" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#facets"><i class="fa fa-check"></i><b>8.6</b> Facets</a></li>
+<li class="chapter" data-level="8.7" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#exBrexitPlots"><i class="fa fa-check"></i><b>8.7</b> Exercises</a></li>
+<li class="chapter" data-level="8.8" data-path="making-plots-with-ggplot2---recap.html"><a href="making-plots-with-ggplot2---recap.html#further-reading-1"><i class="fa fa-check"></i><b>8.8</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html"><i class="fa fa-check"></i><b>9</b> Presentation of plots</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-basics"><i class="fa fa-check"></i><b>9.1</b> The basics</a></li>
+<li class="chapter" data-level="9.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-caption-test"><i class="fa fa-check"></i><b>9.2</b> The caption test</a></li>
+<li class="chapter" data-level="9.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#caption-or-title"><i class="fa fa-check"></i><b>9.3</b> Caption or title?</a></li>
+<li class="chapter" data-level="9.4" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#customising-the-appearance-of-a-plot"><i class="fa fa-check"></i><b>9.4</b> Customising the appearance of a plot</a></li>
+<li class="chapter" data-level="9.5" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#refining-a-plot-an-example"><i class="fa fa-check"></i><b>9.5</b> Refining a plot: an example</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#the-data-to-plot"><i class="fa fa-check"></i><b>9.5.1</b> The data to plot</a></li>
+<li class="chapter" data-level="9.5.2" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#a-first-attempt-four-histograms"><i class="fa fa-check"></i><b>9.5.2</b> A first attempt: four histograms</a></li>
+<li class="chapter" data-level="9.5.3" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#using-a-box-plot"><i class="fa fa-check"></i><b>9.5.3</b> Using a box plot</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#exercises"><i class="fa fa-check"></i><b>9.6</b> Exercises</a></li>
+<li class="chapter" data-level="9.7" data-path="presentation-of-plots.html"><a href="presentation-of-plots.html#data-sources"><i class="fa fa-check"></i><b>9.7</b> Data sources</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html"><i class="fa fa-check"></i><b>10</b> Maps with <code>leaflet</code></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#a-basic-map"><i class="fa fa-check"></i><b>10.1</b> A basic map</a></li>
+<li class="chapter" data-level="10.2" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#indicating-points-on-a-map"><i class="fa fa-check"></i><b>10.2</b> Indicating points on a map</a></li>
+<li class="chapter" data-level="10.3" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#exercise-2"><i class="fa fa-check"></i><b>10.3</b> Exercise</a></li>
+<li class="chapter" data-level="10.4" data-path="maps-with-leaflet.html"><a href="maps-with-leaflet.html#further-reading-2"><i class="fa fa-check"></i><b>10.4</b> Further reading</a></li>
+</ul></li>
+<li class="part"><span><b>III Statistical analysis</b></span></li>
+<li class="chapter" data-level="11" data-path="computing-using-loops.html"><a href="computing-using-loops.html"><i class="fa fa-check"></i><b>11</b> Computing using loops</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="computing-using-loops.html"><a href="computing-using-loops.html#repeating-a-process-with-a-for-loop"><i class="fa fa-check"></i><b>11.1</b> Repeating a process with a <code>for</code> loop</a></li>
+<li class="chapter" data-level="11.2" data-path="computing-using-loops.html"><a href="computing-using-loops.html#example-cleaning-two-text-files"><i class="fa fa-check"></i><b>11.2</b> Example: cleaning two text files</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="computing-using-loops.html"><a href="computing-using-loops.html#the-core-code-block"><i class="fa fa-check"></i><b>11.2.1</b> The core code block</a></li>
+<li class="chapter" data-level="11.2.2" data-path="computing-using-loops.html"><a href="computing-using-loops.html#identify-the-variables-we-need-to-specify"><i class="fa fa-check"></i><b>11.2.2</b> Identify the variables we need to specify</a></li>
+<li class="chapter" data-level="11.2.3" data-path="computing-using-loops.html"><a href="computing-using-loops.html#create-an-empty-list-to-store-the-results"><i class="fa fa-check"></i><b>11.2.3</b> Create an empty list to store the results</a></li>
+<li class="chapter" data-level="11.2.4" data-path="computing-using-loops.html"><a href="computing-using-loops.html#use-a-for-loop-to-run-the-code-block-multiple-times"><i class="fa fa-check"></i><b>11.2.4</b> Use a for loop to run the code block multiple times</a></li>
+<li class="chapter" data-level="11.2.5" data-path="computing-using-loops.html"><a href="computing-using-loops.html#convert-the-list-to-a-data-frame"><i class="fa fa-check"></i><b>11.2.5</b> Convert the list to a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="computing-using-loops.html"><a href="computing-using-loops.html#example-averaging-over-groups"><i class="fa fa-check"></i><b>11.3</b> Example: averaging over groups</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="computing-using-loops.html"><a href="computing-using-loops.html#the-core-code-block-1"><i class="fa fa-check"></i><b>11.3.1</b> The core code block</a></li>
+<li class="chapter" data-level="11.3.2" data-path="computing-using-loops.html"><a href="computing-using-loops.html#identify-the-variables-we-need-to-specify-1"><i class="fa fa-check"></i><b>11.3.2</b> Identify the variables we need to specify</a></li>
+<li class="chapter" data-level="11.3.3" data-path="computing-using-loops.html"><a href="computing-using-loops.html#create-an-empty-vector-to-store-the-results"><i class="fa fa-check"></i><b>11.3.3</b> Create an empty vector to store the results</a></li>
+<li class="chapter" data-level="11.3.4" data-path="computing-using-loops.html"><a href="computing-using-loops.html#use-a-for-loop-to-run-the-code-block-multiple-times-1"><i class="fa fa-check"></i><b>11.3.4</b> Use a <code>for</code> loop to run the code block multiple times</a></li>
+<li class="chapter" data-level="11.3.5" data-path="computing-using-loops.html"><a href="computing-using-loops.html#convert-the-vector-to-a-data-frame"><i class="fa fa-check"></i><b>11.3.5</b> Convert the vector to a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="computing-using-loops.html"><a href="computing-using-loops.html#exercise-3"><i class="fa fa-check"></i><b>11.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="relationships-in-data.html"><a href="relationships-in-data.html"><i class="fa fa-check"></i><b>12</b> Relationships in data</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#covariance-and-correlation---recap"><i class="fa fa-check"></i><b>12.1</b> Covariance and correlation - recap</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#covariance"><i class="fa fa-check"></i><b>12.1.1</b> Covariance</a></li>
+<li class="chapter" data-level="12.1.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#pearsons-correlation-coefficient"><i class="fa fa-check"></i><b>12.1.2</b> Pearson’s correlation coefficient</a></li>
+<li class="chapter" data-level="12.1.3" data-path="relationships-in-data.html"><a href="relationships-in-data.html#spearmans-correlation-coefficient"><i class="fa fa-check"></i><b>12.1.3</b> Spearman’s correlation coefficient</a></li>
+<li class="chapter" data-level="12.1.4" data-path="relationships-in-data.html"><a href="relationships-in-data.html#correlations-for-the-trees-data-set"><i class="fa fa-check"></i><b>12.1.4</b> Correlations for the <code>trees</code> data set</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#simple-linear-regression"><i class="fa fa-check"></i><b>12.2</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#fitting-the-simple-linear-regression-model-in-r"><i class="fa fa-check"></i><b>12.2.1</b> Fitting the simple linear regression model in R</a></li>
+<li class="chapter" data-level="12.2.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#prediction-from-the-fitted-model"><i class="fa fa-check"></i><b>12.2.2</b> Prediction from the fitted model</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="relationships-in-data.html"><a href="relationships-in-data.html#exploring-variation-over-time"><i class="fa fa-check"></i><b>12.3</b> Exploring variation over time</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="relationships-in-data.html"><a href="relationships-in-data.html#trends"><i class="fa fa-check"></i><b>12.3.1</b> Trends</a></li>
+<li class="chapter" data-level="12.3.2" data-path="relationships-in-data.html"><a href="relationships-in-data.html#seasonality"><i class="fa fa-check"></i><b>12.3.2</b> Seasonality</a></li>
+<li class="chapter" data-level="12.3.3" data-path="relationships-in-data.html"><a href="relationships-in-data.html#temporal-dependence"><i class="fa fa-check"></i><b>12.3.3</b> Temporal dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="relationships-in-data.html"><a href="relationships-in-data.html#exercise-4"><i class="fa fa-check"></i><b>12.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="imputing-missing-data.html"><a href="imputing-missing-data.html"><i class="fa fa-check"></i><b>13</b> Imputing missing data</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="imputing-missing-data.html"><a href="imputing-missing-data.html#visualising-missing-data"><i class="fa fa-check"></i><b>13.1</b> Visualising missing data</a></li>
+<li class="chapter" data-level="13.2" data-path="imputing-missing-data.html"><a href="imputing-missing-data.html#exercise-5"><i class="fa fa-check"></i><b>13.2</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MPS223 - Mathematics and Statistics in Action</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="presentation-of-plots" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Section 9</span> Presentation of plots<a href="presentation-of-plots.html#presentation-of-plots" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<script type="text/javascript">
+$(document).ready(function() {
+  $folds = $(".fold");
+  $folds.wrapInner("<div class=\"fold-blck\">"); // wrap a div container around content
+  $folds.prepend("<button class=\"fold-btn\">Show hint</button>");  // add a button
+  $(".fold-blck").toggle();  // fold all blocks
+  $(".fold-btn").on("click", function() {  // add onClick event
+    $(this).text($(this).text() === "Show hint" ? "Hide hint" : "Show hint");  // if the text equals "Fold", change it to "Unfold"or else to "Fold" 
+    $(this).next(".fold-blck").toggle("linear");  // "swing" is the default easing function. This can be further customized in its speed or the overall animation itself.
+  })
+});
+</script>
+<p>It is important to think carefully about how you present your plots to others. With minimal plotting commands you can obtain a plot quickly and easily, <em>but it is unlikely it will be suitable for including in a report</em>.</p>
+<p>For this chapter, you will need to install the <code>MAS6005</code> package, which is available on GitHub only. Install it with the commands:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="presentation-of-plots.html#cb109-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb109-2"><a href="presentation-of-plots.html#cb109-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;OakleyJ/MAS6005&quot;</span>)</span></code></pre></div>
+<div id="the-basics" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> The basics<a href="presentation-of-plots.html#the-basics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Using the <code>mtcars</code> data frame in R, we’ll make a scatter plot of miles per gallon against weight. For more information about the data and these variables, use <code>?mtcars</code>. Suppose we use the following code, and the figure below is used in a written report:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="presentation-of-plots.html#cb110-1" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb110-2"><a href="presentation-of-plots.html#cb110-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-93"></span>
+<img src="EDA-R_files/figure-html/unnamed-chunk-93-1.png" alt="Fuel economy and weight." width="384" />
+<p class="caption">
+Figure 9.1: Fuel economy and weight.
+</p>
+</div>
+<p>This standard of presentation would be unacceptable in any presentation or report! To improve the figure, we should:</p>
+<ol style="list-style-type: decimal">
+<li><p>include proper axes labels: never simply use the R variable names;</p></li>
+<li><p>specify the units;</p></li>
+<li><p>give sufficiently detailed captions so that the figure can be understood on its own, <strong>and</strong> include a conclusion: what do we learn from the figure?</p></li>
+</ol>
+<p>The first two points are obvious, but the third is perhaps less so, so we’ll discuss this a little more.</p>
+</div>
+<div id="the-caption-test" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> The caption test<a href="presentation-of-plots.html#the-caption-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You may be unsure as to whether you should include a particular plot or not. You may be tempted to ‘err on the safe side’ by including the plot, but if the plot doesn’t tell the reader anything useful this will just lead to a bloated report. A simple test to apply is as follows.</p>
+<blockquote>
+<p>State, in your caption, what <strong>conclusion</strong> the reader should draw from looking at the plot. If you can’t think of anything to say, this probably means that there’s nothing useful to be learned from your plot: so leave it out of your report!</p>
+</blockquote>
+<p>This doesn’t mean, for example, that a plot must show an interesting relationship between two variables; a plot may suggest that two variables are unrelated; that can still be informative to a reader. There will also be exceptions: it may be helpful to include a plot simply to show what data are available, but it should be obvious when you need to apply the caption test.</p>
+<p>It’s also good practice to state the data source in the caption. So in summary, the caption should include:</p>
+<ol style="list-style-type: decimal">
+<li>a title for the plot;</li>
+<li>a conclusion that can be drawn from the plot;</li>
+<li>the source of the data, if appropriate.</li>
+</ol>
+<p>Putting this all together, an improvement would be</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="presentation-of-plots.html#cb111-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb111-2"><a href="presentation-of-plots.html#cb111-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb111-3"><a href="presentation-of-plots.html#cb111-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Weight (lb/1000)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Miles / (US) gallon&quot;</span>) </span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-94"></span>
+<img src="EDA-R_files/figure-html/unnamed-chunk-94-1.png" alt="Fuel economy and weight for 32 car models. Heavier cars tend to be less fuel efficient. Source: Motor Trend (1974) " width="384" />
+<p class="caption">
+Figure 9.2: Fuel economy and weight for 32 car models. Heavier cars tend to be less fuel efficient. Source: Motor Trend (1974)
+</p>
+</div>
+</div>
+<div id="caption-or-title" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Caption or title?<a href="presentation-of-plots.html#caption-or-title" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In a written report, plots will usually be labelled by a figure number and then the plot information would all go in the caption. It is not recommended to have an <em>additional</em> title at the top: you would then have plot text in two different places.</p>
+<p>However, if your plot is being presented in a web page, or in some talk slides, then you may not have a figure label and caption. Here, you can use additional <code>ggplot2</code> commands to produce a title, conclusion and data reference within the plot itself. For example (with <code>subtitle</code> used for the plot conclusion, and <code>caption</code> used for the data source),</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="presentation-of-plots.html#cb112-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb112-2"><a href="presentation-of-plots.html#cb112-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb112-3"><a href="presentation-of-plots.html#cb112-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Weight (lb/1000)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Miles / (US) gallon&quot;</span>,</span>
+<span id="cb112-4"><a href="presentation-of-plots.html#cb112-4" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Fuel economy and weight for 32 car models&quot;</span>,</span>
+<span id="cb112-5"><a href="presentation-of-plots.html#cb112-5" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Heavier cars tend to be less fuel efficient&quot;</span>,</span>
+<span id="cb112-6"><a href="presentation-of-plots.html#cb112-6" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Source: Motor Trend (1974)&quot;</span>) </span></code></pre></div>
+<p><img src="EDA-R_files/figure-html/unnamed-chunk-95-1.png" width="384" style="display: block; margin: auto;" /></p>
+</div>
+<div id="customising-the-appearance-of-a-plot" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Customising the appearance of a plot<a href="presentation-of-plots.html#customising-the-appearance-of-a-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can change just about any aspect of the appearance of a plot. If you have a legend in your plot, it’s likely you’ll need to modify it as the default will use data frame column names. You may also wish to change the grey background used by default in <code>ggplot2</code>. Font sizes will need changing if they are too small in your final report / presentation.</p>
+<p>The R Graphics Cookbook is an excellent reference here. (The format used throughout is to state a “problem”: something you want to do with your plot, and then provide the code solution and discussion). Some chapters in particular that may prove helpful to you are:</p>
+<ul>
+<li><a href="https://r-graphics.org/CHAPTER-APPEARANCE.html" target="_blank">Chapter 9 Controlling the Overall Appearance of Graphs</a>,</li>
+<li><a href="https://r-graphics.org/CHAPTER-LEGEND.html" target="_blank">Chapter 10 Legends</a>,</li>
+<li><a href="https://r-graphics.org/CHAPTER-COLORS.html" target="_blank">Chapter 12 Using Colors in Plots</a>.</li>
+</ul>
+</div>
+<div id="refining-a-plot-an-example" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Refining a plot: an example<a href="presentation-of-plots.html#refining-a-plot-an-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ll now give an example of creating a plot, and then thinking about how we might improve it (assuming we’ve already got ‘the basics’ right, in that the axes titles and caption are satisfactory).</p>
+<div id="the-data-to-plot" class="section level3 hasAnchor" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> The data to plot<a href="presentation-of-plots.html#the-data-to-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We consider the <code>mvscores</code> data set from the <code>MAS6005</code> package. The aim here is to compare test match batting scores for one player, Michael Vaughan, between the matches he played as captain, and the matches where he was not captain. The hypothesis is that players tend to perform less well if they have the added burden of captaincy.</p>
+<p>The data set also records whether each score was in the first or second innings; batting can be more difficult in a second innings, due to wear of the pitch.</p>
+<p>To summarise for those with no interest in / knowledge of cricket:</p>
+<ul>
+<li>we want to illustrate how/if the values in <code>runs</code> differ depending on the <code>captain</code> variable (a 2-level factor: <code>yes</code> or <code>no</code>)</li>
+<li><code>innings</code> (a 2-level factor: <code>first</code> or <code>second</code>) is a ‘blocking variable’: we are more interested in comparing captain/not captain scores within the same innings type than between different innings types.</li>
+</ul>
+</div>
+<div id="a-first-attempt-four-histograms" class="section level3 hasAnchor" number="9.5.2">
+<h3><span class="header-section-number">9.5.2</span> A first attempt: four histograms<a href="presentation-of-plots.html#a-first-attempt-four-histograms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ll first try producing four histograms of scores: one for each combination of <code>captain</code> and <code>innings</code>. Note that:</p>
+<ul>
+<li>we use the <code>gridExtra</code> package <span class="citation">(<a href="#ref-R-gridExtra">Auguie 2017</a>)</span> to arrange the plots in a 2x2 grid;</li>
+<li>plots produced by <code>ggplot2</code> can be assigned to variables, and used later in other functions.</li>
+</ul>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="presentation-of-plots.html#cb113-1" tabindex="-1"></a><span class="fu">library</span>(MAS6005)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="presentation-of-plots.html#cb114-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> mvscores <span class="sc">%&gt;%</span></span>
+<span id="cb114-2"><a href="presentation-of-plots.html#cb114-2" tabindex="-1"></a>  <span class="fu">filter</span>(innings <span class="sc">==</span> <span class="st">&quot;first&quot;</span>, captain <span class="sc">==</span> <span class="st">&quot;yes&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb114-3"><a href="presentation-of-plots.html#cb114-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> runs))<span class="sc">+</span></span>
+<span id="cb114-4"><a href="presentation-of-plots.html#cb114-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;First innings runs, captain&quot;</span>) <span class="sc">+</span></span>
+<span id="cb114-5"><a href="presentation-of-plots.html#cb114-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb114-6"><a href="presentation-of-plots.html#cb114-6" tabindex="-1"></a></span>
+<span id="cb114-7"><a href="presentation-of-plots.html#cb114-7" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> mvscores <span class="sc">%&gt;%</span></span>
+<span id="cb114-8"><a href="presentation-of-plots.html#cb114-8" tabindex="-1"></a>  <span class="fu">filter</span>(innings <span class="sc">==</span> <span class="st">&quot;first&quot;</span>, captain <span class="sc">==</span> <span class="st">&quot;no&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb114-9"><a href="presentation-of-plots.html#cb114-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> runs))<span class="sc">+</span></span>
+<span id="cb114-10"><a href="presentation-of-plots.html#cb114-10" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;First innings runs, not captain&quot;</span>) <span class="sc">+</span></span>
+<span id="cb114-11"><a href="presentation-of-plots.html#cb114-11" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb114-12"><a href="presentation-of-plots.html#cb114-12" tabindex="-1"></a></span>
+<span id="cb114-13"><a href="presentation-of-plots.html#cb114-13" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> mvscores <span class="sc">%&gt;%</span></span>
+<span id="cb114-14"><a href="presentation-of-plots.html#cb114-14" tabindex="-1"></a>  <span class="fu">filter</span>(innings <span class="sc">==</span> <span class="st">&quot;second&quot;</span>, captain <span class="sc">==</span> <span class="st">&quot;yes&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb114-15"><a href="presentation-of-plots.html#cb114-15" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> runs))<span class="sc">+</span></span>
+<span id="cb114-16"><a href="presentation-of-plots.html#cb114-16" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Second innings runs, captain&quot;</span>) <span class="sc">+</span></span>
+<span id="cb114-17"><a href="presentation-of-plots.html#cb114-17" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb114-18"><a href="presentation-of-plots.html#cb114-18" tabindex="-1"></a></span>
+<span id="cb114-19"><a href="presentation-of-plots.html#cb114-19" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> mvscores <span class="sc">%&gt;%</span></span>
+<span id="cb114-20"><a href="presentation-of-plots.html#cb114-20" tabindex="-1"></a>  <span class="fu">filter</span>(innings <span class="sc">==</span> <span class="st">&quot;second&quot;</span>, captain <span class="sc">==</span> <span class="st">&quot;no&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb114-21"><a href="presentation-of-plots.html#cb114-21" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> runs))<span class="sc">+</span></span>
+<span id="cb114-22"><a href="presentation-of-plots.html#cb114-22" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Second innings runs, not captain&quot;</span>) <span class="sc">+</span></span>
+<span id="cb114-23"><a href="presentation-of-plots.html#cb114-23" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb114-24"><a href="presentation-of-plots.html#cb114-24" tabindex="-1"></a></span>
+<span id="cb114-25"><a href="presentation-of-plots.html#cb114-25" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(p1, p2, p3, p4, <span class="at">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-97"></span>
+<img src="EDA-R_files/figure-html/unnamed-chunk-97-1.png" alt="Test Match runs scored by the England Cricketer Michael Vaughan, in each innings, and whether or not he played as captain. His scores tended to be higher when he did not play as captain. Source: ESPNcricinfo." width="576" />
+<p class="caption">
+Figure 9.3: Test Match runs scored by the England Cricketer Michael Vaughan, in each innings, and whether or not he played as captain. His scores tended to be higher when he did not play as captain. Source: ESPNcricinfo.
+</p>
+</div>
+<p>A key issue with this plot is that the <span class="math inline">\(x\)</span>-axis scales are different for each histogram, which makes comparing the histograms harder. We could set the scale manually (see <code>?ggplot2::xlim</code>) but facets might work well here.</p>
+<p>The <span class="math inline">\(y\)</span>-axis scales are also different. This issue is slightly more complicated in that the numbers of observations used for each histogram are different, so it’s really the shapes of the histograms that we want to compare. One option is to scale each histogram to have total area 1 (so it’s like a density plot).</p>
+<p>It’s also worth thinking about the arrangement of the plots within the grid. Using rows rather than columns to represent the main factor of interest (<code>captain</code>), would mean that the main comparisons involve looking at histograms aligned vertically, not horizontally: any ‘shift’ in distribution is easier to see.</p>
+<p>An alternative plot, which addresses these issues (and I prefer), is as follows:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="presentation-of-plots.html#cb115-1" tabindex="-1"></a><span class="fu">ggplot</span>(mvscores, <span class="fu">aes</span>(<span class="at">x =</span> runs, <span class="at">y =</span> ..density..))<span class="sc">+</span></span>
+<span id="cb115-2"><a href="presentation-of-plots.html#cb115-2" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Runs scored&quot;</span>) <span class="sc">+</span></span>
+<span id="cb115-3"><a href="presentation-of-plots.html#cb115-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb115-4"><a href="presentation-of-plots.html#cb115-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(captain),</span>
+<span id="cb115-5"><a href="presentation-of-plots.html#cb115-5" tabindex="-1"></a>             <span class="at">col =</span> <span class="fu">vars</span>(innings),</span>
+<span id="cb115-6"><a href="presentation-of-plots.html#cb115-6" tabindex="-1"></a>             <span class="at">labeller =</span> label_both)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-98"></span>
+<img src="EDA-R_files/figure-html/unnamed-chunk-98-1.png" alt="Test Match runs scored by the England Cricketer Michael Vaughan, in each innings, and whether or not he played as captain. His scores tended to be higher when he did not play as captain. Source: ESPNcricinfo." width="576" />
+<p class="caption">
+Figure 9.4: Test Match runs scored by the England Cricketer Michael Vaughan, in each innings, and whether or not he played as captain. His scores tended to be higher when he did not play as captain. Source: ESPNcricinfo.
+</p>
+</div>
+</div>
+<div id="using-a-box-plot" class="section level3 hasAnchor" number="9.5.3">
+<h3><span class="header-section-number">9.5.3</span> Using a box plot<a href="presentation-of-plots.html#using-a-box-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Another option is to present the data using a box plot. Although we lose some information compared with the histogram, comparing summaries of the distributions of scores is easier.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="presentation-of-plots.html#cb116-1" tabindex="-1"></a><span class="fu">ggplot</span>(mvscores, <span class="fu">aes</span>(<span class="at">x =</span> innings, <span class="at">y =</span> runs))<span class="sc">+</span></span>
+<span id="cb116-2"><a href="presentation-of-plots.html#cb116-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> captain) )</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-99"></span>
+<img src="EDA-R_files/figure-html/unnamed-chunk-99-1.png" alt="Test Match runs scored by the England Cricketer Michael Vaughan, in each innings, and whether or not he played as captain. His scores tended to be higher when he did not play as captain. Source: ESPNcricinfo." width="384" />
+<p class="caption">
+Figure 9.5: Test Match runs scored by the England Cricketer Michael Vaughan, in each innings, and whether or not he played as captain. His scores tended to be higher when he did not play as captain. Source: ESPNcricinfo.
+</p>
+</div>
+<p>I prefer this to the histogram plot. Note that it’s more helpful to map <code>captain</code> to colour and <code>innings</code> to the <span class="math inline">\(x\)</span>-axis than vice-versa, as this makes it easier to compare the effect of ‘treatment’ (<code>captain</code>) within each ‘block’ (<code>innings</code>).</p>
+</div>
+</div>
+<div id="exercises" class="section level2 hasAnchor" number="9.6">
+<h2><span class="header-section-number">9.6</span> Exercises<a href="presentation-of-plots.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="task">
+<div class="exercise">
+<p><span id="exr:unlabeled-div-4" class="exercise"><strong>Exercise 9.1  </strong></span>Below are three plots. For each plot:</p>
+<ul>
+<li>run the code in R to reproduce the plot;</li>
+<li>think about how each plot might be improved;</li>
+<li>modify the R code to achieve a better plot.</li>
+</ul>
+<p>Hints are given for each plot, but try not to read them until you have had your own ideas!</p>
+</div>
+</div>
+<ol style="list-style-type: decimal">
+<li>This plot uses the built in data set <code>airquality</code>. Type <code>?airquality</code> for more details.</li>
+</ol>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="presentation-of-plots.html#cb117-1" tabindex="-1"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> Temp, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
+<span id="cb117-2"><a href="presentation-of-plots.html#cb117-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-100"></span>
+<img src="EDA-R_files/figure-html/unnamed-chunk-100-1.png" alt="Scatter plot of ozone versus temperature" width="384" />
+<p class="caption">
+Figure 9.6: Scatter plot of ozone versus temperature
+</p>
+</div>
+<hr>
+<div class="fold">
+<p>This plot fails on all levels regarding <a href="presentation-of-plots.html#the-basics">The basics</a> and <a href="presentation-of-plots.html#the-caption-test">The caption test</a>! Use the help file so you can specify more informative labels.</p>
+</div>
+<hr>
+<ol start="2" style="list-style-type: decimal">
+<li>This following plot uses the <code>medals</code> data set from the <code>MAS6005</code> package, and shows number of gold medals against population size.</li>
+</ol>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="presentation-of-plots.html#cb118-1" tabindex="-1"></a><span class="fu">ggplot</span>(MAS6005<span class="sc">::</span>medals, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> gold)) <span class="sc">+</span></span>
+<span id="cb118-2"><a href="presentation-of-plots.html#cb118-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb118-3"><a href="presentation-of-plots.html#cb118-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;population size&quot;</span>, <span class="at">y =</span> <span class="st">&quot;gold medals won&quot;</span>) </span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-101"></span>
+<img src="EDA-R_files/figure-html/unnamed-chunk-101-1.png" alt="Number of gold medals won against population size for the Rio 2016 Summer Olympics. Although India and China have similar population sizes, China was much more successful. Source (population data): World Bank." width="384" />
+<p class="caption">
+Figure 9.7: Number of gold medals won against population size for the Rio 2016 Summer Olympics. Although India and China have similar population sizes, China was much more successful. Source (population data): World Bank.
+</p>
+</div>
+<hr>
+<div class="fold">
+<ul>
+<li>The caption refers to India and China. Although the reader might guess which points are these two countries, they shouldn’t have to! Annotations would help.</li>
+<li>The bunching of most of the points in the bottom left corner doesn’t look very nice. A log-scale <span class="math inline">\(x\)</span>-axis is worth trying.</li>
+<li>The scientific notation used for the <span class="math inline">\(x\)</span>-axis scale is unfriendly for the general reader. It might help to express population size in units of millions.</li>
+</ul>
+</div>
+<hr>
+<ol start="3" style="list-style-type: decimal">
+<li>The following plot uses the <code>inequality</code> data set from the <code>MAS6005</code> package, and shows income inequality for different countries.</li>
+</ol>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="presentation-of-plots.html#cb119-1" tabindex="-1"></a><span class="fu">ggplot</span>(MAS6005<span class="sc">::</span>inequality, <span class="fu">aes</span>(<span class="at">y =</span> country, <span class="at">x =</span> gini)) <span class="sc">+</span></span>
+<span id="cb119-2"><a href="presentation-of-plots.html#cb119-2" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb119-3"><a href="presentation-of-plots.html#cb119-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Gini coefficient&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-103"></span>
+<img src="EDA-R_files/figure-html/unnamed-chunk-103-1.png" alt="Income inequality as measured by the Gini coefficient for 36 OECD countries, reported in 2016. The UK was ranked 7th worst. Source: OECD." width="384" />
+<p class="caption">
+Figure 9.8: Income inequality as measured by the Gini coefficient for 36 OECD countries, reported in 2016. The UK was ranked 7th worst. Source: OECD.
+</p>
+</div>
+<hr>
+<div class="fold">
+<ul>
+<li>Visualising the rank order is difficult here, as the bars are arranged in alphabetical order of country. Ordering them by Gini coefficient would help. (<a href="https://r-graphics.org/RECIPE-DATAPREP-FACTOR-REORDER-VALUE.html">See this example in the R Graphics Cookbook</a>.)</li>
+<li>The <span class="math inline">\(y\)</span>-axis label “country” is unnecessary here, and can be removed.</li>
+<li>As the caption refers to the UK, we could try to make the UK observation more distinctive in the plot. Here, you could try using the <code>fill</code> argument in <code>geom_cols()</code>, specifying it to be a vector of 36 colours: 35 the same, and one different for the UK.</li>
+</ul>
+</div>
+<hr>
+</div>
+<div id="data-sources" class="section level2 hasAnchor" number="9.7">
+<h2><span class="header-section-number">9.7</span> Data sources<a href="presentation-of-plots.html#data-sources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>The air quality data was obtained from the New York State Department of Conservation (ozone data) and the National Weather Service (temperature data), and provided in the R <code>datasets</code> package.</p></li>
+<li><p>The inequality data was obtained from OECD (2016), Income inequality (indicator). doi: 10.1787/459aa7f1-en [Accessed on 17 August 2016].</p></li>
+<li><p>The population data was obtained from <a href="http://data.worldbank.org/indicator/SP.POP.TOTL?end=2015&amp;start=2000" target="_blank">The World Bank</a>. Accessed 6th October 2015.</p></li>
+<li><p>The medal table data was obtained from <a href="https://www.rio2016.com/en/medal-count-country" class="uri">https://www.rio2016.com/en/medal-count-country</a>. [Accessed on 6th October 2016, but this link is no longer active.]</p></li>
+</ul>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-R-gridExtra" class="csl-entry">
+Auguie, Baptiste. 2017. <em>gridExtra: Miscellaneous Functions for "Grid" Graphics</em>. <a href="https://CRAN.R-project.org/package=gridExtra">https://CRAN.R-project.org/package=gridExtra</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="making-plots-with-ggplot2---recap.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="maps-with-leaflet.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
