@@ -23,7 +23,7 @@
 <meta name="author" content="" />
 
 
-<meta name="date" content="2026-01-29" />
+<meta name="date" content="2026-02-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -352,9 +352,10 @@ $(document).ready(function() {
 });
 </script>
 <p>It is important to think carefully about how you present your plots to others. With minimal plotting commands you can obtain a plot quickly and easily, <em>but it is unlikely it will be suitable for including in a report</em>.</p>
-<p>For this chapter, you will need to install the <code>MAS6005</code> package, which is available on GitHub only. Install it with the commands:</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="presentation-of-plots.html#cb109-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
-<span id="cb109-2"><a href="presentation-of-plots.html#cb109-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;OakleyJ/MAS6005&quot;</span>)</span></code></pre></div>
+<p>For this chapter, you will need to install the <code>gridExtra</code> package, and a package called <code>MAS6005</code> that is available on GitHub only. Install these with the following commands [you only need to install these packages once].</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="presentation-of-plots.html#cb109-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gridExtra&quot;</span>)</span>
+<span id="cb109-2"><a href="presentation-of-plots.html#cb109-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb109-3"><a href="presentation-of-plots.html#cb109-3" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;OakleyJ/MAS6005&quot;</span>)</span></code></pre></div>
 <div id="the-basics" class="section level2 hasAnchor" number="9.1">
 <h2><span class="header-section-number">9.1</span> The basics<a href="presentation-of-plots.html#the-basics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Using the <code>mtcars</code> data frame in R, we’ll make a scatter plot of miles per gallon against weight. For more information about the data and these variables, use <code>?mtcars</code>. Suppose we use the following code, and the figure below is used in a written report:</p>

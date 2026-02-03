@@ -191,7 +191,7 @@
 \makeatother
 \subtitle{Topic 1: Statistical analysis of climate-based data}
 \author{}
-\date{\vspace{-2.5em}2026-01-29}
+\date{\vspace{-2.5em}2026-02-03}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -254,7 +254,7 @@ Before starting your analysis, it is important to set up your working environmen
 \setcounter{enumi}{1}
 \tightlist
 \item
-  In your new MPS223 folder, create another new folder called \texttt{Topic-1\_Climate}
+  In your new MPS223 folder, create another new folder called \texttt{Project-1\_Climate}
 \end{enumerate}
 
 \begin{enumerate}
@@ -269,17 +269,17 @@ Before starting your analysis, it is important to set up your working environmen
 \item
   In R-studio, click on the \texttt{project} button at the top right of the screen (if you don't have a project open, the button will say `Project: (None)' on it), and select \texttt{New\ Project...}
 \item
-  On the dialogue box that appears, click on \texttt{Existing\ Directory} and then use the \texttt{Browse...} option to locate your new folder at: \texttt{U:/MPS223/Topic-1\_Climate}. Then click on \texttt{Create\ Project} to create an R-Project in your folder to hold your work.
+  On the dialogue box that appears, click on \texttt{Existing\ Directory} and then use the \texttt{Browse...} option to locate your new folder at: \texttt{U:/MPS223/Project-1\_Climate}. Then click on \texttt{Create\ Project} to create an R-Project in your folder to hold your work.
 \end{itemize}
 
-This process will create an object called \texttt{Topic-1\_Climate.Rproj} in your \texttt{Topic-1\_Climate} folder. By creating the project, we set the working directory for R to use, and our files become easily accessible in R-studio.
+This process will create an object called \texttt{Project-1\_Climate.Rproj} in your \texttt{Project-1\_Climate} folder. By creating the project, we set the working directory for R to use, and our files become easily accessible in R-studio.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{3}
 \tightlist
 \item
-  In your \texttt{Topic-1\_Climate} folder, create another new folder called \texttt{data}. We will use this folder to store any data files required for the exercises in these notes, as well as the data for your group project.
+  In your \texttt{Project-1\_Climate} folder, create another new folder called \texttt{data}. We will use this folder to store any data files required for the exercises in these notes, as well as the data for your group project.
 \end{enumerate}
 
 \begin{enumerate}
@@ -287,7 +287,7 @@ This process will create an object called \texttt{Topic-1\_Climate.Rproj} in you
 \setcounter{enumi}{4}
 \tightlist
 \item
-  On the module Blackboard page, go to the \texttt{Computer\ Lab\ Example\ Data} folder in the `Class Materials' section (located at `Learning Materials' \(\rightarrow\) `Topic 1: Statistical analysis of climate-based data (Weeks 1-3)' \(\rightarrow\) `Class Materials'). Download the \texttt{MPS223\_Project1\_data.zip} file containing all of the data files required for the notes and exercises, and unpack this file so that all of the data files are saved directly in your \texttt{data} folder.
+  On the module Blackboard page, go to the \texttt{Computer\ Labs\ -\ Examples\ data\ .zip\ file} in the Learning Materials section for Project 1. Download the \texttt{MPS223\_Project1\_data.zip} file containing all of the data files required for the notes and exercises, and unpack this file so that all of the data files are saved directly in your \texttt{data} folder.
 \end{enumerate}
 
 \begin{enumerate}
@@ -1789,10 +1789,11 @@ For this exercise, you will need the \texttt{Brexit} data frame (from the file \
 
 It is important to think carefully about how you present your plots to others. With minimal plotting commands you can obtain a plot quickly and easily, \emph{but it is unlikely it will be suitable for including in a report}.
 
-For this chapter, you will need to install the \texttt{MAS6005} package, which is available on GitHub only. Install it with the commands:
+For this chapter, you will need to install the \texttt{gridExtra} package, and a package called \texttt{MAS6005} that is available on GitHub only. Install these with the following commands {[}you only need to install these packages once{]}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"gridExtra"}\NormalTok{)}
 \FunctionTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
 \NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"OakleyJ/MAS6005"}\NormalTok{)}
 \end{Highlighting}
