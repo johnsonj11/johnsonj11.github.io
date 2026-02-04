@@ -23,7 +23,7 @@
 <meta name="author" content="" />
 
 
-<meta name="date" content="2026-02-03" />
+<meta name="date" content="2026-02-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -203,7 +203,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html"><i class="fa fa-check"></i><b>5</b> Manipulating data frames - recap</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>5.1</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="5.1" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#pipe-operator-sect"><i class="fa fa-check"></i><b>5.1</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
 <li class="chapter" data-level="5.2" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>5.2</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
 <li class="chapter" data-level="5.3" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>5.3</b> Selecting rows with the <code>filter()</code> command</a></li>
 <li class="chapter" data-level="5.4" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>5.4</b> Viewing and extracting data from a column</a></li>
@@ -372,8 +372,8 @@ div.csl-indent {
 <p>If we want to see all 70 rows, we can either use the command</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="manipulating-data-frames---recap.html#cb42-1" tabindex="-1"></a><span class="fu">print</span>(maths, <span class="at">n =</span> <span class="dv">70</span>)</span></code></pre></div>
 <p>or, in RStudio, we can click on <code>maths</code> in the Environment window.</p>
-<div id="chaining-commands-together-with-the-pipe-operator" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Chaining commands together with the pipe operator <code>%&gt;%</code><a href="manipulating-data-frames---recap.html#chaining-commands-together-with-the-pipe-operator" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="pipe-operator-sect" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Chaining commands together with the pipe operator <code>%&gt;%</code><a href="manipulating-data-frames---recap.html#pipe-operator-sect" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ll first look at the ‘pipe operator’ <code>%&gt;%</code>. (It’s a matter of personal preference whether you use it in your code or not, but you may find it makes your code easier to read.)</p>
 <p>The pipe operator <code>%&gt;%</code> takes whatever the output is from the left hand side, and uses it as the first argument in the function on the next line. In general,</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="manipulating-data-frames---recap.html#cb43-1" tabindex="-1"></a><span class="fu">myfunction</span>(x, y)</span></code></pre></div>

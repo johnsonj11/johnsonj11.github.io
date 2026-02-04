@@ -23,7 +23,7 @@
 <meta name="author" content="" />
 
 
-<meta name="date" content="2026-02-03" />
+<meta name="date" content="2026-02-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -203,7 +203,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html"><i class="fa fa-check"></i><b>5</b> Manipulating data frames - recap</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>5.1</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="5.1" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#pipe-operator-sect"><i class="fa fa-check"></i><b>5.1</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
 <li class="chapter" data-level="5.2" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>5.2</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
 <li class="chapter" data-level="5.3" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>5.3</b> Selecting rows with the <code>filter()</code> command</a></li>
 <li class="chapter" data-level="5.4" data-path="manipulating-data-frames---recap.html"><a href="manipulating-data-frames---recap.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>5.4</b> Viewing and extracting data from a column</a></li>
@@ -409,7 +409,7 @@ large, and it’s hard to keep a good record of what edits you made.
 <p>Here, we have to insert two backslash symbols, so that R understands we are searching for a <code>*</code>:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="strings.html#cb25-1" tabindex="-1"></a><span class="fu">str_which</span>(examTextRaw, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">*&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] 6 8</code></pre>
-<p>To do more complicated searches, one can make use of <strong>regular expressions</strong>. Regular expressions describe particular patterns of text, and can be used in many different programming languages. We won’t cover these here, but further reading is given at the of this chapter.</p>
+<p>To do more complicated searches, one can make use of <strong>regular expressions</strong>. Regular expressions describe particular patterns of text, and can be used in many different programming languages. We won’t cover these here, but further reading is given at the end of this chapter.</p>
 </div>
 <div id="replacing-or-removing-text" class="section level3 hasAnchor" number="4.3.3">
 <h3><span class="header-section-number">4.3.3</span> Replacing or removing text<a href="strings.html#replacing-or-removing-text" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -457,7 +457,7 @@ large, and it’s hard to keep a good record of what edits you made.
 </div>
 <div id="making-a-data-frame" class="section level2 hasAnchor" number="4.5">
 <h2><span class="header-section-number">4.5</span> Making a data frame<a href="strings.html#making-a-data-frame" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We’ll first do some operations to clean up the text:</p>
+<p>We’ll first do some operations to clean up the text (see Section <a href="manipulating-data-frames---recap.html#pipe-operator-sect">5.1</a> for explanation of the ‘pipe operator’ <code>%&gt;%</code>):</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="strings.html#cb35-1" tabindex="-1"></a>examTextClean <span class="ot">&lt;-</span> examTextRaw <span class="sc">%&gt;%</span></span>
 <span id="cb35-2"><a href="strings.html#cb35-2" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">*&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb35-3"><a href="strings.html#cb35-3" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="at">pattern =</span> <span class="st">&quot;--&quot;</span>,</span>
