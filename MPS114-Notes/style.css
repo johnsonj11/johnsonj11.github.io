@@ -1,0 +1,30 @@
+div.rmdnote {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+  background-image: url("note.png");
+}
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+div .fold-btn {
+  float: right;
+  margin: 5px 5px 0 0;
+}
+div .fold {
+  border: 1px solid black;
+  padding-left: 5px;
+  min-height: 40px;
+}

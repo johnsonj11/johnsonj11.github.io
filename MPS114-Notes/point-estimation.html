@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Point estimation | MPS114 - An Introduction to Data Science</title>
+  <meta name="description" content="Lecture notes for MPS114" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Point estimation | MPS114 - An Introduction to Data Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Lecture notes for MPS114" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Point estimation | MPS114 - An Introduction to Data Science" />
+  
+  <meta name="twitter:description" content="Lecture notes for MPS114" />
+  
+
+<meta name="author" content="Dr Jill Johnson" />
+
+
+<meta name="date" content="2026-02-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="populations-samples-and-statistical-models.html"/>
+<link rel="next" href="interval-estimates-and-confidence-intervals.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MPS114 - Introduction to Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About these notes</a></li>
+<li class="chapter" data-level="1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html"><i class="fa fa-check"></i><b>1</b> Exploratory Data Analysis using R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#case-study-what-makes-a-country-good-at-maths"><i class="fa fa-check"></i><b>1.1</b> Case study: what makes a country good at maths?</a></li>
+<li class="chapter" data-level="1.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#the-tidyverse"><i class="fa fa-check"></i><b>1.2</b> The “Tidyverse”</a></li>
+<li class="chapter" data-level="1.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#importing-data-into-r-csv-and-.xlsx-files"><i class="fa fa-check"></i><b>1.3</b> Importing data into R: <code>csv</code> and <code>.xlsx</code> files</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#importing-excel-.xlsx-files"><i class="fa fa-check"></i><b>1.3.1</b> Importing Excel <code>.xlsx</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#data-frames-and-tibbles-in-r"><i class="fa fa-check"></i><b>1.4</b> Data frames and tibbles in R</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>1.4.1</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="1.4.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>1.4.2</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="1.4.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>1.4.3</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="1.4.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>1.4.4</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+<li class="chapter" data-level="1.4.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>1.4.5</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-summary-statistics-with-the-summary-command"><i class="fa fa-check"></i><b>1.5</b> Calculating summary statistics with the <code>summary()</code> command</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-individual-summary-statistics"><i class="fa fa-check"></i><b>1.5.1</b> Calculating individual summary statistics</a></li>
+<li class="chapter" data-level="1.5.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-other-quantilespercentiles"><i class="fa fa-check"></i><b>1.5.2</b> Calculating other quantiles/percentiles</a></li>
+<li class="chapter" data-level="1.5.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>1.5.3</b> Computing summaries per group</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#plotting-a-distribution-using-a-histogram"><i class="fa fa-check"></i><b>1.6</b> Plotting a distribution using a histogram</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#describing-the-shape-of-a-distribution-skewness"><i class="fa fa-check"></i><b>1.6.1</b> Describing the shape of a distribution: skewness</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#introducing-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Introducing <code>ggplot2</code></a></li>
+<li class="chapter" data-level="1.8" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#drawing-a-histogram-in-r"><i class="fa fa-check"></i><b>1.8</b> Drawing a histogram in R</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>1.8.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#covariance-and-correlation"><i class="fa fa-check"></i><b>1.9</b> Covariance and correlation</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-a-covariance-in-r"><i class="fa fa-check"></i><b>1.9.1</b> Calculating a covariance in R</a></li>
+<li class="chapter" data-level="1.9.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#pearsons-correlation-coefficient"><i class="fa fa-check"></i><b>1.9.2</b> Pearson’s correlation coefficient</a></li>
+<li class="chapter" data-level="1.9.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-pearsons-correlation-coefficient-in-r"><i class="fa fa-check"></i><b>1.9.3</b> Calculating Pearson’s correlation coefficient in R</a></li>
+<li class="chapter" data-level="1.9.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#spearmans-correlation-coefficient"><i class="fa fa-check"></i><b>1.9.4</b> Spearman’s correlation coefficient</a></li>
+<li class="chapter" data-level="1.9.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-spearmans-correlation-coefficient-in-r"><i class="fa fa-check"></i><b>1.9.5</b> Calculating Spearman’s correlation coefficient in R</a></li>
+<li class="chapter" data-level="1.9.6" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#interpreting-correlation-coefficients"><i class="fa fa-check"></i><b>1.9.6</b> Interpreting correlation coefficients</a></li>
+<li class="chapter" data-level="1.9.7" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#correlations-for-the-maths-data-set"><i class="fa fa-check"></i><b>1.9.7</b> Correlations for the <code>maths</code> data set</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#drawing-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10</b> Drawing a scatter plot in R</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#customising-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.1</b> Customising a scatter plot in R</a></li>
+<li class="chapter" data-level="1.10.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#adding-a-nonlinear-trend-to-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.2</b> Adding a nonlinear trend to a scatter plot in R</a></li>
+<li class="chapter" data-level="1.10.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#adding-a-linear-trend-to-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.3</b> Adding a linear trend to a scatter plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#box-plots"><i class="fa fa-check"></i><b>1.11</b> Box plots</a></li>
+<li class="chapter" data-level="1.12" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#scatter-plots-to-represent-three-variables"><i class="fa fa-check"></i><b>1.12</b> Scatter plots to represent three variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>2</b> Machine Learning</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="machine-learning.html"><a href="machine-learning.html#can-we-teach-a-computer-to-identify-handwritten-digits"><i class="fa fa-check"></i><b>2.1</b> Can we teach a computer to identify handwritten digits?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="machine-learning.html"><a href="machine-learning.html#step-1-converting-an-image-into-data"><i class="fa fa-check"></i><b>2.1.1</b> Step 1: converting an image into data</a></li>
+<li class="chapter" data-level="2.1.2" data-path="machine-learning.html"><a href="machine-learning.html#step-2-assembling-the-training-data-set"><i class="fa fa-check"></i><b>2.1.2</b> Step 2: assembling the training data set</a></li>
+<li class="chapter" data-level="2.1.3" data-path="machine-learning.html"><a href="machine-learning.html#step-3-an-algorithm-for-estimating-the-digit-in-a-new-image"><i class="fa fa-check"></i><b>2.1.3</b> Step 3: an algorithm for estimating the digit in a new image</a></li>
+<li class="chapter" data-level="2.1.4" data-path="machine-learning.html"><a href="machine-learning.html#the-k-nearest-neighbour-algorithm-knn"><i class="fa fa-check"></i><b>2.1.4</b> The <span class="math inline">\(K\)</span> nearest neighbour algorithm (KNN)</a></li>
+<li class="chapter" data-level="2.1.5" data-path="machine-learning.html"><a href="machine-learning.html#using-k-nearest-neighbours-in-r"><i class="fa fa-check"></i><b>2.1.5</b> Using <span class="math inline">\(K\)</span> nearest neighbours in R</a></li>
+<li class="chapter" data-level="2.1.6" data-path="machine-learning.html"><a href="machine-learning.html#the-performance-of-the-algorithm"><i class="fa fa-check"></i><b>2.1.6</b> The performance of the algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Populations, samples and statistical models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#statistical-models"><i class="fa fa-check"></i><b>3.1</b> Statistical models</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#objectives"><i class="fa fa-check"></i><b>3.1.1</b> Objectives</a></li>
+<li class="chapter" data-level="3.1.2" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#comment-infinite-and-finite-populations"><i class="fa fa-check"></i><b>3.1.2</b> Comment: infinite and finite populations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="point-estimation.html"><a href="point-estimation.html"><i class="fa fa-check"></i><b>4</b> Point estimation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="point-estimation.html"><a href="point-estimation.html#estimating-the-parameters-of-a-normal-distribution"><i class="fa fa-check"></i><b>4.1</b> Estimating the parameters of a normal distribution</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="point-estimation.html"><a href="point-estimation.html#problem-setup-and-notation"><i class="fa fa-check"></i><b>4.1.1</b> Problem setup and notation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="point-estimation.html"><a href="point-estimation.html#the-sample-mean-and-sample-variance"><i class="fa fa-check"></i><b>4.1.2</b> The sample mean and sample variance</a></li>
+<li class="chapter" data-level="4.1.3" data-path="point-estimation.html"><a href="point-estimation.html#point-estimates-for-the-mean-and-variance"><i class="fa fa-check"></i><b>4.1.3</b> Point estimates for the mean and variance</a></li>
+<li class="chapter" data-level="4.1.4" data-path="point-estimation.html"><a href="point-estimation.html#testing-the-method"><i class="fa fa-check"></i><b>4.1.4</b> Testing the method</a></li>
+<li class="chapter" data-level="4.1.5" data-path="point-estimation.html"><a href="point-estimation.html#estimators-and-estimates"><i class="fa fa-check"></i><b>4.1.5</b> Estimators and estimates</a></li>
+<li class="chapter" data-level="4.1.6" data-path="point-estimation.html"><a href="point-estimation.html#the-chi2-distribution"><i class="fa fa-check"></i><b>4.1.6</b> The <span class="math inline">\(\chi^2\)</span> distribution</a></li>
+<li class="chapter" data-level="4.1.7" data-path="point-estimation.html"><a href="point-estimation.html#the-distribution-of-the-estimators"><i class="fa fa-check"></i><b>4.1.7</b> The distribution of the estimators</a></li>
+<li class="chapter" data-level="4.1.8" data-path="point-estimation.html"><a href="point-estimation.html#unbiased-estimators"><i class="fa fa-check"></i><b>4.1.8</b> Unbiased estimators</a></li>
+<li class="chapter" data-level="4.1.9" data-path="point-estimation.html"><a href="point-estimation.html#the-standard-error-of-an-estimator"><i class="fa fa-check"></i><b>4.1.9</b> The standard error of an estimator</a></li>
+<li class="chapter" data-level="4.1.10" data-path="point-estimation.html"><a href="point-estimation.html#consistent-estimators"><i class="fa fa-check"></i><b>4.1.10</b> Consistent estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="point-estimation.html"><a href="point-estimation.html#estimating-the-probability-parameter-in-a-binomial-distribution"><i class="fa fa-check"></i><b>4.2</b> Estimating the probability parameter in a Binomial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html"><i class="fa fa-check"></i><b>5</b> Interval estimates and confidence intervals</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#the-student-t-distribution"><i class="fa fa-check"></i><b>5.1</b> The Student <span class="math inline">\(t\)</span> distribution</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#mean-and-variance-of-the-t-distribution"><i class="fa fa-check"></i><b>5.1.1</b> Mean and variance of the <span class="math inline">\(t\)</span>-distribution</a></li>
+<li class="chapter" data-level="5.1.2" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#notation-quantilespercentiles-of-the-t-distribution"><i class="fa fa-check"></i><b>5.1.2</b> Notation: quantiles/percentiles of the <span class="math inline">\(t\)</span> distribution</a></li>
+<li class="chapter" data-level="5.1.3" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#the-t-distribution-in-r."><i class="fa fa-check"></i><b>5.1.3</b> The <span class="math inline">\(t\)</span> distribution in R.</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#confidence-intervals-for-the-mean-and-the-variance-of-a-normal-distribution"><i class="fa fa-check"></i><b>5.2</b> Confidence intervals for the mean and the variance of a normal distribution</a></li>
+<li class="chapter" data-level="5.3" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#confidence-interval-for-the-probability-parameter-in-a-binomial-distribution"><i class="fa fa-check"></i><b>5.3</b> Confidence interval for the probability parameter in a binomial distribution</a></li>
+<li class="chapter" data-level="5.4" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#alpha-confidence-intervals"><i class="fa fa-check"></i><b>5.4</b> <span class="math inline">\(100(1-\alpha)\%\)</span> Confidence Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing: A-level recap</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#hypothesis-testing-with-the-neyman-pearson-approach"><i class="fa fa-check"></i><b>6.1</b> Hypothesis testing with the Neyman-Pearson approach</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#one-sided-and-two-sided-alternative-hypotheses"><i class="fa fa-check"></i><b>6.1.1</b> One-sided and two-sided alternative hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#fishers-p-value-method"><i class="fa fa-check"></i><b>6.2</b> Fisher’s <span class="math inline">\(p\)</span>-value method</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#what-counts-as-a-small-p-value"><i class="fa fa-check"></i><b>6.2.1</b> What counts as a small <span class="math inline">\(p\)</span>-value?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#relationship-between-the-neyman-pearson-and-p-value-methods"><i class="fa fa-check"></i><b>6.3</b> Relationship between the Neyman-Pearson and <span class="math inline">\(p\)</span>-value methods</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#one-sample-t-test"><i class="fa fa-check"></i><b>6.4</b> One-sample <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#which-hypothesis-test-do-i-use-for"><i class="fa fa-check"></i><b>6.5</b> Which hypothesis test do I use for…?</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing: comparing two population means</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#example-can-imagining-eating-food-make-you-eat-less"><i class="fa fa-check"></i><b>7.1</b> Example: can imagining eating food make you eat less?</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-hypotheses"><i class="fa fa-check"></i><b>7.1.1</b> The hypotheses</a></li>
+<li class="chapter" data-level="7.1.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#a-test-statistic"><i class="fa fa-check"></i><b>7.1.2</b> A test statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#hypothesis-testing-using-simulation"><i class="fa fa-check"></i><b>7.2</b> Hypothesis testing using simulation</a></li>
+<li class="chapter" data-level="7.3" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test"><i class="fa fa-check"></i><b>7.3</b> The two-sample <span class="math inline">\(t\)</span> test</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test-with-the-neyman-pearson-method"><i class="fa fa-check"></i><b>7.3.1</b> The two-sample <span class="math inline">\(t\)</span>-test with the Neyman-Pearson method</a></li>
+<li class="chapter" data-level="7.3.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#an-illustrated-guide"><i class="fa fa-check"></i><b>7.3.2</b> An illustrated guide</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#confidence-interval-for-the-difference-between-two-means"><i class="fa fa-check"></i><b>7.4</b> Confidence interval for the difference between two means</a></li>
+<li class="chapter" data-level="7.5" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#equivalence-of-confidence-intervals-and-neyman-pearson-testing"><i class="fa fa-check"></i><b>7.5</b> Equivalence of confidence intervals and Neyman-Pearson testing</a></li>
+<li class="chapter" data-level="7.6" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test-in-r"><i class="fa fa-check"></i><b>7.6</b> The two-sample <span class="math inline">\(t\)</span> test in R</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#t-tests-with-data-frames-in-r"><i class="fa fa-check"></i><b>7.6.1</b> <span class="math inline">\(t\)</span>-tests with data frames in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#examples"><i class="fa fa-check"></i><b>7.7</b> Examples</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#using-the-p-value-method"><i class="fa fa-check"></i><b>7.7.1</b> Using the <span class="math inline">\(p\)</span>-value method</a></li>
+<li class="chapter" data-level="7.7.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#using-neyman-pearson-testing"><i class="fa fa-check"></i><b>7.7.2</b> Using Neyman-Pearson testing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing: comparing two proportions</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#example-an-investigation-into-gender-bias"><i class="fa fa-check"></i><b>8.1</b> Example: an investigation into gender bias</a></li>
+<li class="chapter" data-level="8.2" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#comparing-two-binomial-proportions"><i class="fa fa-check"></i><b>8.2</b> Comparing two binomial proportions</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#a-simulation-method"><i class="fa fa-check"></i><b>8.2.1</b> A simulation method</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#an-analytical-method"><i class="fa fa-check"></i><b>8.3</b> An analytical method</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#the-analytical-method-a-summary"><i class="fa fa-check"></i><b>8.3.1</b> The analytical method: a summary</a></li>
+<li class="chapter" data-level="8.3.2" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#conclusion"><i class="fa fa-check"></i><b>8.3.2</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#confidence-intervals-to-measure-the-difference"><i class="fa fa-check"></i><b>8.4</b> Confidence intervals to measure the difference</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><i class="fa fa-check"></i><b>9</b> Sample size and power for a Neyman-Pearson hypothesis test</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#gender-bias-example-re-visited"><i class="fa fa-check"></i><b>9.1</b> Gender bias example re-visited</a></li>
+<li class="chapter" data-level="9.2" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#the-power-of-a-hypothesis-test"><i class="fa fa-check"></i><b>9.2</b> The power of a hypothesis test</a></li>
+<li class="chapter" data-level="9.3" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#an-analytical-approach"><i class="fa fa-check"></i><b>9.3</b> An analytical approach</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html"><i class="fa fa-check"></i><b>10</b> <span class="math inline">\(\chi^2\)</span> tests for contingency tables</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#example-customer-ratings-of-restaurants"><i class="fa fa-check"></i><b>10.1</b> Example: customer ratings of restaurants</a></li>
+<li class="chapter" data-level="10.2" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-model-and-hypotheses"><i class="fa fa-check"></i><b>10.2</b> A model and hypotheses</a></li>
+<li class="chapter" data-level="10.3" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-test-statistic-1"><i class="fa fa-check"></i><b>10.3</b> A test statistic</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#the-formula-for-the-expected-counts"><i class="fa fa-check"></i><b>10.3.1</b> The formula for the expected counts</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#computing-the-test-statistic-for-the-observed-data"><i class="fa fa-check"></i><b>10.4</b> Computing the test statistic for the observed data</a></li>
+<li class="chapter" data-level="10.5" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-simulation-method-1"><i class="fa fa-check"></i><b>10.5</b> A simulation method</a></li>
+<li class="chapter" data-level="10.6" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#an-analytical-method-1"><i class="fa fa-check"></i><b>10.6</b> An analytical method</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#chi2-tests-in-r"><i class="fa fa-check"></i><b>10.6.1</b> <span class="math inline">\(\chi^2\)</span> tests in R</a></li>
+<li class="chapter" data-level="10.6.2" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#row-homogeneity-and-independence"><i class="fa fa-check"></i><b>10.6.2</b> Row homogeneity and independence</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#exercise"><i class="fa fa-check"></i><b>10.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html"><i class="fa fa-check"></i><b>11</b> Index of definitions and examples</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html#definitions"><i class="fa fa-check"></i><b>11.1</b> Definitions</a></li>
+<li class="chapter" data-level="11.2" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html#examples-1"><i class="fa fa-check"></i><b>11.2</b> Examples</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MPS114 - An Introduction to Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="point-estimation" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Point estimation<a href="point-estimation.html#point-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<script type="text/javascript">
+$(document).ready(function() {
+  $folds = $(".fold");
+  $folds.wrapInner("<div class=\"fold-blck\">"); // wrap a div container around content
+  $folds.prepend("<button class=\"fold-btn\">Show solution</button>");  // add a button
+  $(".fold-blck").toggle();  // fold all blocks
+  $(".fold-btn").on("click", function() {  // add onClick event
+    $(this).text($(this).text() === "Show solution" ? "Hide solution" : "Show solution");  // if the text equals "Fold", change it to "Unfold"or else to "Fold" 
+    $(this).next(".fold-blck").toggle("linear");  // "swing" is the default easing function. This can be further customized in its speed or the overall animation itself.
+  })
+});
+</script>
+<p>In this chapter, we consider how to estimate the parameters of a probability distribution, given observations from that distribution. By “point” estimate, we mean a single number as the estimate. (In the next chapter, we will consider <em>interval</em> estimates: estimates in the form of a <em>range</em> of values).</p>
+<div id="estimating-the-parameters-of-a-normal-distribution" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Estimating the parameters of a normal distribution<a href="point-estimation.html#estimating-the-parameters-of-a-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="problem-setup-and-notation" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Problem setup and notation<a href="point-estimation.html#problem-setup-and-notation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose we model some data with a normal distribution: we have <span class="math inline">\(n\)</span> independent and identically distributed normal random variables
+<span class="math display">\[\begin{equation}
+X_1,X_2,\ldots,X_{n}\stackrel{i.i.d}{\sim} N(\mu, \sigma^2),
+\end{equation}\]</span>
+where the values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> are unknown to us. We denote the <em>observed values</em> of these <span class="math inline">\(n\)</span> random variables by <span class="math inline">\(x_1,\ldots,x_n\)</span>. How should we estimate <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> using <span class="math inline">\(x_1,\ldots,x_n\)</span>? This problem is illustrated in Figure <a href="point-estimation.html#fig:normal-inference">4.1</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:normal-inference"></span>
+<img src="MPS114-Data-Science_files/figure-html/normal-inference-1.png" alt="The red crosses show 10 observations drawn from the $N(\mu, \sigma^2)$ distribution. Suppose we *only* know the values of these 10 observations: can we use them to estimate the values of $\mu$ and $\sigma^2$?" width="384" />
+<p class="caption">
+Figure 4.1: The red crosses show 10 observations drawn from the <span class="math inline">\(N(\mu, \sigma^2)\)</span> distribution. Suppose we <em>only</em> know the values of these 10 observations: can we use them to estimate the values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>?
+</p>
+</div>
+<div class="rmdnote">
+<p>
+The distinction between big <span class="math inline"><span class="math inline">\(X\)</span></span>
+and little <span class="math inline"><span class="math inline">\(x\)</span></span> is important: we use
+<span class="math inline"><span class="math inline">\(X_i\)</span></span> to represent a <strong>random
+variable</strong>, and <span class="math inline"><span class="math inline">\(x_i\)</span></span> to
+represent the <strong>observed value</strong> of a random variable.
+</p>
+</div>
+<ul>
+<li><p>We can think of <span class="math inline">\(X_i\)</span> as describing the situation <em>before</em> we have collected our data: we don’t know what value we are going to observe, so we represent it by a random variable <span class="math inline">\(X_i\)</span>.</p></li>
+<li><p>We can think of <span class="math inline">\(x_i\)</span> as describing the situation <em>after</em> we have collected our data: we now have a numerical value for our <span class="math inline">\(i\)</span>th observation, which we denote by a constant <span class="math inline">\(x_i\)</span>.</p></li>
+</ul>
+</div>
+<div id="the-sample-mean-and-sample-variance" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> The sample mean and sample variance<a href="point-estimation.html#the-sample-mean-and-sample-variance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ll define some notation/terminology now, that we will use a lot from now on.</p>
+<hr>
+<div class="definition">
+<p><span id="def:defSampleMean" class="definition"><strong>Definition 4.1  (Sample mean) </strong></span>Given the observations <span class="math inline">\(x_1,\ldots,x_n\)</span>, we define the sample mean to be
+<span class="math display">\[
+\bar{x}: = \frac{1}{n}\sum_{i=1}^n x_i.  
+\]</span></p>
+</div>
+<hr>
+<div class="definition">
+<p><span id="def:defSampleVariance" class="definition"><strong>Definition 4.2  (Sample variance) </strong></span>Given the observations <span class="math inline">\(x_1,\ldots,x_n\)</span>, we define the sample variance to be
+<span class="math display">\[
+s^2: = \frac{1}{n-1}\sum_{i=1}^n (x_i-\bar{x})^2.  
+\]</span></p>
+</div>
+<hr>
+<div class="rmdnote">
+<p>
+Confusingly, the word “mean” has multiple meanings in probability and
+statistics! Don’t confuse the “sample mean” <span class="math inline"><span class="math inline">\(\bar{x}\)</span></span> with the “mean of a random
+variable” <span class="math inline"><span class="math inline">\(\mathbb{E}(X)\)</span></span>: they are
+not the same thing! Similarly, “sample variance” doesn’t mean the same
+thing as the “variance of a random variable” <span class="math inline"><span class="math inline">\(Var(X)\)</span></span>
+</p>
+</div>
+</div>
+<div id="point-estimates-for-the-mean-and-variance" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Point estimates for the mean and variance<a href="point-estimation.html#point-estimates-for-the-mean-and-variance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For now, we will simply state suitable estimates for the parameters of any distribution (methods such as “maximum likelihood estimation” can be used to derive estimates). For the normal distribution, we will use the estimates</p>
+<p><span class="math display">\[\begin{align}
+\hat{\mu} &amp;:= \bar{x} \\
+\hat{\sigma}^2 &amp;:= s^2.
+\end{align}\]</span></p>
+<div class="rmdnote">
+<p>
+The hat <span class="math inline"><span class="math inline">\(\hat{}\)</span></span> notation is
+important here: it is used to denote that <span class="math inline"><span class="math inline">\(\hat{\mu}\)</span></span> and <span class="math inline"><span class="math inline">\(\hat{\sigma}^2\)</span></span> are only
+<em>estimates</em> of <span class="math inline"><span class="math inline">\(\mu\)</span></span> and <span class="math inline"><span class="math inline">\(\sigma^2\)</span></span>. Don’t write an expression such
+as <span class="math inline"><span class="math inline">\(\mu = \bar{x}\)</span></span>: this would be
+claiming that the <em>true</em> value of the unknown mean parameter
+<span class="math inline"><span class="math inline">\(\mu\)</span></span> is the sample mean <span class="math inline"><span class="math inline">\(\bar{x}\)</span></span>.
+</p>
+</div>
+<p>In R, these can be calculated with the functions <code>mean()</code> and <code>var()</code> respectively.</p>
+</div>
+<div id="testing-the-method" class="section level3 hasAnchor" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> Testing the method<a href="point-estimation.html#testing-the-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To illustrate the notation, the R commands, and to persuade ourselves that the formulae give sensible estimates, we’ll do a simulation example in R.</p>
+<p>We’ll consider a sample of 100 observations</p>
+<p><span class="math display">\[
+X_1,\ldots, X_{100}\stackrel{i.i.d}{\sim} N(\mu, \sigma^2)
+\]</span>
+We’ll now get R to generate some data. To do this, we have to choose values for <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>: I’ll choose <span class="math inline">\(\mu=20\)</span> and <span class="math inline">\(\sigma^2 = 25\)</span>:</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="point-estimation.html#cb114-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">20</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>If we inspect the first three elements of <code>x</code>, we get</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="point-estimation.html#cb115-1" tabindex="-1"></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
+<pre><code>## [1] 20.36 16.76 16.07</code></pre>
+<p>so we have <span class="math inline">\(x_1=\)</span> 20.36, <span class="math inline">\(x_2=\)</span> 16.76, <span class="math inline">\(x_3=\)</span> 16.07, <span class="math inline">\(\ldots\)</span>. Now pretending that we don’t know the true values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, we compute our sample mean and sample variance:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="point-estimation.html#cb117-1" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
+<pre><code>## [1] 18.89395</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="point-estimation.html#cb119-1" tabindex="-1"></a><span class="fu">var</span>(x)</span></code></pre></div>
+<pre><code>## [1] 30.37141</code></pre>
+<p>so we have
+<span class="math display">\[\begin{eqnarray*}
+\hat{\mu}&amp;=&amp; \bar{x} = \frac{1}{100}\sum_{i=1}^{100} x_i=\mbox{18.9},\\
+\hat{\sigma}^2&amp;=&amp; s^2 = \frac{1}{99}\sum_{i=1}^{100} (x_i-\bar{x})^2=  \mbox{30.4},
+\end{eqnarray*}\]</span>
+to 3 s.f., and these estimates are similar to the true values, as we would hope. We illustrate this in Figure <a href="point-estimation.html#fig:normal-estimators">4.2</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:normal-estimators"></span>
+<img src="MPS114-Data-Science_files/figure-html/normal-estimators-1.png" alt="The circles and histogram represent 100 observations drawn from the $N(\mu, \sigma^2)$ distribution. We display the true normal distribution with the red dashed line. We compute estimates of $\mu$ and $\sigma^2$ using $\bar{x}$ and $s^2$: the corresponding estimated normal distribution is shown as the black curve, and is fairly similar to the true distribution: the estimates are fairly similar to the true values." width="576" />
+<p class="caption">
+Figure 4.2: The circles and histogram represent 100 observations drawn from the <span class="math inline">\(N(\mu, \sigma^2)\)</span> distribution. We display the true normal distribution with the red dashed line. We compute estimates of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> using <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(s^2\)</span>: the corresponding estimated normal distribution is shown as the black curve, and is fairly similar to the true distribution: the estimates are fairly similar to the true values.
+</p>
+</div>
+</div>
+<div id="estimators-and-estimates" class="section level3 hasAnchor" number="4.1.5">
+<h3><span class="header-section-number">4.1.5</span> Estimators and estimates<a href="point-estimation.html#estimators-and-estimates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Over the next few sections, we will explain why <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(s^2\)</span> were good choices of estimates to use for <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>As a motivating example, suppose we are planning an experiment to test a new steel manufacturing process. A batch of <span class="math inline">\(n\)</span> steel cables will be produced, and the tensile strength of each cable will be measured. We don’t yet know what the tensile strengths will be, and we denote the strength of the <span class="math inline">\(i\)</span>th cable by the random variable <span class="math inline">\(X_i\)</span>. We suppose that the strengths are normally distributed:
+<span class="math display">\[\begin{equation}
+X_1,X_2,\ldots,X_{n}\stackrel{i.i.d}{\sim} N(\mu, \sigma^2),
+\end{equation}\]</span>
+and the aim of the experiment is to estimate <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>.</p>
+<div class="rmdnote">
+<p>
+Although we don’t yet have the data, we are going to declare
+<strong>now</strong> how we intend to estimate <span class="math inline"><span class="math inline">\(\mu\)</span></span> and <span class="math inline"><span class="math inline">\(\sigma^2\)</span></span>, and then investigate whether
+our estimation method is likely to ‘work’ or not: whether it is likely
+to produce good estimates.
+</p>
+</div>
+<p>We declare that we are going to use the following two <strong>estimators</strong>, to estimate <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> respectively:
+<span class="math display">\[\begin{align}
+\bar{X} &amp;:= \frac{1}{N}\sum_{i=1}^n X_i,\\
+S^2 &amp;:= \frac{1}{n-1}\sum_{i=1}^n (X_i-\bar{X})^2.
+\end{align}\]</span></p>
+<hr>
+<div class="definition">
+<p><span id="def:unnamed-chunk-94" class="definition"><strong>Definition 4.3  (Estimators) </strong></span>An estimator is a function of some random variables <span class="math inline">\(X_1,\ldots,X_n\)</span> intended to provide an estimate of some parameter from the distribution of <span class="math inline">\(X_1,\ldots,X_n\)</span>.</p>
+</div>
+<hr>
+<p>Don’t confuse <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> with <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(s^2\)</span>! Both <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> are random variables because they are functions of the random variables <span class="math inline">\(X_1,\ldots,X_n\)</span>.</p>
+<div class="rmdnote">
+<p>
+An estimat<strong>or</strong> is a random variable; the observed
+value of the estimator, calculated using the observed values <span class="math inline"><span class="math inline">\(x_1,\ldots,x_n\)</span></span> is the corresponding
+estimat<strong>e</strong>.
+</p>
+</div>
+<p>In our steel cables example:</p>
+<ul>
+<li>we haven’t yet done the experiment; the cables haven’t been manufactured yet, and we can’t know what values for the tensile strengths we will observe. At this stage, we think of the <span class="math inline">\(n\)</span> tensile strengths <span class="math inline">\(X_1,\ldots,X_n\)</span> as random variables, so both <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> are random too.</li>
+<li>After we have done the experiment, we will have the <span class="math inline">\(n\)</span> numerical values for the tensile strengths, and the sample mean and variance that we calculate from these values will be represented by the constants <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(s^2\)</span>.</li>
+</ul>
+<hr>
+<p>Now we can ask the question: are <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> good estimators? Given that they are random variables, how likely is it that they will give us values ‘close’ to the true values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>?</p>
+</div>
+<div id="the-chi2-distribution" class="section level3 hasAnchor" number="4.1.6">
+<h3><span class="header-section-number">4.1.6</span> The <span class="math inline">\(\chi^2\)</span> distribution<a href="point-estimation.html#the-chi2-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ll shortly discuss the distribution of the two estimators <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span>, but first, we need to introduce a new distribution.</p>
+<hr>
+<div class="definition">
+<p><span id="def:unnamed-chunk-96" class="definition"><strong>Definition 4.4  ($\chi^2$ distribution) </strong></span>If a random variable <span class="math inline">\(Y\)</span> has the <span class="math inline">\(\chi^2_\nu\)</span> distribution (the “chi-squared distribution with <span class="math inline">\(\nu\)</span> degrees of freedom”), we write <span class="math inline">\(Y\sim \chi_\nu^2\)</span> and the probability density function of <span class="math inline">\(Y\)</span> is given by
+<span class="math display">\[\begin{equation}\label{chisquare2}
+f_Y(y) = \left\{\begin{array}{cc}\frac{y^{\nu/2-1}}{2^{\nu/2} \Gamma(\nu/2) }  \exp\left(-\frac{y}{2}\right),&amp; y\geq 0,\\
+0 &amp; y&lt;0.\end{array}\right.
+\end{equation}\]</span>
+Note that we must have <span class="math inline">\(\nu&gt;0\)</span>. Here <span class="math inline">\(\Gamma\)</span> denotes the gamma function, defined by
+<span class="math display">\[\begin{equation}
+\Gamma(x)=\int_0^{\infty}t^{x-1}e^{-t}dt.
+\end{equation}\]</span></p>
+</div>
+<hr>
+<p>It can be shown that
+<span class="math display" id="eq:chisqvar" id="eq:chisqmean">\[\begin{align}
+\mathbb{E}(Y)&amp;= \nu,\tag{4.1}\\
+Var(Y)&amp;=2\nu.\tag{4.2}
+\end{align}\]</span>
+The <span class="math inline">\(\chi^2_\nu\)</span> distribution is positively skewed, with the skew more apparent as the degrees of freedom <span class="math inline">\(\nu\)</span> decreases. Three <span class="math inline">\(\chi^2\)</span> distributions are plotted in Figure <a href="point-estimation.html#fig:chisq">4.3</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:chisq"></span>
+<img src="MPS114-Data-Science_files/figure-html/chisq-1.png" alt="Three $\chi^2_{n}$ distributions with $n=5$, 10 and 20 degrees of freedom." width="384" />
+<p class="caption">
+Figure 4.3: Three <span class="math inline">\(\chi^2_{n}\)</span> distributions with <span class="math inline">\(n=5\)</span>, 10 and 20 degrees of freedom.
+</p>
+</div>
+<div class="rmdnote">
+<p>
+We won’t be working with the density function of the <span class="math inline"><span class="math inline">\(\chi^2\)</span></span> distribution in this module, but
+you will need to know its mean and variance, and that a <span class="math inline"><span class="math inline">\(\chi^2\)</span></span> random variable cannot be
+negative.
+</p>
+</div>
+</div>
+<div id="the-distribution-of-the-estimators" class="section level3 hasAnchor" number="4.1.7">
+<h3><span class="header-section-number">4.1.7</span> The distribution of the estimators<a href="point-estimation.html#the-distribution-of-the-estimators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As the estimators are random variables, we can derive their probability distributions. It can be shown that:</p>
+<p><span class="math display" id="eq:Xbardist">\[\begin{equation}
+\bar{X}\sim N\left(\mu, \frac{\sigma^2}{n}\right)\tag{4.3}
+\end{equation}\]</span></p>
+<p>For the distribution of <span class="math inline">\(S^2\)</span>, we have the following result. If define the random variable <span class="math inline">\(R\)</span> to be
+<span class="math display">\[\begin{equation}
+R:=\frac{(n-1)S^2}{\sigma^2},
+\end{equation}\]</span>
+then <span class="math inline">\(R\)</span> has the probability distribution
+<span class="math display" id="eq:Ssquareddist">\[\begin{equation}
+R  \sim \chi^2_{n-1}. \tag{4.4}
+\end{equation}\]</span>
+You can learn how to prove this result in MPS235. For now, we’ll just note that <span class="math inline">\(\frac{(n-1)S^2}{\sigma^2}\)</span> cannot be negative, which is one property of the <span class="math inline">\(\chi^2\)</span> distribution.</p>
+</div>
+<div id="unbiased-estimators" class="section level3 hasAnchor" number="4.1.8">
+<h3><span class="header-section-number">4.1.8</span> Unbiased estimators<a href="point-estimation.html#unbiased-estimators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+We can now justify why <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> are good choices of estimators for <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>.
+<hr>
+<div class="definition">
+<p><span id="def:unnamed-chunk-98" class="definition"><strong>Definition 4.5  (Unbiased estimator) </strong></span>Let <span class="math inline">\(T(X_1,\ldots,X_n)\)</span> be a function of <span class="math inline">\(X_1,\ldots,X_n\)</span>. We say that <span class="math inline">\(T(X_1,\ldots,X_n)\)</span> is an unbiased estimator of a parameter <span class="math inline">\(\theta\)</span> if
+<span class="math display">\[
+\mathbb{E}(T(X_1,\ldots,X_n))  = \theta
+\]</span></p>
+</div>
+<div class="rmdnote">
+<p>
+Informally, we could say that an unbiased estimator is ‘expected to
+give the right answer’, or ‘gives the right answer on average’.
+</p>
+</div>
+<hr>
+<p><span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> are unbiased estimators of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> respectively: we have
+<span class="math display">\[\begin{align}
+\mathbb{E}(\bar{X}) &amp;= \mu,\\
+\mathbb{E}(S^2) &amp;= \sigma^2.
+\end{align}\]</span></p>
+<div class="example">
+<p><span id="exm:exampleUnbiasedEstimators" class="example"><strong>Example 4.1  (Unbiased estimators: sample mean and sample variance) </strong></span><br> Prove that <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> are unbiased estimators of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>.</p>
+</div>
+<div class="fold">
+<p><strong>Solution</strong></p>
+<p>Recall the basic properties of expectations:
+<span class="math display">\[\begin{align}
+\mathbb{E}(aX) &amp;= a \mathbb{E}(X),\\
+\mathbb{E}(X_i + X_j) &amp;= \mathbb{E}(X_i) + \mathbb{E}(X_j).
+\end{align}\]</span>
+Now, for <span class="math inline">\(\bar{X}\)</span> to be an <a href="point-estimation.html#unbiased-estimators">unbiased estimator</a> of <span class="math inline">\(\mu\)</span>, we need to show that <span class="math inline">\(\mathbb{E}(\bar{X})=\mu\)</span>. We have
+<span class="math display">\[\begin{align}
+\mathbb{E}(\bar{X}) &amp;= \mathbb{E}\left(\frac{1}{n}\sum_{i=1}^nX_i\right)\\
+&amp;= \frac{1}{n}\sum_{i=1}^n\mathbb{E}(X_i)\\
+&amp;= \frac{1}{n}\sum_{i=1}^n \mu \\
+&amp;= \frac{n\mu}{n}\\
+&amp;=\mu,
+\end{align}\]</span>
+as required.</p>
+<p>For <span class="math inline">\(S^2\)</span> to be an <a href="point-estimation.html#unbiased-estimators">unbiased estimator</a> of <span class="math inline">\(\sigma^2\)</span>, we need to show that <span class="math inline">\(\mathbb{E}(S^2)=\sigma^2\)</span>. Recall that we defined <span class="math inline">\(R=\frac{(n-1)S^2}{\sigma^2}\)</span>, and stated that <span class="math inline">\(R\sim \chi^2_{n-1}\)</span>, which means that <span class="math inline">\(\mathbb{E}(R)= n-1\)</span>, using the result in <a href="point-estimation.html#eq:chisqmean">(4.1)</a></p>
+<p>We have
+<span class="math display">\[\begin{align}
+\mathbb{E}(S^2) &amp;= \mathbb{E}\left(\frac{R\sigma^2}{n-1}\right)\\
+&amp;= \frac{\sigma^2}{n-1}\mathbb{E}(R)\\
+&amp;= \frac{\sigma^2}{n-1}\times (n-1)\\
+&amp;= \sigma^2,
+\end{align}\]</span></p>
+</div>
+</div>
+<div id="the-standard-error-of-an-estimator" class="section level3 hasAnchor" number="4.1.9">
+<h3><span class="header-section-number">4.1.9</span> The standard error of an estimator<a href="point-estimation.html#the-standard-error-of-an-estimator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="definition">
+<p><span id="def:unnamed-chunk-100" class="definition"><strong>Definition 4.6  (Standard error) </strong></span>Let <span class="math inline">\(T(X_1,\ldots,X_n)\)</span> be a function of <span class="math inline">\(X_1,\ldots,X_n\)</span>, used to estimate some parameter <span class="math inline">\(\theta\)</span>. The standard error of <span class="math inline">\(T(X_1,\ldots,X_n)\)</span> is defined to be
+<span class="math display">\[\begin{align}
+&amp; s.e.(T(X_1,\ldots,X_n)) =\\
+&amp;\sqrt{Var(T(X_1,\ldots,X_n))},
+\end{align}\]</span>
+i.e the square root of its variance.</p>
+</div>
+<div class="rmdnote">
+<p>
+As the standard error is the square root of a variance, we could also
+call it a ‘standard deviation’. However, when referring to estimators,
+we use the term ‘standard error’ instead.
+</p>
+</div>
+<div class="rmdnote">
+<p>
+For an unbiased estimator, the smaller the standard error the better:
+the closer the estimate is likely to be to the true value.
+</p>
+</div>
+<p>Writing <span class="math inline">\(T = T(X_1,\ldots,X_n)\)</span> for short, for an unbiased estimator <span class="math inline">\(T\)</span> of a parameter <span class="math inline">\(\theta\)</span>, we have
+<span class="math display">\[
+Var(T):= \mathbb{E}((T - \mathbb{E}(T))^2) = \mathbb{E}((T - \theta)^2)
+\]</span>
+so the smaller the standard error, the smaller the expectation of the (squared) difference between <span class="math inline">\(T\)</span> and <span class="math inline">\(\theta\)</span>.</p>
+<hr>
+<p>We have
+<span class="math display">\[\begin{align}
+s.e.(\bar{X})&amp;=\sqrt{ \frac{\sigma^2}{n}},\\
+s.e.(S^2)&amp;= \sqrt{\frac{2\sigma^4}{n-1}}.
+\end{align}\]</span></p>
+<div class="example">
+<p><span id="exm:exampleStandardError" class="example"><strong>Example 4.2  (Standard error of the sample mean) </strong></span><br> Derive the standard error of <span class="math inline">\(\bar{X}\)</span></p>
+</div>
+<div class="fold">
+<p><strong>Solution</strong></p>
+<p>Recall the basic properties of variances:
+<span class="math display">\[
+Var(aX) = a^2 Var(X),
+\]</span>
+and for <span class="math inline">\(X_i\)</span> and <span class="math inline">\(X_j\)</span> independent, we have
+<span class="math display">\[
+Var(X_i + X_j) = Var(X_i) + Var(X_j).
+\]</span>
+(if they are not independent, we have to include the covariance term <span class="math inline">\(Var(X_i + X_j) = Var(X_i) + Var(X_j) + 2 Cov(X_i, X_j)\)</span>)</p>
+<p>We have
+<span class="math display">\[\begin{align}
+Var(\bar{X}) &amp;= Var\left(\frac{1}{n}\sum_{i=1}^nX_i\right)\\
+&amp;= \frac{1}{n^2}\sum_{i=1}^nVar(X_i)\\
+&amp;= \frac{1}{n^2}\sum_{i=1}^n \sigma^2\\
+&amp;= \frac{n\sigma^2}{n^2}\\
+&amp;=\frac{\sigma^2}{n},
+\end{align}\]</span>
+so we have <span class="math inline">\(s.e.(\bar{X}) = \sqrt{\sigma^2/n}\)</span>.</p>
+</div>
+<div class="example">
+<p><span id="exm:exampleStandardErrorsSsq" class="example"><strong>Example 4.3  (Standard error of the sample variance) </strong></span><br> Derive the standard error of <span class="math inline">\(S^2\)</span>.</p>
+</div>
+<div class="fold">
+<p><strong>Solution</strong></p>
+<p>Recall that we defined <span class="math inline">\(R=\frac{(n-1)S^2}{\sigma^2}\)</span>, and stated that <span class="math inline">\(R\sim \chi^2_{n-1}\)</span>, which means that <span class="math inline">\(Var(R)= 2(n-1)\)</span>, using the result in <a href="point-estimation.html#eq:chisqvar">(4.2)</a></p>
+<p>We have
+<span class="math display">\[\begin{align}
+Var(S^2)&amp;=Var\left(\frac{R\sigma^2}{n-1}\right)\\
+&amp;= \frac{\sigma^4}{(n-1)^2}Var(R)\\
+&amp;= \frac{\sigma^4}{(n-1)^2}\times 2(n-1),
+\end{align}\]</span>
+and so <span class="math inline">\(s.e.(S^2)= \sqrt{\frac{2\sigma^4}{n-1}}\)</span>.</p>
+</div>
+</div>
+<div id="consistent-estimators" class="section level3 hasAnchor" number="4.1.10">
+<h3><span class="header-section-number">4.1.10</span> Consistent estimators<a href="point-estimation.html#consistent-estimators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="definition">
+<p><span id="def:unnamed-chunk-103" class="definition"><strong>Definition 4.7  (Consistent estimator) </strong></span>An estimator <span class="math inline">\(T(X_1,\ldots,X_n)\)</span> for a parameter <span class="math inline">\(\theta\)</span> is consistent if, for any <span class="math inline">\(\epsilon&gt;0\)</span>, we have
+<span class="math display">\[\begin{equation}
+\lim_{n \rightarrow \infty}P(|T(X_1,\ldots,X_n) - \theta| &lt; \epsilon) = 1.
+\end{equation}\]</span></p>
+</div>
+<div class="rmdnote">
+<p>
+Informally, we can say that a consistent estimator is guaranteed to
+converge to the true value of the parameter as the sample size tends to
+infinity.
+</p>
+</div>
+<hr>
+<div class="theorem">
+<p><span id="thm:unnamed-chunk-105" class="theorem"><strong>Theorem 4.1  (Identifying a consistent estimator) </strong></span>If an estimator is <a href="point-estimation.html#unbiased-estimators">unbiased</a>, and its <a href="point-estimation.html#the-standard-error-of-an-estimator">standard error</a> tends to 0 as the sample size <span class="math inline">\(n\)</span> tends to infinity, it will also be a consistent estimator.</p>
+</div>
+<p>You do not need to know the proof of this result for this module, but if you want a challenge, you are encouraged to prove this result for yourself! (Hint: you will need to use Chebyshev’s inequality.) A proof is provided in the tutorial booklet solutions.</p>
+<p>Both <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> are consistent estimators, which gives another justification for using them.</p>
+<div class="example">
+<p><span id="exm:exampleConsistent" class="example"><strong>Example 4.4  (Consistency of sample mean and sample variance) </strong></span><br> Verify that <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> are consistent estimators for <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>.</p>
+</div>
+<div class="fold">
+<p><strong>Solution</strong></p>
+<p>We have already shown, in Example <a href="point-estimation.html#exm:exampleUnbiasedEstimators">4.1</a> that <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> are <a href="point-estimation.html#unbiased-estimators">unbiased estimator</a> for <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> respectively. We have also shown, in Examples <a href="point-estimation.html#exm:exampleStandardError">4.2</a> and <a href="point-estimation.html#exm:exampleStandardErrorsSsq">4.3</a> that the standard errors are
+<span class="math display">\[\begin{align}
+s.e.(\bar{X})&amp;=\sqrt{ \frac{\sigma^2}{n}},\\
+s.e.(S^2)&amp;= \sqrt{\frac{2\sigma^4}{n-1}}.
+\end{align}\]</span>
+We can see that both these standard errors tend to 0 as <span class="math inline">\(n\rightarrow \infty\)</span>, so both estimators are consistent.</p>
+</div>
+</div>
+</div>
+<div id="estimating-the-probability-parameter-in-a-binomial-distribution" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Estimating the probability parameter in a Binomial distribution<a href="point-estimation.html#estimating-the-probability-parameter-in-a-binomial-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we have a single random variable
+<span class="math display">\[
+X\sim Bin(n, \theta)
+\]</span>
+with <span class="math inline">\(x\)</span> the observed value of <span class="math inline">\(X\)</span>: the observed number of ‘successes’ in <span class="math inline">\(n\)</span> trials. If <span class="math inline">\(\theta\)</span> is unknown, how should we estimate it? (The other parameter in the distribution, <span class="math inline">\(n\)</span>, would typically be known).</p>
+<p>Here, the obvious choice would be
+<span class="math display">\[
+\hat{\theta} = \frac{x}{n},
+\]</span></p>
+<p>so our estimator is <span class="math inline">\(\frac{X}{n}\)</span>. It can be shown that this is an <a href="point-estimation.html#unbiased-estimators">unbiased estimator</a> of <span class="math inline">\(\theta\)</span>, is <a href="point-estimation.html#consistent-estimators">consistent</a>, and has <a href="point-estimation.html#the-standard-error-of-an-estimator">standard error</a> <span class="math inline">\(\sqrt{\frac{\theta(1-\theta)}{n}}\)</span>.</p>
+<div class="example">
+<p><span id="exm:exampleUnbiased" class="example"><strong>Example 4.5  (Unbiased estimators: sample proportion) </strong></span><br> Prove that <span class="math inline">\(\frac{X}{n}\)</span> is unbiased estimator of <span class="math inline">\(\theta\)</span> for <span class="math inline">\(X\sim Bin(n, \theta)\)</span>.</p>
+</div>
+<div class="fold">
+<p><strong>Solution</strong></p>
+<p>For <span class="math inline">\(X\sim Bin(n,\theta)\)</span>, we have <span class="math inline">\(\mathbb{E}(X) = n\theta\)</span>. To show that <span class="math inline">\(X/n\)</span> is an <a href="point-estimation.html#unbiased-estimators">unbiased estimator</a> of <span class="math inline">\(\theta\)</span>, we need to show <span class="math inline">\(\mathbb{E}(X/n) = \theta\)</span>. We have
+<span class="math display">\[\begin{align}
+\mathbb{E}\left(\frac{X}{n}\right)&amp; = \frac{1}{n}\mathbb{E}(X)\\
+&amp;= \frac{n\theta}{n}\\
+&amp;=\theta,
+\end{align}\]</span>
+as required.</p>
+</div>
+<div class="example">
+<p><span id="exm:exampleSE" class="example"><strong>Example 4.6  (Standard error of the sample proportion) </strong></span><br> Derive the standard error of <span class="math inline">\(\frac{X}{n}\)</span> for <span class="math inline">\(X\sim Bin(n, \theta)\)</span></p>
+</div>
+<div class="fold">
+<p><strong>Solution</strong></p>
+<p>For <span class="math inline">\(X\sim Bin(n,\theta)\)</span>, we have <span class="math inline">\(Var(X) = n\theta(1-\theta)\)</span>. For the <a href="point-estimation.html#the-standard-error-of-an-estimator">standard error</a>, we have
+<span class="math display">\[\begin{align}
+Var\left(\frac{X}{n}\right)&amp; = \frac{1}{n^2}Var(X)\\
+&amp;= \frac{n\theta(1-\theta)}{n^2},
+\end{align}\]</span>
+and so we have
+<span class="math display">\[s.e.(X/n) = \sqrt{\frac{\theta(1-\theta)}{n}}.\]</span></p>
+</div>
+<div class="example">
+<p><span id="exm:exampleConsistentBin" class="example"><strong>Example 4.7  (Consistency of sample proportion) </strong></span><br> Verify that <span class="math inline">\(\frac{X}{n}\)</span> is a consistent estimator of <span class="math inline">\(\theta\)</span> for <span class="math inline">\(X\sim Bin(n, \theta)\)</span>.</p>
+</div>
+<div class="fold">
+<p>
+We have shown that <span class="math inline"><span class="math inline">\(\frac{X}{n}\)</span></span>
+is an unbiased estimator of <span class="math inline"><span class="math inline">\(\theta\)</span></span>.
+To be <a href="point-estimation.html#consistent-estimators">consistent</a>, we require its
+standard error to tend to 0 as <span class="math inline"><span class="math inline">\(n\rightarrow\infty\)</span></span>. We have shown that
+the standard error is <span class="math inline"><span class="math inline">\(\sqrt{\theta(1-\theta)/n}\)</span></span>, so the
+requirement is met: <span class="math inline"><span class="math inline">\(\frac{X}{n}\)</span></span> is
+a consistent estimator for <span class="math inline"><span class="math inline">\(\theta\)</span></span>.
+</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="populations-samples-and-statistical-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interval-estimates-and-confidence-intervals.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

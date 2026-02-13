@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Interval estimates and confidence intervals | MPS114 - An Introduction to Data Science</title>
+  <meta name="description" content="Lecture notes for MPS114" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Interval estimates and confidence intervals | MPS114 - An Introduction to Data Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Lecture notes for MPS114" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Interval estimates and confidence intervals | MPS114 - An Introduction to Data Science" />
+  
+  <meta name="twitter:description" content="Lecture notes for MPS114" />
+  
+
+<meta name="author" content="Dr Jill Johnson" />
+
+
+<meta name="date" content="2026-02-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="point-estimation.html"/>
+<link rel="next" href="hypothesis-testing-a-level-recap.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MPS114 - Introduction to Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About these notes</a></li>
+<li class="chapter" data-level="1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html"><i class="fa fa-check"></i><b>1</b> Exploratory Data Analysis using R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#case-study-what-makes-a-country-good-at-maths"><i class="fa fa-check"></i><b>1.1</b> Case study: what makes a country good at maths?</a></li>
+<li class="chapter" data-level="1.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#the-tidyverse"><i class="fa fa-check"></i><b>1.2</b> The “Tidyverse”</a></li>
+<li class="chapter" data-level="1.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#importing-data-into-r-csv-and-.xlsx-files"><i class="fa fa-check"></i><b>1.3</b> Importing data into R: <code>csv</code> and <code>.xlsx</code> files</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#importing-excel-.xlsx-files"><i class="fa fa-check"></i><b>1.3.1</b> Importing Excel <code>.xlsx</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#data-frames-and-tibbles-in-r"><i class="fa fa-check"></i><b>1.4</b> Data frames and tibbles in R</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>1.4.1</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="1.4.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>1.4.2</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="1.4.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>1.4.3</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="1.4.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>1.4.4</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+<li class="chapter" data-level="1.4.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>1.4.5</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-summary-statistics-with-the-summary-command"><i class="fa fa-check"></i><b>1.5</b> Calculating summary statistics with the <code>summary()</code> command</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-individual-summary-statistics"><i class="fa fa-check"></i><b>1.5.1</b> Calculating individual summary statistics</a></li>
+<li class="chapter" data-level="1.5.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-other-quantilespercentiles"><i class="fa fa-check"></i><b>1.5.2</b> Calculating other quantiles/percentiles</a></li>
+<li class="chapter" data-level="1.5.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>1.5.3</b> Computing summaries per group</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#plotting-a-distribution-using-a-histogram"><i class="fa fa-check"></i><b>1.6</b> Plotting a distribution using a histogram</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#describing-the-shape-of-a-distribution-skewness"><i class="fa fa-check"></i><b>1.6.1</b> Describing the shape of a distribution: skewness</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#introducing-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Introducing <code>ggplot2</code></a></li>
+<li class="chapter" data-level="1.8" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#drawing-a-histogram-in-r"><i class="fa fa-check"></i><b>1.8</b> Drawing a histogram in R</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>1.8.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#covariance-and-correlation"><i class="fa fa-check"></i><b>1.9</b> Covariance and correlation</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-a-covariance-in-r"><i class="fa fa-check"></i><b>1.9.1</b> Calculating a covariance in R</a></li>
+<li class="chapter" data-level="1.9.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#pearsons-correlation-coefficient"><i class="fa fa-check"></i><b>1.9.2</b> Pearson’s correlation coefficient</a></li>
+<li class="chapter" data-level="1.9.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-pearsons-correlation-coefficient-in-r"><i class="fa fa-check"></i><b>1.9.3</b> Calculating Pearson’s correlation coefficient in R</a></li>
+<li class="chapter" data-level="1.9.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#spearmans-correlation-coefficient"><i class="fa fa-check"></i><b>1.9.4</b> Spearman’s correlation coefficient</a></li>
+<li class="chapter" data-level="1.9.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-spearmans-correlation-coefficient-in-r"><i class="fa fa-check"></i><b>1.9.5</b> Calculating Spearman’s correlation coefficient in R</a></li>
+<li class="chapter" data-level="1.9.6" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#interpreting-correlation-coefficients"><i class="fa fa-check"></i><b>1.9.6</b> Interpreting correlation coefficients</a></li>
+<li class="chapter" data-level="1.9.7" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#correlations-for-the-maths-data-set"><i class="fa fa-check"></i><b>1.9.7</b> Correlations for the <code>maths</code> data set</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#drawing-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10</b> Drawing a scatter plot in R</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#customising-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.1</b> Customising a scatter plot in R</a></li>
+<li class="chapter" data-level="1.10.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#adding-a-nonlinear-trend-to-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.2</b> Adding a nonlinear trend to a scatter plot in R</a></li>
+<li class="chapter" data-level="1.10.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#adding-a-linear-trend-to-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.3</b> Adding a linear trend to a scatter plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#box-plots"><i class="fa fa-check"></i><b>1.11</b> Box plots</a></li>
+<li class="chapter" data-level="1.12" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#scatter-plots-to-represent-three-variables"><i class="fa fa-check"></i><b>1.12</b> Scatter plots to represent three variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>2</b> Machine Learning</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="machine-learning.html"><a href="machine-learning.html#can-we-teach-a-computer-to-identify-handwritten-digits"><i class="fa fa-check"></i><b>2.1</b> Can we teach a computer to identify handwritten digits?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="machine-learning.html"><a href="machine-learning.html#step-1-converting-an-image-into-data"><i class="fa fa-check"></i><b>2.1.1</b> Step 1: converting an image into data</a></li>
+<li class="chapter" data-level="2.1.2" data-path="machine-learning.html"><a href="machine-learning.html#step-2-assembling-the-training-data-set"><i class="fa fa-check"></i><b>2.1.2</b> Step 2: assembling the training data set</a></li>
+<li class="chapter" data-level="2.1.3" data-path="machine-learning.html"><a href="machine-learning.html#step-3-an-algorithm-for-estimating-the-digit-in-a-new-image"><i class="fa fa-check"></i><b>2.1.3</b> Step 3: an algorithm for estimating the digit in a new image</a></li>
+<li class="chapter" data-level="2.1.4" data-path="machine-learning.html"><a href="machine-learning.html#the-k-nearest-neighbour-algorithm-knn"><i class="fa fa-check"></i><b>2.1.4</b> The <span class="math inline">\(K\)</span> nearest neighbour algorithm (KNN)</a></li>
+<li class="chapter" data-level="2.1.5" data-path="machine-learning.html"><a href="machine-learning.html#using-k-nearest-neighbours-in-r"><i class="fa fa-check"></i><b>2.1.5</b> Using <span class="math inline">\(K\)</span> nearest neighbours in R</a></li>
+<li class="chapter" data-level="2.1.6" data-path="machine-learning.html"><a href="machine-learning.html#the-performance-of-the-algorithm"><i class="fa fa-check"></i><b>2.1.6</b> The performance of the algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Populations, samples and statistical models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#statistical-models"><i class="fa fa-check"></i><b>3.1</b> Statistical models</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#objectives"><i class="fa fa-check"></i><b>3.1.1</b> Objectives</a></li>
+<li class="chapter" data-level="3.1.2" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#comment-infinite-and-finite-populations"><i class="fa fa-check"></i><b>3.1.2</b> Comment: infinite and finite populations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="point-estimation.html"><a href="point-estimation.html"><i class="fa fa-check"></i><b>4</b> Point estimation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="point-estimation.html"><a href="point-estimation.html#estimating-the-parameters-of-a-normal-distribution"><i class="fa fa-check"></i><b>4.1</b> Estimating the parameters of a normal distribution</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="point-estimation.html"><a href="point-estimation.html#problem-setup-and-notation"><i class="fa fa-check"></i><b>4.1.1</b> Problem setup and notation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="point-estimation.html"><a href="point-estimation.html#the-sample-mean-and-sample-variance"><i class="fa fa-check"></i><b>4.1.2</b> The sample mean and sample variance</a></li>
+<li class="chapter" data-level="4.1.3" data-path="point-estimation.html"><a href="point-estimation.html#point-estimates-for-the-mean-and-variance"><i class="fa fa-check"></i><b>4.1.3</b> Point estimates for the mean and variance</a></li>
+<li class="chapter" data-level="4.1.4" data-path="point-estimation.html"><a href="point-estimation.html#testing-the-method"><i class="fa fa-check"></i><b>4.1.4</b> Testing the method</a></li>
+<li class="chapter" data-level="4.1.5" data-path="point-estimation.html"><a href="point-estimation.html#estimators-and-estimates"><i class="fa fa-check"></i><b>4.1.5</b> Estimators and estimates</a></li>
+<li class="chapter" data-level="4.1.6" data-path="point-estimation.html"><a href="point-estimation.html#the-chi2-distribution"><i class="fa fa-check"></i><b>4.1.6</b> The <span class="math inline">\(\chi^2\)</span> distribution</a></li>
+<li class="chapter" data-level="4.1.7" data-path="point-estimation.html"><a href="point-estimation.html#the-distribution-of-the-estimators"><i class="fa fa-check"></i><b>4.1.7</b> The distribution of the estimators</a></li>
+<li class="chapter" data-level="4.1.8" data-path="point-estimation.html"><a href="point-estimation.html#unbiased-estimators"><i class="fa fa-check"></i><b>4.1.8</b> Unbiased estimators</a></li>
+<li class="chapter" data-level="4.1.9" data-path="point-estimation.html"><a href="point-estimation.html#the-standard-error-of-an-estimator"><i class="fa fa-check"></i><b>4.1.9</b> The standard error of an estimator</a></li>
+<li class="chapter" data-level="4.1.10" data-path="point-estimation.html"><a href="point-estimation.html#consistent-estimators"><i class="fa fa-check"></i><b>4.1.10</b> Consistent estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="point-estimation.html"><a href="point-estimation.html#estimating-the-probability-parameter-in-a-binomial-distribution"><i class="fa fa-check"></i><b>4.2</b> Estimating the probability parameter in a Binomial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html"><i class="fa fa-check"></i><b>5</b> Interval estimates and confidence intervals</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#the-student-t-distribution"><i class="fa fa-check"></i><b>5.1</b> The Student <span class="math inline">\(t\)</span> distribution</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#mean-and-variance-of-the-t-distribution"><i class="fa fa-check"></i><b>5.1.1</b> Mean and variance of the <span class="math inline">\(t\)</span>-distribution</a></li>
+<li class="chapter" data-level="5.1.2" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#notation-quantilespercentiles-of-the-t-distribution"><i class="fa fa-check"></i><b>5.1.2</b> Notation: quantiles/percentiles of the <span class="math inline">\(t\)</span> distribution</a></li>
+<li class="chapter" data-level="5.1.3" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#the-t-distribution-in-r."><i class="fa fa-check"></i><b>5.1.3</b> The <span class="math inline">\(t\)</span> distribution in R.</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#confidence-intervals-for-the-mean-and-the-variance-of-a-normal-distribution"><i class="fa fa-check"></i><b>5.2</b> Confidence intervals for the mean and the variance of a normal distribution</a></li>
+<li class="chapter" data-level="5.3" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#confidence-interval-for-the-probability-parameter-in-a-binomial-distribution"><i class="fa fa-check"></i><b>5.3</b> Confidence interval for the probability parameter in a binomial distribution</a></li>
+<li class="chapter" data-level="5.4" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#alpha-confidence-intervals"><i class="fa fa-check"></i><b>5.4</b> <span class="math inline">\(100(1-\alpha)\%\)</span> Confidence Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing: A-level recap</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#hypothesis-testing-with-the-neyman-pearson-approach"><i class="fa fa-check"></i><b>6.1</b> Hypothesis testing with the Neyman-Pearson approach</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#one-sided-and-two-sided-alternative-hypotheses"><i class="fa fa-check"></i><b>6.1.1</b> One-sided and two-sided alternative hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#fishers-p-value-method"><i class="fa fa-check"></i><b>6.2</b> Fisher’s <span class="math inline">\(p\)</span>-value method</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#what-counts-as-a-small-p-value"><i class="fa fa-check"></i><b>6.2.1</b> What counts as a small <span class="math inline">\(p\)</span>-value?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#relationship-between-the-neyman-pearson-and-p-value-methods"><i class="fa fa-check"></i><b>6.3</b> Relationship between the Neyman-Pearson and <span class="math inline">\(p\)</span>-value methods</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#one-sample-t-test"><i class="fa fa-check"></i><b>6.4</b> One-sample <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#which-hypothesis-test-do-i-use-for"><i class="fa fa-check"></i><b>6.5</b> Which hypothesis test do I use for…?</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing: comparing two population means</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#example-can-imagining-eating-food-make-you-eat-less"><i class="fa fa-check"></i><b>7.1</b> Example: can imagining eating food make you eat less?</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-hypotheses"><i class="fa fa-check"></i><b>7.1.1</b> The hypotheses</a></li>
+<li class="chapter" data-level="7.1.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#a-test-statistic"><i class="fa fa-check"></i><b>7.1.2</b> A test statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#hypothesis-testing-using-simulation"><i class="fa fa-check"></i><b>7.2</b> Hypothesis testing using simulation</a></li>
+<li class="chapter" data-level="7.3" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test"><i class="fa fa-check"></i><b>7.3</b> The two-sample <span class="math inline">\(t\)</span> test</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test-with-the-neyman-pearson-method"><i class="fa fa-check"></i><b>7.3.1</b> The two-sample <span class="math inline">\(t\)</span>-test with the Neyman-Pearson method</a></li>
+<li class="chapter" data-level="7.3.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#an-illustrated-guide"><i class="fa fa-check"></i><b>7.3.2</b> An illustrated guide</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#confidence-interval-for-the-difference-between-two-means"><i class="fa fa-check"></i><b>7.4</b> Confidence interval for the difference between two means</a></li>
+<li class="chapter" data-level="7.5" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#equivalence-of-confidence-intervals-and-neyman-pearson-testing"><i class="fa fa-check"></i><b>7.5</b> Equivalence of confidence intervals and Neyman-Pearson testing</a></li>
+<li class="chapter" data-level="7.6" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test-in-r"><i class="fa fa-check"></i><b>7.6</b> The two-sample <span class="math inline">\(t\)</span> test in R</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#t-tests-with-data-frames-in-r"><i class="fa fa-check"></i><b>7.6.1</b> <span class="math inline">\(t\)</span>-tests with data frames in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#examples"><i class="fa fa-check"></i><b>7.7</b> Examples</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#using-the-p-value-method"><i class="fa fa-check"></i><b>7.7.1</b> Using the <span class="math inline">\(p\)</span>-value method</a></li>
+<li class="chapter" data-level="7.7.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#using-neyman-pearson-testing"><i class="fa fa-check"></i><b>7.7.2</b> Using Neyman-Pearson testing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing: comparing two proportions</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#example-an-investigation-into-gender-bias"><i class="fa fa-check"></i><b>8.1</b> Example: an investigation into gender bias</a></li>
+<li class="chapter" data-level="8.2" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#comparing-two-binomial-proportions"><i class="fa fa-check"></i><b>8.2</b> Comparing two binomial proportions</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#a-simulation-method"><i class="fa fa-check"></i><b>8.2.1</b> A simulation method</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#an-analytical-method"><i class="fa fa-check"></i><b>8.3</b> An analytical method</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#the-analytical-method-a-summary"><i class="fa fa-check"></i><b>8.3.1</b> The analytical method: a summary</a></li>
+<li class="chapter" data-level="8.3.2" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#conclusion"><i class="fa fa-check"></i><b>8.3.2</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#confidence-intervals-to-measure-the-difference"><i class="fa fa-check"></i><b>8.4</b> Confidence intervals to measure the difference</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><i class="fa fa-check"></i><b>9</b> Sample size and power for a Neyman-Pearson hypothesis test</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#gender-bias-example-re-visited"><i class="fa fa-check"></i><b>9.1</b> Gender bias example re-visited</a></li>
+<li class="chapter" data-level="9.2" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#the-power-of-a-hypothesis-test"><i class="fa fa-check"></i><b>9.2</b> The power of a hypothesis test</a></li>
+<li class="chapter" data-level="9.3" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#an-analytical-approach"><i class="fa fa-check"></i><b>9.3</b> An analytical approach</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html"><i class="fa fa-check"></i><b>10</b> <span class="math inline">\(\chi^2\)</span> tests for contingency tables</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#example-customer-ratings-of-restaurants"><i class="fa fa-check"></i><b>10.1</b> Example: customer ratings of restaurants</a></li>
+<li class="chapter" data-level="10.2" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-model-and-hypotheses"><i class="fa fa-check"></i><b>10.2</b> A model and hypotheses</a></li>
+<li class="chapter" data-level="10.3" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-test-statistic-1"><i class="fa fa-check"></i><b>10.3</b> A test statistic</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#the-formula-for-the-expected-counts"><i class="fa fa-check"></i><b>10.3.1</b> The formula for the expected counts</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#computing-the-test-statistic-for-the-observed-data"><i class="fa fa-check"></i><b>10.4</b> Computing the test statistic for the observed data</a></li>
+<li class="chapter" data-level="10.5" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-simulation-method-1"><i class="fa fa-check"></i><b>10.5</b> A simulation method</a></li>
+<li class="chapter" data-level="10.6" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#an-analytical-method-1"><i class="fa fa-check"></i><b>10.6</b> An analytical method</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#chi2-tests-in-r"><i class="fa fa-check"></i><b>10.6.1</b> <span class="math inline">\(\chi^2\)</span> tests in R</a></li>
+<li class="chapter" data-level="10.6.2" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#row-homogeneity-and-independence"><i class="fa fa-check"></i><b>10.6.2</b> Row homogeneity and independence</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#exercise"><i class="fa fa-check"></i><b>10.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html"><i class="fa fa-check"></i><b>11</b> Index of definitions and examples</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html#definitions"><i class="fa fa-check"></i><b>11.1</b> Definitions</a></li>
+<li class="chapter" data-level="11.2" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html#examples-1"><i class="fa fa-check"></i><b>11.2</b> Examples</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MPS114 - An Introduction to Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="interval-estimates-and-confidence-intervals" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Interval estimates and confidence intervals<a href="interval-estimates-and-confidence-intervals.html#interval-estimates-and-confidence-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<script type="text/javascript">
+$(document).ready(function() {
+  $folds = $(".fold");
+  $folds.wrapInner("<div class=\"fold-blck\">"); // wrap a div container around content
+  $folds.prepend("<button class=\"fold-btn\">Show solution</button>");  // add a button
+  $(".fold-blck").toggle();  // fold all blocks
+  $(".fold-btn").on("click", function() {  // add onClick event
+    $(this).text($(this).text() === "Show solution" ? "Hide solution" : "Show solution");  // if the text equals "Fold", change it to "Unfold"or else to "Fold" 
+    $(this).next(".fold-blck").toggle("linear");  // "swing" is the default easing function. This can be further customized in its speed or the overall animation itself.
+  })
+});
+</script>
+<p>In the last chapter we learnt how to obtain <em>point</em> estimates for parameters in probability distributions. The problem with point estimates is that they will almost certainly be <em>wrong</em>! Sample means will almost always differ from population means, for example.</p>
+<hr>
+<div class="definition">
+<p><span id="def:unnamed-chunk-107" class="definition"><strong>Definition 5.1  (Interval estimate) </strong></span>We use the term “interval estimate” to mean a range of values that we think are plausible for some unknown parameter. For example, instead of reporting a point estimate: “we estimate <span class="math inline">\(\mu\)</span> to be 11.5”, we might report an interval estimate: “we think <span class="math inline">\(\mu\)</span> is between 9.5 and 13.5”.</p>
+</div>
+<hr>
+<div class="rmdnote">
+<p>
+By providing an interval estimate, we are able to describe our
+<strong>uncertainty</strong> about a parameter: the more uncertain we
+are, the wider the interval.
+</p>
+</div>
+<p>In this chapter, we will study a particular type of interval estimate known as a <em>confidence interval</em>. First, we need a little more distribution theory</p>
+<div id="the-student-t-distribution" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> The Student <span class="math inline">\(t\)</span> distribution<a href="interval-estimates-and-confidence-intervals.html#the-student-t-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+We will use the Student <span class="math inline">\(t\)</span> distribution shortly for obtaining confidence intervals.<br />
+
+<hr>
+<div class="definition">
+<p><span id="def:unnamed-chunk-109" class="definition"><strong>Definition 5.2  (Student $t$ distribution) </strong></span>If a random variable <span class="math inline">\(Y\)</span> has a Student <span class="math inline">\(t\)</span> distribution (or “Student’s <span class="math inline">\(t\)</span>” distribution or just “<span class="math inline">\(t\)</span> distribution” for short) with <span class="math inline">\(\nu\)</span> degrees of freedom,
+that is if
+<span class="math display">\[
+Y\sim t_{\nu},
+\]</span>
+then <span class="math inline">\(Y\)</span> has the density function
+<span class="math display">\[
+f_{\nu}(y) = \frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\Gamma\left(\frac{\nu}{2}\right)\sqrt{\pi \nu}}\left(1+\frac{y^2}{\nu}\right)^{-\frac{\nu+1}{2}},
+\]</span>
+for <span class="math inline">\(\infty&lt;y&lt;\infty\)</span></p>
+</div>
+<hr>
+<div id="mean-and-variance-of-the-t-distribution" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Mean and variance of the <span class="math inline">\(t\)</span>-distribution<a href="interval-estimates-and-confidence-intervals.html#mean-and-variance-of-the-t-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If <span class="math inline">\(\nu&gt;1\)</span> then
+<span class="math display">\[
+E(Y)=0,
+\]</span>
+and if <span class="math inline">\(\nu&gt;2\)</span> then
+<span class="math display">\[
+V(Y)=\frac{\nu}{\nu-2}
+\]</span>
+The pdf <span class="math inline">\(f_{\nu}\)</span> is symmetric about zero. For large values of <span class="math inline">\(\nu\)</span>, it is very similar to the standard normal density <span class="math inline">\(N(0,1)\)</span>. Some <span class="math inline">\(t\)</span>-distributions are plotted in Figure <a href="interval-estimates-and-confidence-intervals.html#fig:t-distributions">5.1</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:t-distributions"></span>
+<img src="MPS114-Data-Science_files/figure-html/t-distributions-1.png" alt="The $t_3$ and $t_{10}$ distributions, together with the standard normal distribution. A $t$ distribution with more than 30 degrees of freedom is hard to distinguish from a standard normal distribution. Note that $t$ distributions have **heavier tails** than the normal." width="480" />
+<p class="caption">
+Figure 5.1: The <span class="math inline">\(t_3\)</span> and <span class="math inline">\(t_{10}\)</span> distributions, together with the standard normal distribution. A <span class="math inline">\(t\)</span> distribution with more than 30 degrees of freedom is hard to distinguish from a standard normal distribution. Note that <span class="math inline">\(t\)</span> distributions have <strong>heavier tails</strong> than the normal.
+</p>
+</div>
+<hr>
+<div class="theorem">
+<p><span id="thm:NormalChiT" class="theorem"><strong>Theorem 5.1  (Relationship between the normal distribution, the $\chi^2$ distribution and the $t$ distribution) </strong></span>If <span class="math inline">\(Z\sim N(0,1)\)</span> and <span class="math inline">\(Y\sim \chi^2_{\nu}\)</span>, then
+<span class="math display">\[
+T = \frac{Z}{\sqrt{Y/\nu}} \sim t_{\nu},
+\]</span>
+so the ratio of a standard normal variable to the square root of a <span class="math inline">\(\chi^2\)</span> variable has a <span class="math inline">\(t\)</span> distribution.</p>
+</div>
+<hr>
+<p>(We do not prove this result in this module.)</p>
+</div>
+<div id="notation-quantilespercentiles-of-the-t-distribution" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Notation: quantiles/percentiles of the <span class="math inline">\(t\)</span> distribution<a href="interval-estimates-and-confidence-intervals.html#notation-quantilespercentiles-of-the-t-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If <span class="math inline">\(T\)</span> has a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(\nu\)</span> degrees of freedom, we define <span class="math inline">\(t_{\nu,\ \alpha}\)</span>, for <span class="math inline">\(\alpha\in(0,1)\)</span>, by
+<span class="math display">\[
+P(T \leq t_{\nu,\ \alpha}) = 1-\alpha,
+\]</span>
+so <span class="math inline">\(t_{\nu,\ \alpha}\)</span> is the <span class="math inline">\((1-\alpha)\)</span> quantile or <span class="math inline">\(100(1-\alpha)\)</span> percentile of the <span class="math inline">\(t_{\nu}\)</span> distribution. For example, <span class="math inline">\(t_{10;\ 0.05}=1.812\)</span>, so 1.812 is the 95th percentile of the <span class="math inline">\(t\)</span> distribution with 10 degrees of freedom.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:t-quantile"></span>
+<img src="MPS114-Data-Science_files/figure-html/t-quantile-1.png" alt="The 95th percentile of the $t_{10}$ distribution, which is 1.812 to 3 d.p. Note the convention for the term $\alpha$ in $t_{\nu, \alpha}$ to refer the probability to the right (the shaded area), so that the 95th percentile is denoted by $t_{10, 0.05}$." width="384" />
+<p class="caption">
+Figure 5.2: The 95th percentile of the <span class="math inline">\(t_{10}\)</span> distribution, which is 1.812 to 3 d.p. Note the convention for the term <span class="math inline">\(\alpha\)</span> in <span class="math inline">\(t_{\nu, \alpha}\)</span> to refer the probability to the right (the shaded area), so that the 95th percentile is denoted by <span class="math inline">\(t_{10, 0.05}\)</span>.
+</p>
+</div>
+</div>
+<div id="the-t-distribution-in-r." class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> The <span class="math inline">\(t\)</span> distribution in R.<a href="interval-estimates-and-confidence-intervals.html#the-t-distribution-in-r." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Cumulative probabilities and quantiles/percentiles can be calculated in R. To calculate a probability, we use the <code>pt()</code> command. For example, to calculate <span class="math inline">\(P(T\le -1)\)</span> for <span class="math inline">\(T\sim t_3\)</span>, we do</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="interval-estimates-and-confidence-intervals.html#cb121-1" tabindex="-1"></a><span class="fu">pt</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## [1] 0.1955011</code></pre>
+<p>hence, for <span class="math inline">\(T\sim t_3\)</span>, we have <span class="math inline">\(P(T\le -1)=0.196\)</span> (to 3 d.p.).</p>
+<p>To calculate a quantile/percentile, we use the <code>qt()</code> command. For example, if we want the 95th percentile of the <span class="math inline">\(t_{10}\)</span> distribution, we do</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="interval-estimates-and-confidence-intervals.html#cb123-1" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.95</span>, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## [1] 1.812461</code></pre>
+<p>Note that in R, we have specified the left tail probability (0.95), whereas the convention when writing quantiles is to use the right tail probability: we write
+<span class="math display">\[
+t_{10, 0.05} = 1.812 \mbox{ to 3 d.p.}
+\]</span></p>
+</div>
+</div>
+<div id="confidence-intervals-for-the-mean-and-the-variance-of-a-normal-distribution" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Confidence intervals for the mean and the variance of a normal distribution<a href="interval-estimates-and-confidence-intervals.html#confidence-intervals-for-the-mean-and-the-variance-of-a-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we have <span class="math inline">\(n\)</span> independent and identically distributed normal random variables
+<span class="math display">\[
+X_1,X_2,\ldots,X_{n}\stackrel{i.i.d}{\sim} N(\mu, \sigma^2),
+\]</span>
+where the values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> are unknown to us. As usual, denote the <em>observed values</em> of these <span class="math inline">\(n\)</span> random variables by <span class="math inline">\(x_1,\ldots,x_n\)</span>. We now want to report interval estimates for <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, given <span class="math inline">\(x_1,\ldots,x_n\)</span>. We will report 95% confidence intervals.</p>
+<ul>
+<li><p>95% confidence interval for the mean <span class="math inline">\(\mu\)</span>:
+<span class="math display" id="eq:meanCI">\[\begin{equation}
+\bar{x} \pm t_{n-1, 0.025} \sqrt{\frac{s^2}{n}}, \tag{5.1}
+\end{equation}\]</span></p></li>
+<li><p>95% confidence interval for the variance <span class="math inline">\(\sigma^2\)</span>:
+<span class="math display" id="eq:varCI">\[\begin{equation}
+\left[\frac{(n-1)s^{2}}{\chi^{2}_{n-1; 0.025}} , \frac{(n-1)s^{2}}{\chi^{2}_{n-1; 0.975}}\right],\tag{5.2}
+\end{equation}\]</span>
+with
+<span class="math display">\[\begin{align}
+\bar{x} &amp;= \frac{1}{n}\sum_{i=1}^nx_i,\\
+s^2&amp; = \frac{1}{n-1}\sum_{i=1}^n(x_i - \bar{x})^2.
+\end{align}\]</span></p></li>
+</ul>
+<p>By inspecting <a href="interval-estimates-and-confidence-intervals.html#eq:meanCI">(5.1)</a>, we see that</p>
+<ul>
+<li><p>we’d expect the confidence interval for <span class="math inline">\(\mu\)</span> to get narrower as the sample size <span class="math inline">\(n\)</span> increases. The more data we have, the less uncertain we should be.</p></li>
+<li><p>a larger <span class="math inline">\(s^2\)</span> will make the confidence interval wider. A larger <span class="math inline">\(s^2\)</span> means there is more variability in the data, which makes it harder to get a good estimate of the mean <span class="math inline">\(\mu\)</span>.</p></li>
+</ul>
+<p>Although less obvious from <a href="interval-estimates-and-confidence-intervals.html#eq:varCI">(5.2)</a>, increasing the sample size should also reduce the width of the interval.</p>
+<div class="example">
+<p><span id="exm:exampleCIcompute" class="example"><strong>Example 5.1  (Confidence intervals for the mean and variance of a normal distribution: Netflix stock prices) </strong></span><br> In this example, we will work with some financial data. First, some background. Netflix was one of the <a href="https://finance.yahoo.com/news/14-best-performing-stocks-2018-100000910.html">best performing stocks in 2018</a>. We will compare it with one other stock: GlaxoSmithKline (GSK). Figure <a href="interval-estimates-and-confidence-intervals.html#fig:shareprice">5.3</a> (left plot) shows end of day share prices for Netflix and GSK, for each trading day in 2018.</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:shareprice"></span>
+<img src="MPS114-Data-Science_files/figure-html/shareprice-1.png" alt="Left plot: daily share prices for Netflix and GSK Right plot: daily returns (daily change in share price as a proportion of the price the price at the start of the day). The returns give the profit/loss one would make from one day to the next, and look similar for the two stocks." width="768" />
+<p class="caption">
+Figure 5.3: Left plot: daily share prices for Netflix and GSK Right plot: daily returns (daily change in share price as a proportion of the price the price at the start of the day). The returns give the profit/loss one would make from one day to the next, and look similar for the two stocks.
+</p>
+</div>
+<p>For investing, it’s not so much the actual price that matters, rather, it’s the <em>return</em> on the investment that counts. If we define <span class="math inline">\(S_i\)</span> to be the Netflix share price at the end of day <span class="math inline">\(i\)</span>, we define the <span class="math inline">\(i\)</span>th daily return for a Netflix share as
+<span class="math display">\[
+X_i = \frac{S_i - S_{i-1}}{S_{i-1}}
+\]</span>
+(e.g., <span class="math inline">\(\$1000\)</span> invested on day <span class="math inline">\(i-1\)</span> will have grown to <span class="math inline">\(\$(1+X_i)1000\)</span> by the end of day <span class="math inline">\(i\)</span>.) Daily returns are shown in the right plot. We have 249 daily returns, and we suppose
+<span class="math display">\[
+X_1,\ldots,X_{249}\stackrel{i.i.d}{\sim}N(\mu, \sigma^2).
+\]</span>
+We interpret <span class="math inline">\(\mu\)</span> as a population mean return. This describes one aspect of the stock’s performance: what the <em>expected</em> return would be on any given day: if <span class="math inline">\(\mu\)</span> turned out to be negative, we would actually expect the stock to decline in value over the long term. The parameter <span class="math inline">\(\sigma\)</span> is referred to as the <strong>volatility</strong> of the return. Investors care about the volatility as well as the mean return, because it can describe how risky investing in the stock would be.</p>
+<p>We’ll now state the problem in general terms, without the finance jargon. We have some random variables
+<span class="math display">\[
+X_1,\ldots,X_{249}\stackrel{i.i.d}{\sim}N(\mu, \sigma^2).
+\]</span>
+Given the corresponding observed values <span class="math inline">\(x_1,\ldots,x_{249}\)</span>, we want to compute 95% confidence intervals for <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>The observed values <span class="math inline">\(x_1,\ldots,x_{249}\)</span> are stored in R in the vector <code>netflix</code>. The first three observations are</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="interval-estimates-and-confidence-intervals.html#cb125-1" tabindex="-1"></a>netflix[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
+<pre><code>## [1] 0.020 0.003 0.021</code></pre>
+<p>so we have <span class="math inline">\(x_1= 0.02, x_2= 0.003, x_3=0.021\)</span> and so on.</p>
+<p><strong>Task</strong>: using the following R output, compute 95% confidence intervals for <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>.</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="interval-estimates-and-confidence-intervals.html#cb127-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">mean</span>(netflix), <span class="fu">var</span>(netflix))</span></code></pre></div>
+<pre><code>## [1] 0.0014257 0.0008466</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="interval-estimates-and-confidence-intervals.html#cb129-1" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">248</span>)</span></code></pre></div>
+<pre><code>## [1] 1.97</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="interval-estimates-and-confidence-intervals.html#cb131-1" tabindex="-1"></a><span class="fu">qchisq</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="dv">248</span>)</span></code></pre></div>
+<pre><code>## [1] 206.3 293.5</code></pre>
+<div class="fold">
+<p><strong>Solution</strong></p>
+<p>First, we consider the R output for the <span class="math inline">\(t\)</span> and <span class="math inline">\(\chi^2\)</span> distributions. We have</p>
+<p>which means that <span class="math inline">\(t_{248,\, 0.025} = 1.97\)</span> (to 3 d.p.): the 97.5th percentile of the <span class="math inline">\(t_{248}\)</span> distribution is 1.97 (very similar to the normal distribution). This is displayed below: the red shaded region indicates a 2.5% probability of exceeding 1.97.</p>
+<p>We also have</p>
+<p>which means that <span class="math inline">\(\chi^2_{248,\, 0.975} = 206.3\)</span> and <span class="math inline">\(\chi^2_{248,\, 0.025} = 293.5\)</span> (to 1 d.p.): the 2.5th and 97.5th percentiles of the <span class="math inline">\(\chi^2_{248}\)</span> distribution are 206.3 and 293.5 respectively. These are displayed below: each red shaded region indicates a 2.5% probability, so the probability of lying outside the range (206.3, 293.5) is 5%.</p>
+<p>Now, the 95% confidence interval for <span class="math inline">\(\mu\)</span> is
+<span class="math display">\[
+\bar{x}\pm t_{248,\,0.025}\sqrt{\frac{s^2}{249}}.
+\]</span>
+We have (from the <code>mean(netflix)</code> R output)
+<span class="math display">\[\bar{x} = \frac{1}{249}\sum_{i=1}^{249}x_i = 0.001426\]</span>
+and (from the <code>var(netflix)</code> R output)
+<span class="math display">\[
+s^2 = \frac{1}{248}\sum_{i=1}^{249}(x_i - \bar{x})^2  =0.0008466.
+\]</span>
+so, substituting in the values for <span class="math inline">\(\bar{x}, s^2\)</span> and <span class="math inline">\(t_{248,\,0.025}\)</span>, we compute the 95% confidence interval to be <span class="math display">\[(-0.002, 0.005).\]</span></p>
+<p>For the population variance <span class="math inline">\(\sigma^2\)</span>, the 95% confidence interval is
+<span class="math display">\[
+\left(\frac{248s^2}{\chi^2_{248,\,0.025}}, \frac{248s^2}{\chi^2_{248,\,0.975}}\right),
+\]</span>
+and substituting in the values we get (0.0007149, 0.0010172). We can take the square root to get a CI for the standard deviation: (0.027, 0.032).</p>
+</div>
+<p>To help understand how we might use these results see Figure <a href="interval-estimates-and-confidence-intervals.html#fig:CIplots">5.4</a>, where compare the returns for the Netflix and GSK stocks. (Calculations for the GSK stocks confidence intervals are not given here, but are included in the tutorial booklet as an exercise.)</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:CIplots"></span>
+<img src="MPS114-Data-Science_files/figure-html/CIplots-1.png" alt="The left plot shows 95% confidence intervals for the standard deviations (volatilities). Here, we can be confident that the Netflix returns have a higher population standard deviation: investing in Netflix looks to be more risky. The right shows 95% confidence intervals for the mean returns for Netflix and GSK stocks. As a consequence of the higher standard deviation for Netflix, we are more uncertain about the population mean return compared with GSK, even though the sample sizes were the same. The Netflix population mean return could be much higher, but it could actually be lower than GSK’s; this another way in which we can see the higher risk with Netflix." width="576" />
+<p class="caption">
+Figure 5.4: The left plot shows 95% confidence intervals for the standard deviations (volatilities). Here, we can be confident that the Netflix returns have a higher population standard deviation: investing in Netflix looks to be more risky. The right shows 95% confidence intervals for the mean returns for Netflix and GSK stocks. As a consequence of the higher standard deviation for Netflix, we are more uncertain about the population mean return compared with GSK, even though the sample sizes were the same. The Netflix population mean return could be much higher, but it could actually be lower than GSK’s; this another way in which we can see the higher risk with Netflix.
+</p>
+</div>
+<hr>
+<p>We’ll now justify these choices of interval estimates using the following result.</p>
+<div class="theorem">
+<p><span id="thm:unnamed-chunk-118" class="theorem"><strong>Theorem 5.2  (Property of a confidence interval) </strong></span><em>Before</em> we get the data, a 95% confidence interval has a 95% chance of containing the true value of the parameter.</p>
+</div>
+<p><strong>Proof</strong></p>
+<p>We have
+<span class="math display">\[
+X_1,X_2,\ldots,X_{n}\stackrel{i.i.d}{\sim} N(\mu, \sigma^2),
+\]</span>
+and we consider the two random variables
+<span class="math display">\[\begin{align}
+\bar{X} &amp;= \frac{1}{n}\sum_{i=1}^nX_i,\\
+S^2 &amp;= \frac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X}^2).
+\end{align}\]</span>
+(Recall that <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^2\)</span> are random, because they are functions of the random variables <span class="math inline">\(X_1,\ldots,X_n\)</span>). We define
+<span class="math display">\[
+T = \frac{\bar{X} - \mu}{\sqrt{S^2/n}}.
+\]</span>
+We first show that <span class="math inline">\(T\sim t_{n-1}\)</span>, i.e the function <span class="math inline">\(T\)</span> has the Student-<span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom. We write
+<span class="math display">\[
+T = \frac{\bar{X} - \mu}{\sqrt{\frac{\sigma^2}{n}}\sqrt{\frac{S^2}{\sigma^2}\times\frac{n-1}{n-1}}},
+\]</span>
+(where we can see that the <span class="math inline">\(\sigma^2\)</span> and <span class="math inline">\((n-1)\)</span> terms cancel out, leaving us with the first expression for <span class="math inline">\(T\)</span> above.) We can now write
+<span class="math display">\[
+T = \frac{Z}{\sqrt{Y/(n-1)}},
+\]</span>
+where
+<span class="math display">\[
+Z = \frac{\bar{X} - \mu}{\sqrt{\sigma^2/n}}\sim N(0,1),
+\]</span>
+which follows from equation <a href="point-estimation.html#eq:Xbardist">(4.3)</a>, and
+<span class="math display">\[
+Y = \frac{S^2(n-1)}{\sigma^2}\sim \chi^2_{n-1},
+\]</span>
+which follows from equation <a href="point-estimation.html#eq:Ssquareddist">(4.4)</a>. Then, applying Theorem <a href="interval-estimates-and-confidence-intervals.html#thm:NormalChiT">5.1</a>, it follows that <span class="math inline">\(T\sim t_{n-1}\)</span>.</p>
+<p>Now, we have
+<span class="math display">\[
+P(-t_{n-1,\, 0.025}\le T \le t_{n-1,\, 0.025}) = 0.95,
+\]</span>
+which we visualise below.
+<img src="MPS114-Data-Science_files/figure-html/unnamed-chunk-119-1.png" width="384" style="display: block; margin: auto;" />
+Now we substitute in for <span class="math inline">\(T\)</span>:
+<span class="math display">\[\begin{align}
+&amp;P\left(-t_{n-1,\, 0.025}\le \frac{\bar{X} - \mu}{\sqrt{\frac{S^2}{n}}} \le t_{n-1,\, 0.025}\right) \\ &amp;= 0.95.
+\end{align}\]</span>
+Multiplying the inequality through by -1 we have
+<span class="math display">\[\begin{align}
+P\left(t_{n-1,\, 0.025}\ge \frac{\mu - \bar{X}}{\sqrt{\frac{S^2}{n}}} \ge -t_{n-1,\, 0.025}\right) = 0.95,
+\end{align}\]</span>
+and then we can rearrange the inequalities (multiply by <span class="math inline">\(\sqrt{\frac{S^2}{n}}\)</span>, then add <span class="math inline">\(\bar{X}\)</span>) to get
+<span class="math display">\[\begin{align}
+&amp;P\left(\bar{X} + t_{n-1,\, 0.025}\sqrt{\frac{S^2}{n}}\ge \mu\right.\\
+&amp;\left.\ge \bar{X}-t_{n-1,\, 0.025}\sqrt{\frac{S^2}{n}}\right)\\
+&amp;= 0.95,
+\end{align}\]</span>
+Hence <strong>before</strong> we get the data, there is a 95% chance that the interval
+<span class="math display">\[
+\left[\bar{X} - t_{n-1,\, 0.025}\sqrt{\frac{S^2}{n}},\, \bar{X} + t_{n-1,\, 0.025}\sqrt{\frac{S^2}{n}}\right]
+\]</span>
+will contain <span class="math inline">\(\mu\)</span>. This is the justification for using <a href="interval-estimates-and-confidence-intervals.html#eq:meanCI">(5.1)</a> as our interval estimate for <span class="math inline">\(\mu\)</span>: the probability that this approach will result in an interval that contains <span class="math inline">\(\mu\)</span> is high: 0.95.</p>
+<hr>
+<p>We will illustrate this with the following simulation experiment. Using R, we will generate a sample of size 10 from a normal distribution with <em>known</em> parameters. We can then calculate the confidence interval for the mean, and see if it contains the true value or not. We will first do this once, using the <span class="math inline">\(N(30, 25)\)</span> distribution:</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="interval-estimates-and-confidence-intervals.html#cb133-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">30</span>, <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="dv">25</span>))</span>
+<span id="cb133-2"><a href="interval-estimates-and-confidence-intervals.html#cb133-2" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>##  [1] 25.19 28.54 31.29 24.24 30.98 30.15 30.43 35.58 23.91 36.34</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="interval-estimates-and-confidence-intervals.html#cb135-1" tabindex="-1"></a><span class="fu">mean</span>(x) <span class="sc">-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">9</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">var</span>(x) <span class="sc">/</span> <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## [1] 26.57</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="interval-estimates-and-confidence-intervals.html#cb137-1" tabindex="-1"></a><span class="fu">mean</span>(x) <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">9</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">var</span>(x) <span class="sc">/</span> <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## [1] 32.76</code></pre>
+<p>This gave a 95% confidence interval of (26.57, 32.76), which does contain the true value (30) in this instance. Now we’ll repeat this 100 times, each time obtaining different random samples of size 10 from the <span class="math inline">\(N(30, 25)\)</span> distribution and each time calculating the confidence interval. The 100 confidence intervals are shown as horizontal lines in Figure <a href="interval-estimates-and-confidence-intervals.html#fig:t-intervals">5.5</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:t-intervals"></span>
+<img src="MPS114-Data-Science_files/figure-html/t-intervals-1.png" alt="95 \% confidence intervals from one hundred separate samples of data. Before the data are obtained, we would expect 95 out of the 100 intervals to contain the true value of the mean. After the data are obtained, we see what 94 out of the 100 intervals did actually contain the true value. " width="480" />
+<p class="caption">
+Figure 5.5: 95 % confidence intervals from one hundred separate samples of data. Before the data are obtained, we would expect 95 out of the 100 intervals to contain the true value of the mean. After the data are obtained, we see what 94 out of the 100 intervals did actually contain the true value.
+</p>
+</div>
+<div class="rmdnote">
+<p>
+The “95%” in “95% confidence interval” refers to a probability
+<em>before</em> getting the data.
+</p>
+</div>
+</div>
+<div id="confidence-interval-for-the-probability-parameter-in-a-binomial-distribution" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Confidence interval for the probability parameter in a binomial distribution<a href="interval-estimates-and-confidence-intervals.html#confidence-interval-for-the-probability-parameter-in-a-binomial-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we have
+<span class="math display">\[
+X\sim Bin(n, \theta)
+\]</span>
+Denoting the observed value of <span class="math inline">\(X\)</span> by <span class="math inline">\(x\)</span>, an <em>approximate</em> 95% confidence interval for <span class="math inline">\(\theta\)</span> is given by
+<span class="math display">\[\begin{equation}
+p \pm  z_{0.025}\sqrt{\frac{p(1-p)}{n}},
+\end{equation}\]</span>
+where <span class="math inline">\(p=x/n\)</span> and <span class="math inline">\(z_{0.025}=1.96\)</span> is the 97.5th percentile of the <span class="math inline">\(N(0,1)\)</span> distribution (so we are using the normal distribution rather than the <span class="math inline">\(t\)</span>-distribution here.)</p>
+<div class="example">
+<p><span id="exm:exampleCIbin" class="example"><strong>Example 5.2  (Confidence interval for a binomial probability parameter: Scottish independence opinion polls) </strong></span><br> A survey has been conducted to estimate support for an independent Scotland<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. 1067 voters in Scotland were asked: “Should Scotland be an independent country?”. The responses were as follows: Yes: 43%, No: 45%, Don’t know: 10%, Refused: 3%. Assuming each respondent was selected at random from the population of eligible voters, calculate an approximate 95% confidence interval for the proportion of “Yes” voters in Scotland, ignoring the “Don’t know” and “Refused” responses. What would the CI have been, assuming the same observed proportions, but with a sample size of 100 voters?</p>
+</div>
+<div class="fold">
+<p>
+The 95% confidence interval is <span class="math display"><span class="math display">\[
+0.43 \pm 1.96 \sqrt{\frac{0.43\times 0.57}{1067}},
+\]</span></span> which gives (40%, 46%). Had the sample size been 100, with the
+proportions unchanged, the 95% CI would be <span class="math display"><span class="math display">\[
+0.43 \pm 1.96 \sqrt{\frac{0.43\times 0.57}{100}},
+\]</span></span> which gives (33%, 53%). Arguably, this is too wide to be
+useful; in particular, the interest is going to be in whether the ‘yes’
+vote exceeds 50%, and this interval spans 50%.
+</p>
+</div>
+</div>
+<div id="alpha-confidence-intervals" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> <span class="math inline">\(100(1-\alpha)\%\)</span> Confidence Intervals<a href="interval-estimates-and-confidence-intervals.html#alpha-confidence-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can consider other levels of confidence. In general, we use the expression “<span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval”, so, for example, choosing <span class="math inline">\(\alpha = 0.01\)</span> corresponds to a 99% confidence interval. We write the confidence intervals for the three cases we have considered as follows</p>
+<ul>
+<li><span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for the mean of a normal distribution</li>
+</ul>
+<p><span class="math display">\[\begin{equation}
+    \left[\bar{x} - \frac{s}{\sqrt{n}}t_{n-1;\alpha/2},\quad \bar{x} + \frac{s}{\sqrt{n}}t_{n-1;\alpha/2}\right],
+\end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for the variance of a normal distribution</li>
+</ul>
+<p><span class="math display">\[\begin{equation}
+\left[\frac{(n-1)s^{2}}{\chi^{2}_{n-1; \alpha/2}},\quad \frac{(n-1)s^{2}}{\chi^{2}_{n-1; 1-\alpha/2}}\right],
+\end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for a binomial probability parameter</li>
+</ul>
+<p><span class="math display">\[\begin{equation}
+p \pm  z_{\alpha/2}\sqrt{\frac{p(1-p)}{n}}.
+\end{equation}\]</span></p>
+<p>As we increase the confidence level (by decreasing <span class="math inline">\(\alpha\)</span>), the confidence intervals will become wider. The penalty for increasing the probability (before we get the data) that the interval will contain the true value is to report an interval that is less informative.</p>
+<div class="example">
+<p><span id="exm:exampleCI99" class="example"><strong>Example 5.3  (Confidence intervals: calculating a 99\% confidence interval for a binomial probability parameter) </strong></span><br> Calculate a 99% confidence interval for the population proportion of yes voters from the previous example. (43% yes voters from a sample of 1067), using the R output below. Only one of the three output values is relevant: you have to decide which.</p>
+</div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="interval-estimates-and-confidence-intervals.html#cb139-1" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.95</span>, <span class="fl">0.99</span>, <span class="fl">0.995</span>), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] 1.645 2.326 2.576</code></pre>
+<div class="fold">
+<p><strong>Solution</strong></p>
+<p>We want a 99% confidence interval, so in the general notation, we have a 100(1-<span class="math inline">\(\alpha\)</span>)% interval with <span class="math inline">\(\alpha = 0.01\)</span> The confidence interval is given by
+<span class="math display">\[\begin{equation}
+0.43 \pm  z_{0.01/2}\sqrt{\frac{0.43(1-0.43)}{1067}}.
+\end{equation}\]</span>
+We just need to know the value of <span class="math inline">\(z_{0.01/2} = z_{0.005}\)</span>, which is the 99.5th percentile (not the 0.5th percentile!) of the standard normal distribution. From the R output above, this value is 2.576. Just to confirm this, we have</p>
+<p>We display this in the plot below.</p>
+
+<p>Substituting in 2.576 for <span class="math inline">\(z_{0.005}\)</span>, we obtain the 99% confidence interval as (39%, 47%): slightly wider than the 95% interval, as it has to be. The price to pay for being more ‘confident’ is that we are less ‘informative’: we have to report a wider interval.</p>
+</div>
+<div class="rmdnote">
+<p>
+There is no point in attempting to produce a 100% confidence
+interval. For the mean <span class="math inline"><span class="math inline">\(\mu\)</span></span> of a
+normal distribution, for example, we have <span class="math inline"><span class="math inline">\(t_{n-1;0} = \infty\)</span></span>, so the 100%
+confidence interval would be <span class="math inline"><span class="math inline">\((-\infty,
+\infty)\)</span></span>. That’s clearly not helpful!
+</p>
+</div>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>See, for example, <a href="http://whatscotlandthinks.org/questions/how-would-you-vote-in-the-in-a-scottish-independence-referendum-if-held-now-ask#line">the opinion polls reported here</a><a href="interval-estimates-and-confidence-intervals.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="point-estimation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hypothesis-testing-a-level-recap.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

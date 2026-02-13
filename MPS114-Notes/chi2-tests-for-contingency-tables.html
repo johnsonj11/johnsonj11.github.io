@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 \(\chi^2\) tests for contingency tables | MPS114 - An Introduction to Data Science</title>
+  <meta name="description" content="Lecture notes for MPS114" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 \(\chi^2\) tests for contingency tables | MPS114 - An Introduction to Data Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Lecture notes for MPS114" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 \(\chi^2\) tests for contingency tables | MPS114 - An Introduction to Data Science" />
+  
+  <meta name="twitter:description" content="Lecture notes for MPS114" />
+  
+
+<meta name="author" content="Dr Jill Johnson" />
+
+
+<meta name="date" content="2026-02-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"/>
+<link rel="next" href="index-of-definitions-and-examples.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MPS114 - Introduction to Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About these notes</a></li>
+<li class="chapter" data-level="1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html"><i class="fa fa-check"></i><b>1</b> Exploratory Data Analysis using R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#case-study-what-makes-a-country-good-at-maths"><i class="fa fa-check"></i><b>1.1</b> Case study: what makes a country good at maths?</a></li>
+<li class="chapter" data-level="1.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#the-tidyverse"><i class="fa fa-check"></i><b>1.2</b> The “Tidyverse”</a></li>
+<li class="chapter" data-level="1.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#importing-data-into-r-csv-and-.xlsx-files"><i class="fa fa-check"></i><b>1.3</b> Importing data into R: <code>csv</code> and <code>.xlsx</code> files</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#importing-excel-.xlsx-files"><i class="fa fa-check"></i><b>1.3.1</b> Importing Excel <code>.xlsx</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#data-frames-and-tibbles-in-r"><i class="fa fa-check"></i><b>1.4</b> Data frames and tibbles in R</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#ordering-the-rows-by-a-variable-with-the-arrange-command"><i class="fa fa-check"></i><b>1.4.1</b> Ordering the rows by a variable with the <code>arrange()</code> command</a></li>
+<li class="chapter" data-level="1.4.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#selecting-rows-with-the-filter-command"><i class="fa fa-check"></i><b>1.4.2</b> Selecting rows with the <code>filter()</code> command</a></li>
+<li class="chapter" data-level="1.4.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#viewing-and-extracting-data-from-a-column"><i class="fa fa-check"></i><b>1.4.3</b> Viewing and extracting data from a column</a></li>
+<li class="chapter" data-level="1.4.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#creating-new-columns-in-a-data-frame-with-the-mutate-command"><i class="fa fa-check"></i><b>1.4.4</b> Creating new columns in a data frame with the <code>mutate()</code> command</a></li>
+<li class="chapter" data-level="1.4.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#chaining-commands-together-with-the-pipe-operator"><i class="fa fa-check"></i><b>1.4.5</b> Chaining commands together with the pipe operator <code>%&gt;%</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-summary-statistics-with-the-summary-command"><i class="fa fa-check"></i><b>1.5</b> Calculating summary statistics with the <code>summary()</code> command</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-individual-summary-statistics"><i class="fa fa-check"></i><b>1.5.1</b> Calculating individual summary statistics</a></li>
+<li class="chapter" data-level="1.5.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-other-quantilespercentiles"><i class="fa fa-check"></i><b>1.5.2</b> Calculating other quantiles/percentiles</a></li>
+<li class="chapter" data-level="1.5.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#computing-summaries-per-group"><i class="fa fa-check"></i><b>1.5.3</b> Computing summaries per group</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#plotting-a-distribution-using-a-histogram"><i class="fa fa-check"></i><b>1.6</b> Plotting a distribution using a histogram</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#describing-the-shape-of-a-distribution-skewness"><i class="fa fa-check"></i><b>1.6.1</b> Describing the shape of a distribution: skewness</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#introducing-ggplot2"><i class="fa fa-check"></i><b>1.7</b> Introducing <code>ggplot2</code></a></li>
+<li class="chapter" data-level="1.8" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#drawing-a-histogram-in-r"><i class="fa fa-check"></i><b>1.8</b> Drawing a histogram in R</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#customising-a-histogram-plot-in-r"><i class="fa fa-check"></i><b>1.8.1</b> Customising a histogram plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#covariance-and-correlation"><i class="fa fa-check"></i><b>1.9</b> Covariance and correlation</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-a-covariance-in-r"><i class="fa fa-check"></i><b>1.9.1</b> Calculating a covariance in R</a></li>
+<li class="chapter" data-level="1.9.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#pearsons-correlation-coefficient"><i class="fa fa-check"></i><b>1.9.2</b> Pearson’s correlation coefficient</a></li>
+<li class="chapter" data-level="1.9.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-pearsons-correlation-coefficient-in-r"><i class="fa fa-check"></i><b>1.9.3</b> Calculating Pearson’s correlation coefficient in R</a></li>
+<li class="chapter" data-level="1.9.4" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#spearmans-correlation-coefficient"><i class="fa fa-check"></i><b>1.9.4</b> Spearman’s correlation coefficient</a></li>
+<li class="chapter" data-level="1.9.5" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#calculating-spearmans-correlation-coefficient-in-r"><i class="fa fa-check"></i><b>1.9.5</b> Calculating Spearman’s correlation coefficient in R</a></li>
+<li class="chapter" data-level="1.9.6" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#interpreting-correlation-coefficients"><i class="fa fa-check"></i><b>1.9.6</b> Interpreting correlation coefficients</a></li>
+<li class="chapter" data-level="1.9.7" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#correlations-for-the-maths-data-set"><i class="fa fa-check"></i><b>1.9.7</b> Correlations for the <code>maths</code> data set</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#drawing-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10</b> Drawing a scatter plot in R</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#customising-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.1</b> Customising a scatter plot in R</a></li>
+<li class="chapter" data-level="1.10.2" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#adding-a-nonlinear-trend-to-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.2</b> Adding a nonlinear trend to a scatter plot in R</a></li>
+<li class="chapter" data-level="1.10.3" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#adding-a-linear-trend-to-a-scatter-plot-in-r"><i class="fa fa-check"></i><b>1.10.3</b> Adding a linear trend to a scatter plot in R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#box-plots"><i class="fa fa-check"></i><b>1.11</b> Box plots</a></li>
+<li class="chapter" data-level="1.12" data-path="exploratory-data-analysis-using-r.html"><a href="exploratory-data-analysis-using-r.html#scatter-plots-to-represent-three-variables"><i class="fa fa-check"></i><b>1.12</b> Scatter plots to represent three variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>2</b> Machine Learning</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="machine-learning.html"><a href="machine-learning.html#can-we-teach-a-computer-to-identify-handwritten-digits"><i class="fa fa-check"></i><b>2.1</b> Can we teach a computer to identify handwritten digits?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="machine-learning.html"><a href="machine-learning.html#step-1-converting-an-image-into-data"><i class="fa fa-check"></i><b>2.1.1</b> Step 1: converting an image into data</a></li>
+<li class="chapter" data-level="2.1.2" data-path="machine-learning.html"><a href="machine-learning.html#step-2-assembling-the-training-data-set"><i class="fa fa-check"></i><b>2.1.2</b> Step 2: assembling the training data set</a></li>
+<li class="chapter" data-level="2.1.3" data-path="machine-learning.html"><a href="machine-learning.html#step-3-an-algorithm-for-estimating-the-digit-in-a-new-image"><i class="fa fa-check"></i><b>2.1.3</b> Step 3: an algorithm for estimating the digit in a new image</a></li>
+<li class="chapter" data-level="2.1.4" data-path="machine-learning.html"><a href="machine-learning.html#the-k-nearest-neighbour-algorithm-knn"><i class="fa fa-check"></i><b>2.1.4</b> The <span class="math inline">\(K\)</span> nearest neighbour algorithm (KNN)</a></li>
+<li class="chapter" data-level="2.1.5" data-path="machine-learning.html"><a href="machine-learning.html#using-k-nearest-neighbours-in-r"><i class="fa fa-check"></i><b>2.1.5</b> Using <span class="math inline">\(K\)</span> nearest neighbours in R</a></li>
+<li class="chapter" data-level="2.1.6" data-path="machine-learning.html"><a href="machine-learning.html#the-performance-of-the-algorithm"><i class="fa fa-check"></i><b>2.1.6</b> The performance of the algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Populations, samples and statistical models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#statistical-models"><i class="fa fa-check"></i><b>3.1</b> Statistical models</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#objectives"><i class="fa fa-check"></i><b>3.1.1</b> Objectives</a></li>
+<li class="chapter" data-level="3.1.2" data-path="populations-samples-and-statistical-models.html"><a href="populations-samples-and-statistical-models.html#comment-infinite-and-finite-populations"><i class="fa fa-check"></i><b>3.1.2</b> Comment: infinite and finite populations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="point-estimation.html"><a href="point-estimation.html"><i class="fa fa-check"></i><b>4</b> Point estimation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="point-estimation.html"><a href="point-estimation.html#estimating-the-parameters-of-a-normal-distribution"><i class="fa fa-check"></i><b>4.1</b> Estimating the parameters of a normal distribution</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="point-estimation.html"><a href="point-estimation.html#problem-setup-and-notation"><i class="fa fa-check"></i><b>4.1.1</b> Problem setup and notation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="point-estimation.html"><a href="point-estimation.html#the-sample-mean-and-sample-variance"><i class="fa fa-check"></i><b>4.1.2</b> The sample mean and sample variance</a></li>
+<li class="chapter" data-level="4.1.3" data-path="point-estimation.html"><a href="point-estimation.html#point-estimates-for-the-mean-and-variance"><i class="fa fa-check"></i><b>4.1.3</b> Point estimates for the mean and variance</a></li>
+<li class="chapter" data-level="4.1.4" data-path="point-estimation.html"><a href="point-estimation.html#testing-the-method"><i class="fa fa-check"></i><b>4.1.4</b> Testing the method</a></li>
+<li class="chapter" data-level="4.1.5" data-path="point-estimation.html"><a href="point-estimation.html#estimators-and-estimates"><i class="fa fa-check"></i><b>4.1.5</b> Estimators and estimates</a></li>
+<li class="chapter" data-level="4.1.6" data-path="point-estimation.html"><a href="point-estimation.html#the-chi2-distribution"><i class="fa fa-check"></i><b>4.1.6</b> The <span class="math inline">\(\chi^2\)</span> distribution</a></li>
+<li class="chapter" data-level="4.1.7" data-path="point-estimation.html"><a href="point-estimation.html#the-distribution-of-the-estimators"><i class="fa fa-check"></i><b>4.1.7</b> The distribution of the estimators</a></li>
+<li class="chapter" data-level="4.1.8" data-path="point-estimation.html"><a href="point-estimation.html#unbiased-estimators"><i class="fa fa-check"></i><b>4.1.8</b> Unbiased estimators</a></li>
+<li class="chapter" data-level="4.1.9" data-path="point-estimation.html"><a href="point-estimation.html#the-standard-error-of-an-estimator"><i class="fa fa-check"></i><b>4.1.9</b> The standard error of an estimator</a></li>
+<li class="chapter" data-level="4.1.10" data-path="point-estimation.html"><a href="point-estimation.html#consistent-estimators"><i class="fa fa-check"></i><b>4.1.10</b> Consistent estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="point-estimation.html"><a href="point-estimation.html#estimating-the-probability-parameter-in-a-binomial-distribution"><i class="fa fa-check"></i><b>4.2</b> Estimating the probability parameter in a Binomial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html"><i class="fa fa-check"></i><b>5</b> Interval estimates and confidence intervals</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#the-student-t-distribution"><i class="fa fa-check"></i><b>5.1</b> The Student <span class="math inline">\(t\)</span> distribution</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#mean-and-variance-of-the-t-distribution"><i class="fa fa-check"></i><b>5.1.1</b> Mean and variance of the <span class="math inline">\(t\)</span>-distribution</a></li>
+<li class="chapter" data-level="5.1.2" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#notation-quantilespercentiles-of-the-t-distribution"><i class="fa fa-check"></i><b>5.1.2</b> Notation: quantiles/percentiles of the <span class="math inline">\(t\)</span> distribution</a></li>
+<li class="chapter" data-level="5.1.3" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#the-t-distribution-in-r."><i class="fa fa-check"></i><b>5.1.3</b> The <span class="math inline">\(t\)</span> distribution in R.</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#confidence-intervals-for-the-mean-and-the-variance-of-a-normal-distribution"><i class="fa fa-check"></i><b>5.2</b> Confidence intervals for the mean and the variance of a normal distribution</a></li>
+<li class="chapter" data-level="5.3" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#confidence-interval-for-the-probability-parameter-in-a-binomial-distribution"><i class="fa fa-check"></i><b>5.3</b> Confidence interval for the probability parameter in a binomial distribution</a></li>
+<li class="chapter" data-level="5.4" data-path="interval-estimates-and-confidence-intervals.html"><a href="interval-estimates-and-confidence-intervals.html#alpha-confidence-intervals"><i class="fa fa-check"></i><b>5.4</b> <span class="math inline">\(100(1-\alpha)\%\)</span> Confidence Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing: A-level recap</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#hypothesis-testing-with-the-neyman-pearson-approach"><i class="fa fa-check"></i><b>6.1</b> Hypothesis testing with the Neyman-Pearson approach</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#one-sided-and-two-sided-alternative-hypotheses"><i class="fa fa-check"></i><b>6.1.1</b> One-sided and two-sided alternative hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#fishers-p-value-method"><i class="fa fa-check"></i><b>6.2</b> Fisher’s <span class="math inline">\(p\)</span>-value method</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#what-counts-as-a-small-p-value"><i class="fa fa-check"></i><b>6.2.1</b> What counts as a small <span class="math inline">\(p\)</span>-value?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#relationship-between-the-neyman-pearson-and-p-value-methods"><i class="fa fa-check"></i><b>6.3</b> Relationship between the Neyman-Pearson and <span class="math inline">\(p\)</span>-value methods</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#one-sample-t-test"><i class="fa fa-check"></i><b>6.4</b> One-sample <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis-testing-a-level-recap.html"><a href="hypothesis-testing-a-level-recap.html#which-hypothesis-test-do-i-use-for"><i class="fa fa-check"></i><b>6.5</b> Which hypothesis test do I use for…?</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing: comparing two population means</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#example-can-imagining-eating-food-make-you-eat-less"><i class="fa fa-check"></i><b>7.1</b> Example: can imagining eating food make you eat less?</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-hypotheses"><i class="fa fa-check"></i><b>7.1.1</b> The hypotheses</a></li>
+<li class="chapter" data-level="7.1.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#a-test-statistic"><i class="fa fa-check"></i><b>7.1.2</b> A test statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#hypothesis-testing-using-simulation"><i class="fa fa-check"></i><b>7.2</b> Hypothesis testing using simulation</a></li>
+<li class="chapter" data-level="7.3" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test"><i class="fa fa-check"></i><b>7.3</b> The two-sample <span class="math inline">\(t\)</span> test</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test-with-the-neyman-pearson-method"><i class="fa fa-check"></i><b>7.3.1</b> The two-sample <span class="math inline">\(t\)</span>-test with the Neyman-Pearson method</a></li>
+<li class="chapter" data-level="7.3.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#an-illustrated-guide"><i class="fa fa-check"></i><b>7.3.2</b> An illustrated guide</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#confidence-interval-for-the-difference-between-two-means"><i class="fa fa-check"></i><b>7.4</b> Confidence interval for the difference between two means</a></li>
+<li class="chapter" data-level="7.5" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#equivalence-of-confidence-intervals-and-neyman-pearson-testing"><i class="fa fa-check"></i><b>7.5</b> Equivalence of confidence intervals and Neyman-Pearson testing</a></li>
+<li class="chapter" data-level="7.6" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#the-two-sample-t-test-in-r"><i class="fa fa-check"></i><b>7.6</b> The two-sample <span class="math inline">\(t\)</span> test in R</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#t-tests-with-data-frames-in-r"><i class="fa fa-check"></i><b>7.6.1</b> <span class="math inline">\(t\)</span>-tests with data frames in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#examples"><i class="fa fa-check"></i><b>7.7</b> Examples</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#using-the-p-value-method"><i class="fa fa-check"></i><b>7.7.1</b> Using the <span class="math inline">\(p\)</span>-value method</a></li>
+<li class="chapter" data-level="7.7.2" data-path="hypothesis-testing-comparing-two-population-means.html"><a href="hypothesis-testing-comparing-two-population-means.html#using-neyman-pearson-testing"><i class="fa fa-check"></i><b>7.7.2</b> Using Neyman-Pearson testing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing: comparing two proportions</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#example-an-investigation-into-gender-bias"><i class="fa fa-check"></i><b>8.1</b> Example: an investigation into gender bias</a></li>
+<li class="chapter" data-level="8.2" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#comparing-two-binomial-proportions"><i class="fa fa-check"></i><b>8.2</b> Comparing two binomial proportions</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#a-simulation-method"><i class="fa fa-check"></i><b>8.2.1</b> A simulation method</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#an-analytical-method"><i class="fa fa-check"></i><b>8.3</b> An analytical method</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#the-analytical-method-a-summary"><i class="fa fa-check"></i><b>8.3.1</b> The analytical method: a summary</a></li>
+<li class="chapter" data-level="8.3.2" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#conclusion"><i class="fa fa-check"></i><b>8.3.2</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="hypothesis-testing-comparing-two-proportions.html"><a href="hypothesis-testing-comparing-two-proportions.html#confidence-intervals-to-measure-the-difference"><i class="fa fa-check"></i><b>8.4</b> Confidence intervals to measure the difference</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><i class="fa fa-check"></i><b>9</b> Sample size and power for a Neyman-Pearson hypothesis test</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#gender-bias-example-re-visited"><i class="fa fa-check"></i><b>9.1</b> Gender bias example re-visited</a></li>
+<li class="chapter" data-level="9.2" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#the-power-of-a-hypothesis-test"><i class="fa fa-check"></i><b>9.2</b> The power of a hypothesis test</a></li>
+<li class="chapter" data-level="9.3" data-path="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html"><a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html#an-analytical-approach"><i class="fa fa-check"></i><b>9.3</b> An analytical approach</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html"><i class="fa fa-check"></i><b>10</b> <span class="math inline">\(\chi^2\)</span> tests for contingency tables</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#example-customer-ratings-of-restaurants"><i class="fa fa-check"></i><b>10.1</b> Example: customer ratings of restaurants</a></li>
+<li class="chapter" data-level="10.2" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-model-and-hypotheses"><i class="fa fa-check"></i><b>10.2</b> A model and hypotheses</a></li>
+<li class="chapter" data-level="10.3" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-test-statistic-1"><i class="fa fa-check"></i><b>10.3</b> A test statistic</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#the-formula-for-the-expected-counts"><i class="fa fa-check"></i><b>10.3.1</b> The formula for the expected counts</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#computing-the-test-statistic-for-the-observed-data"><i class="fa fa-check"></i><b>10.4</b> Computing the test statistic for the observed data</a></li>
+<li class="chapter" data-level="10.5" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#a-simulation-method-1"><i class="fa fa-check"></i><b>10.5</b> A simulation method</a></li>
+<li class="chapter" data-level="10.6" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#an-analytical-method-1"><i class="fa fa-check"></i><b>10.6</b> An analytical method</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#chi2-tests-in-r"><i class="fa fa-check"></i><b>10.6.1</b> <span class="math inline">\(\chi^2\)</span> tests in R</a></li>
+<li class="chapter" data-level="10.6.2" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#row-homogeneity-and-independence"><i class="fa fa-check"></i><b>10.6.2</b> Row homogeneity and independence</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="chi2-tests-for-contingency-tables.html"><a href="chi2-tests-for-contingency-tables.html#exercise"><i class="fa fa-check"></i><b>10.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html"><i class="fa fa-check"></i><b>11</b> Index of definitions and examples</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html#definitions"><i class="fa fa-check"></i><b>11.1</b> Definitions</a></li>
+<li class="chapter" data-level="11.2" data-path="index-of-definitions-and-examples.html"><a href="index-of-definitions-and-examples.html#examples-1"><i class="fa fa-check"></i><b>11.2</b> Examples</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MPS114 - An Introduction to Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chi2-tests-for-contingency-tables" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> <span class="math inline">\(\chi^2\)</span> tests for contingency tables<a href="chi2-tests-for-contingency-tables.html#chi2-tests-for-contingency-tables" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<script type="text/javascript">
+$(document).ready(function() {
+  $folds = $(".fold");
+  $folds.wrapInner("<div class=\"fold-blck\">"); // wrap a div container around content
+  $folds.prepend("<button class=\"fold-btn\">Show solution</button>");  // add a button
+  $(".fold-blck").toggle();  // fold all blocks
+  $(".fold-btn").on("click", function() {  // add onClick event
+    $(this).text($(this).text() === "Show solution" ? "Hide solution" : "Show solution");  // if the text equals "Fold", change it to "Unfold"or else to "Fold" 
+    $(this).next(".fold-blck").toggle("linear");  // "swing" is the default easing function. This can be further customized in its speed or the overall animation itself.
+  })
+});
+</script>
+<p>For our final hypothesis testing problem, we will extend the problem of comparing two binomial distributions to two (or more) multinomial distributions, to see if the probability parameters in each distribution are the same.</p>
+<div id="example-customer-ratings-of-restaurants" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Example: customer ratings of restaurants<a href="chi2-tests-for-contingency-tables.html#example-customer-ratings-of-restaurants" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The website <a href="https://www.tripadvisor.co.uk/">tripadvisor</a> gives customer reviews of hotels, restaurants, tourist attractions etc., and each review includes a rating. Ratings for restaurants in Sheffield (in September 2018) were as follows:</p>
+<table>
+<caption><span id="tab:unnamed-chunk-194">Table 10.1: </span>Ratings for two restaurants on Tripadvisor (as of 12th September, 2018). There were 298 reviews for Akbar’s, and 916 reviews for Aagrah.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Excellent</th>
+<th align="right">Very good</th>
+<th align="right">Average</th>
+<th align="right">Poor</th>
+<th align="right">Terrible</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Akbar’s</td>
+<td align="right">146</td>
+<td align="right">70</td>
+<td align="right">33</td>
+<td align="right">24</td>
+<td align="right">25</td>
+</tr>
+<tr class="even">
+<td align="left">Aagrah</td>
+<td align="right">419</td>
+<td align="right">277</td>
+<td align="right">102</td>
+<td align="right">66</td>
+<td align="right">52</td>
+</tr>
+</tbody>
+</table>
+<p>This type of data is sometimes described as <strong>contingency table</strong> data. For each customer, we record two qualitative variables: the restaurant the customer went to, and the rating the customer gave. The numbers in the table then give the number of times each restaurant-rating pair occurred.</p>
+<p>Based on these scores, the restaurants were given a ranking: Akbar’s was ranked 187 out of 1257 restaurants in Sheffield, and Aagrah was ranked 116. However, the percentage of ratings in each category looks similar for the two restaurants, as we can see in Figure <a href="chi2-tests-for-contingency-tables.html#fig:tripFig">10.1</a>. We might wonder whether the customer ratings are significantly different; if they are not, one could argue that the rankings are not meaningful. (The same concern applies to most league tables, sporting ones excluded.)</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:tripFig"></span>
+<img src="MPS114-Data-Science_files/figure-html/tripFig-1.png" alt="Comparing percentages of ratings for the two restaurants. These look similar - could the differences just be down to random chance?" width="768" />
+<p class="caption">
+Figure 10.1: Comparing percentages of ratings for the two restaurants. These look similar - could the differences just be down to random chance?
+</p>
+</div>
+</div>
+<div id="a-model-and-hypotheses" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> A model and hypotheses<a href="chi2-tests-for-contingency-tables.html#a-model-and-hypotheses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can model these data using multinomial distributions. Before the ratings have been observed, define, as random variables, <span class="math inline">\(Y=(Y_1,Y_2,Y_3,Y_4,Y_5)\)</span> as the number of ratings in each category in for Akbar’s, and <span class="math inline">\(Z=(Z_1,Z_2,Z_3,Z_4,Z_5)\)</span> as the number of ratings in each category for Aagrah So, for example, <span class="math inline">\(Y_2\)</span> would be the number of “very good” ratings for Akbar’s, and <span class="math inline">\(Z_5\)</span> would be the number of “terrible” ratings for Aagrah. Keeping the total number of ratings fixed for each restaurant, we might suppose that
+<span class="math display">\[\begin{align}
+Y &amp;\sim multinom(298; \theta_{1}, \theta_{2},\ldots,\theta_{5}),\\
+Z &amp;\sim multinom(916; \phi_{1}, \phi_{2},\ldots,\phi_{5}),
+\end{align}\]</span>
+with, for example, <span class="math inline">\(\theta_{1}\)</span> the probability of an “excellent” rating for Akbar’s, and <span class="math inline">\(\phi_2\)</span> the probability of a “very good” rating for Aagrah.</p>
+<p>We state the null hypothesis as
+<span class="math display">\[\begin{align}
+H_0 &amp;:\theta_i = \phi_i,\quad i=1,2,\ldots,5 \\
+H_A &amp;:\theta_i \neq \phi_i,\quad \mbox{for at least one $i$},
+\end{align}\]</span>
+so our null hypothesis is that the probability of a particular rating is the same for either restaurant.</p>
+</div>
+<div id="a-test-statistic-1" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> A test statistic<a href="chi2-tests-for-contingency-tables.html#a-test-statistic-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here, we use the test statistic</p>
+<p><span class="math display">\[
+X^2 = \sum_{i=1}^R\sum_{j=1}^C\frac{(O_{i,j} - E_{i,j})^2}{E_{{i,j}}},
+\]</span>
+where</p>
+<ul>
+<li><span class="math inline">\(O_{i,j}\)</span> is the observed count in row <span class="math inline">\(i\)</span>, column <span class="math inline">\(j\)</span> of the table,</li>
+<li><span class="math inline">\(E_{i,j}\)</span> is the expected count in row <span class="math inline">\(i\)</span>, column <span class="math inline">\(j\)</span> of the table assuming <span class="math inline">\(H_0\)</span> is true, and is computed as</li>
+</ul>
+<p><span class="math display" id="eq:ChiSqrExpected">\[
+E_{i,j} = \frac{\mbox{(total in row $i$)} \times \mbox{(total in column $j$)}}{\mbox{grand total}}
+\tag{10.1}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(R\)</span> is the number of rows in the table (2 in the example),</li>
+<li><span class="math inline">\(C\)</span> is the number of columns in the table (5 in the example).</li>
+</ul>
+<div class="rmdnote">
+<ul>
+<li>
+The test statistic cannot be negative. The smallest possible value
+is 0, when all the observations are exactly what we would expect to see,
+if <span class="math inline"><span class="math inline">\(H_0\)</span></span> were true.
+</li>
+<li>
+<span class="math inline"><span class="math inline">\(X^2\)</span></span> will get larger as the
+observed values <span class="math inline"><span class="math inline">\(O_{i,j}\)</span></span> differ more
+from the expected values <span class="math inline"><span class="math inline">\(E_{i,j}\)</span></span>
+under <span class="math inline"><span class="math inline">\(H_0\)</span></span>; larger values of <span class="math inline"><span class="math inline">\(X^2\)</span></span> will give stronger evidence
+<em>against</em> <span class="math inline"><span class="math inline">\(H_0\)</span></span>.
+</li>
+</ul>
+</div>
+<div id="the-formula-for-the-expected-counts" class="section level3 hasAnchor" number="10.3.1">
+<h3><span class="header-section-number">10.3.1</span> The formula for the expected counts<a href="chi2-tests-for-contingency-tables.html#the-formula-for-the-expected-counts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We now explain where the formula for <span class="math inline">\(E_{i,j}\)</span> comes from. As an example, consider <span class="math inline">\(E_{1,2}\)</span>: the expected number of “very good” ratings for Akbar’s. From the multinomial distribution that we defined previously (<span class="math inline">\(Y \sim multinom(298; \theta_{1}, \theta_{2},\ldots,\theta_{5})\)</span>), this expected number would be
+<span class="math display">\[
+298 \times \theta_2,
+\]</span>
+so we will need an estimate of <span class="math inline">\(\theta_2\)</span>, the probability of a “very good” ratings for Akbar’s. We estimate <span class="math inline">\(\theta_2\)</span> using the following argument.</p>
+<ul>
+<li>Under <span class="math inline">\(H_0\)</span>, the probability of a “very good” rating is the same in both rows of the table: we have <span class="math inline">\(\theta_2 = \phi_2\)</span>.</li>
+<li>We observed <span class="math inline">\(70+277 = 347\)</span> “very good” ratings in total, out of a grand total of 1214 ratings</li>
+<li>An appropriate estimate of <span class="math inline">\(\theta_2\)</span> would therefore be <span class="math inline">\(\frac{374}{1214}\)</span>. (We would use the same estimate of <span class="math inline">\(\phi_2\)</span>, under <span class="math inline">\(H_0\)</span> which assumes <span class="math inline">\(\theta_2 = \phi_2\)</span>).</li>
+</ul>
+<p>Hence we have
+<span class="math display">\[
+E_{1,2} = 298 \times \frac{347}{1214} =\frac{\mbox{(total in row 1)} \times \mbox{(total in column 2)}}{\mbox{grand total}}.
+\]</span></p>
+</div>
+</div>
+<div id="computing-the-test-statistic-for-the-observed-data" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Computing the test statistic for the observed data<a href="chi2-tests-for-contingency-tables.html#computing-the-test-statistic-for-the-observed-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We now compute all the expected values:</p>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="20%" />
+<col width="22%" />
+<col width="18%" />
+<col width="12%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\({}\)</span></th>
+<th>Excellent</th>
+<th>Very good</th>
+<th>Average</th>
+<th>Poor</th>
+<th>Terrible</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Akbar’s</td>
+<td><span class="math inline">\(\frac{298\times 565}{1214}\)</span></td>
+<td><span class="math inline">\(\frac{298\times 347}{1214}\)</span></td>
+<td><span class="math inline">\(\frac{298\times 135}{1214}\)</span></td>
+<td><span class="math inline">\(\frac{298\times 90}{1214}\)</span></td>
+<td><span class="math inline">\(\frac{298\times 77}{1214}\)</span></td>
+</tr>
+<tr class="even">
+<td>Aagrah</td>
+<td><span class="math inline">\(\frac{916\times 565}{1214}\)</span></td>
+<td><span class="math inline">\(\frac{916\times 347}{1214}\)</span></td>
+<td><span class="math inline">\(\frac{916\times 135}{1214}\)</span></td>
+<td><span class="math inline">\(\frac{916\times 90}{1214}\)</span></td>
+<td><span class="math inline">\(\frac{916\times 77}{1214}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>We can now compute our observed test statistic:
+<span class="math display">\[\begin{align}
+X^2_{obs}&amp;= \frac{(146 - 138.7)^2}{138.7} + \frac{(70 - 85.18)^2}{85.18}\\
+&amp;+ \frac{(33-33.14)^2}{33.14}
++\frac{(24 - 22.09)^2}{22.09}\\
+&amp;+ \frac{(25 - 18.9)^2}{18.9} +\frac{(419 - 426.3)^2}{426.3} \\
+&amp;+\frac{(277 - 261.82)^2}{261.82} +\frac{(102 - 101.86)^2}{101.86}\\
+&amp;+\frac{(66 - 67.91)^2}{67.91} +\frac{(52 - 58.1)^2}{58.1}\\
+&amp; = 6.92
+\end{align}\]</span></p>
+<p>We’ll also do this calculation in R. We first set up the table of observed value in R using the <code>matrix()</code> command, specifying 2 rows (<code>nrow = 2</code>), 5 columns (<code>ncol = 5</code>), and that the provided values (<code>c(146, 70, ..., 52)</code>) are specified in order along the <strong>rows</strong> (<code>byrow = TRUE</code>).</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="chi2-tests-for-contingency-tables.html#cb206-1" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">146</span>, <span class="dv">70</span>, <span class="dv">33</span>, <span class="dv">24</span>, <span class="dv">25</span>,</span>
+<span id="cb206-2"><a href="chi2-tests-for-contingency-tables.html#cb206-2" tabindex="-1"></a>                     <span class="dv">419</span>, <span class="dv">277</span>, <span class="dv">102</span>, <span class="dv">66</span>, <span class="dv">52</span>),</span>
+<span id="cb206-3"><a href="chi2-tests-for-contingency-tables.html#cb206-3" tabindex="-1"></a>                   <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">5</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>To check this has worked:</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="chi2-tests-for-contingency-tables.html#cb207-1" tabindex="-1"></a>observed</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]  146   70   33   24   25
+## [2,]  419  277  102   66   52</code></pre>
+<p>Now we’ll compute a matrix of expected values, using the <code>outer(), rowSums</code> and <code>colSums()</code> commands. Don’t worry about how these work (though you might guess), just note where we’ve used the matrix <code>observed</code>.</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="chi2-tests-for-contingency-tables.html#cb209-1" tabindex="-1"></a>expected <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">rowSums</span>(observed), <span class="fu">colSums</span>(observed),  <span class="st">&quot;*&quot;</span>) <span class="sc">/</span></span>
+<span id="cb209-2"><a href="chi2-tests-for-contingency-tables.html#cb209-2" tabindex="-1"></a>  <span class="fu">sum</span>(observed)</span></code></pre></div>
+<p>Then to compute the test statistic:</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="chi2-tests-for-contingency-tables.html#cb210-1" tabindex="-1"></a><span class="fu">sum</span>((observed <span class="sc">-</span> expected)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> expected)</span></code></pre></div>
+<pre><code>## [1] 6.922</code></pre>
+</div>
+<div id="a-simulation-method-1" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> A simulation method<a href="chi2-tests-for-contingency-tables.html#a-simulation-method-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As in previous chapters, we will first try a simulation method to see how ‘easy’ it is to obtain a test statistic as large as the one we observed, if <span class="math inline">\(H_0\)</span> were true.</p>
+<p>Assuming <span class="math inline">\(H_0\)</span> to be true, and using the estimated probabilities used in the calculation of the expected values <span class="math inline">\(E_{i,j}\)</span>, we have</p>
+<p><span class="math display">\[\begin{align}
+Y &amp;\sim multinom(298; \frac{565}{1214}, \frac{347}{1214},
+\frac{135}{1214}, \frac{90}{1214}, \frac{77}{1214} ),\\
+Z &amp;\sim multinom(916; \frac{565}{1214}, \frac{347}{1214},
+\frac{135}{1214}, \frac{90}{1214}, \frac{77}{1214}).
+\end{align}\]</span></p>
+<p>We now get R to simulate a random <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span>, and assemble a new matrix of observed values, which we call <code>newObserved</code>.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="chi2-tests-for-contingency-tables.html#cb212-1" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(<span class="dv">1</span>, <span class="dv">298</span>, <span class="fu">c</span>(<span class="dv">565</span>, <span class="dv">347</span>, <span class="dv">135</span>, <span class="dv">90</span>, <span class="dv">77</span>)<span class="sc">/</span><span class="dv">1214</span>)</span>
+<span id="cb212-2"><a href="chi2-tests-for-contingency-tables.html#cb212-2" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(<span class="dv">1</span>, <span class="dv">916</span>, <span class="fu">c</span>(<span class="dv">565</span>, <span class="dv">347</span>, <span class="dv">135</span>, <span class="dv">90</span>, <span class="dv">77</span>)<span class="sc">/</span><span class="dv">1214</span>)</span>
+<span id="cb212-3"><a href="chi2-tests-for-contingency-tables.html#cb212-3" tabindex="-1"></a>newObserved <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(Y, Z),</span>
+<span id="cb212-4"><a href="chi2-tests-for-contingency-tables.html#cb212-4" tabindex="-1"></a>                   <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">5</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>and to see what we got:</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="chi2-tests-for-contingency-tables.html#cb213-1" tabindex="-1"></a>newObserved</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]  167   75   24   17   15
+## [2,]  436  252  100   76   52</code></pre>
+<p>Now we compute the test statistic on this simulated data:</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="chi2-tests-for-contingency-tables.html#cb215-1" tabindex="-1"></a>newExpected <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">rowSums</span>(newObserved), <span class="fu">colSums</span>(newObserved),  <span class="st">&quot;*&quot;</span>) <span class="sc">/</span></span>
+<span id="cb215-2"><a href="chi2-tests-for-contingency-tables.html#cb215-2" tabindex="-1"></a>  <span class="fu">sum</span>(newObserved)</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="chi2-tests-for-contingency-tables.html#cb216-1" tabindex="-1"></a><span class="fu">sum</span>((newObserved <span class="sc">-</span> newExpected)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> newExpected)</span></code></pre></div>
+<pre><code>## [1] 7.63</code></pre>
+<p>This has produced a larger test statistic: even though the probabilities of the different ratings were the same for the two restaurants, in the simulation, there was a bigger difference between the <em>observed</em> ratings for the two restaurants.</p>
+<p>Now we repeat the simulation a large number of times.</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="chi2-tests-for-contingency-tables.html#cb218-1" tabindex="-1"></a>chisquared <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">100000</span>)</span>
+<span id="cb218-2"><a href="chi2-tests-for-contingency-tables.html#cb218-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>){</span>
+<span id="cb218-3"><a href="chi2-tests-for-contingency-tables.html#cb218-3" tabindex="-1"></a>   Y <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(<span class="dv">1</span>, <span class="dv">298</span>, <span class="fu">c</span>(<span class="dv">565</span>, <span class="dv">347</span>, <span class="dv">135</span>, <span class="dv">90</span>, <span class="dv">77</span>)<span class="sc">/</span><span class="dv">1214</span>)</span>
+<span id="cb218-4"><a href="chi2-tests-for-contingency-tables.html#cb218-4" tabindex="-1"></a>   Z <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(<span class="dv">1</span>, <span class="dv">916</span>, <span class="fu">c</span>(<span class="dv">565</span>, <span class="dv">347</span>, <span class="dv">135</span>, <span class="dv">90</span>, <span class="dv">77</span>)<span class="sc">/</span><span class="dv">1214</span>)</span>
+<span id="cb218-5"><a href="chi2-tests-for-contingency-tables.html#cb218-5" tabindex="-1"></a>   newObserved <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(Y, Z),</span>
+<span id="cb218-6"><a href="chi2-tests-for-contingency-tables.html#cb218-6" tabindex="-1"></a>                         <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">5</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb218-7"><a href="chi2-tests-for-contingency-tables.html#cb218-7" tabindex="-1"></a>   newExpected <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">rowSums</span>(newObserved), </span>
+<span id="cb218-8"><a href="chi2-tests-for-contingency-tables.html#cb218-8" tabindex="-1"></a>                        <span class="fu">colSums</span>(newObserved),  <span class="st">&quot;*&quot;</span>) <span class="sc">/</span></span>
+<span id="cb218-9"><a href="chi2-tests-for-contingency-tables.html#cb218-9" tabindex="-1"></a>      <span class="fu">sum</span>(newObserved)</span>
+<span id="cb218-10"><a href="chi2-tests-for-contingency-tables.html#cb218-10" tabindex="-1"></a>   chisquared[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>((newObserved <span class="sc">-</span> newExpected)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> newExpected)</span>
+<span id="cb218-11"><a href="chi2-tests-for-contingency-tables.html#cb218-11" tabindex="-1"></a>}</span>
+<span id="cb218-12"><a href="chi2-tests-for-contingency-tables.html#cb218-12" tabindex="-1"></a><span class="fu">sum</span>(chisquared <span class="sc">&gt;=</span> <span class="fl">6.92</span>)</span></code></pre></div>
+<pre><code>## [1] 14014</code></pre>
+<p>So about 14% of the time (14014/100000), we get test statistics larger than 6.92: if <span class="math inline">\(H_0\)</span> were true, there would be nothing ‘surprising’ about the observed differences in ratings between the two restaurants.</p>
+<div class="rmdnote">
+<p>
+The 14% is our <span class="math inline"><span class="math inline">\(p\)</span></span>-value: our
+probability that the test statistic would be as large as 6.92, if <span class="math inline"><span class="math inline">\(H_0\)</span></span> is true.
+</p>
+</div>
+<p>We’ll draw a histogram of our test statistics to visualise this.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-206"></span>
+<img src="MPS114-Data-Science_files/figure-html/unnamed-chunk-206-1.png" alt="Histogram of randomly simulated test statistics, all simulated assuming \(H_0\) is true. The larger values correspond to larger differences between the observed values, and the expected values under \(H_0\). We are able to generate test statistics larger than the observed one (6.92) about 14% of the time." width="384" />
+<p class="caption">
+Figure 10.2: Histogram of randomly simulated test statistics, all simulated assuming <span class="math inline">\(H_0\)</span> is true. The larger values correspond to larger differences between the observed values, and the expected values under <span class="math inline">\(H_0\)</span>. We are able to generate test statistics larger than the observed one (6.92) about 14% of the time.
+</p>
+</div>
+</div>
+<div id="an-analytical-method-1" class="section level2 hasAnchor" number="10.6">
+<h2><span class="header-section-number">10.6</span> An analytical method<a href="chi2-tests-for-contingency-tables.html#an-analytical-method-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Rather than using simulation, we can instead use an analytical approach, based on an approximate distribution of the test statistic under <span class="math inline">\(H_0\)</span>.</p>
+<p>If <span class="math inline">\(H_0\)</span> is true then, approximately
+<span class="math display">\[X^2 \sim \chi^2_{\nu},\]</span>
+with <span class="math inline">\(\nu =\)</span> (number of rows <span class="math inline">\(-1\)</span>) <span class="math inline">\(\times\)</span> (number of columns <span class="math inline">\(-1\)</span>). We then compute the <span class="math inline">\(p\)</span>-value as
+<span class="math display">\[
+P(X^2\ge X^2_{obs}),
+\]</span>
+for <span class="math inline">\(X^2\sim \chi^2_{\nu}\)</span>.</p>
+<p>As a rule-of-thumb, each expected count should be at least 5, otherwise the approximation may not be very good. If any expected count is less than 5, we could combine columns in the table, so that we have a smaller table, but more observations in (some of) the cells.</p>
+<p>Informally, we can think of the degrees of freedom parameter <span class="math inline">\(\nu\)</span> as the number of ‘pieces of information’ we have to compare the two distributions.</p>
+<ul>
+<li>We have 10 observations in total: 2 rows <span class="math inline">\(\times\)</span> 5 columns.</li>
+<li>The row totals are fixed: the values in the last column are determined by the values in the first four columns. This reduces us to <span class="math inline">\(2  \times (5-1)\)</span> ‘unconstrained’ observations.</li>
+<li>We have had to estimate the probability of response in each column. Probabilities must sum to one, so we have estimated (number of columns <span class="math inline">\(-1\)</span> ) parameters here.</li>
+<li>The degrees of freedom is the number of ‘unconstrained’ observations, minus the the number of estimated parameters:
+<span class="math inline">\(\nu=\)</span> (number of rows)<span class="math inline">\(\times\)</span>(number of columns <span class="math inline">\(-1\)</span>) <span class="math inline">\(-\)</span> (number of columns} <span class="math inline">\(- 1\)</span>)<span class="math inline">\(=\)</span>(number of rows} <span class="math inline">\(-1\)</span>)<span class="math inline">\(\times\)</span>(number of columns <span class="math inline">\(-1\)</span>).</li>
+</ul>
+<p>In our example, we have
+<span class="math inline">\(\nu =\)</span> (number of rows<span class="math inline">\(-1\)</span>)<span class="math inline">\(\times\)</span> (number of columns <span class="math inline">\(- 1) = 4\)</span>, so we need to compute
+<span class="math display">\[
+P(X^2\ge 6.92),
+\]</span>
+for <span class="math inline">\(X^2\sim \chi^2_{4}\)</span>. We obtain this from R with the <code>pchisq()</code> command:</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="chi2-tests-for-contingency-tables.html#cb220-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(<span class="fl">6.92</span>, <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## [1] 0.1402</code></pre>
+<p>Notice how close this is to the <span class="math inline">\(p\)</span>-value obtained in our simulation. This is because the <span class="math inline">\(\chi^2\)</span> approximation is good for this sample size. We illustrate this below.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-208"></span>
+<img src="MPS114-Data-Science_files/figure-html/unnamed-chunk-208-1.png" alt="The $\chi^2_4$ distribution, together with a histogram of our simulated test statistics. Notice the close agreement: the approximation of a $\chi^2_4$ distribution for the test statistic is a good one. The $p$-value (0.14) is shown by the red shaded area. " width="384" />
+<p class="caption">
+Figure 10.3: The <span class="math inline">\(\chi^2_4\)</span> distribution, together with a histogram of our simulated test statistics. Notice the close agreement: the approximation of a <span class="math inline">\(\chi^2_4\)</span> distribution for the test statistic is a good one. The <span class="math inline">\(p\)</span>-value (0.14) is shown by the red shaded area.
+</p>
+</div>
+<p>In conclusion, we state that there is no evidence against <span class="math inline">\(H_0\)</span>: no evidence to say that a customer is more likely to rate one restaurant higher than the other. This would suggest that the difference in rankings between the two restuarants (116 and 187) is not particularly meaningful.</p>
+<div id="chi2-tests-in-r" class="section level3 hasAnchor" number="10.6.1">
+<h3><span class="header-section-number">10.6.1</span> <span class="math inline">\(\chi^2\)</span> tests in R<a href="chi2-tests-for-contingency-tables.html#chi2-tests-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can conduct a <span class="math inline">\(\chi^2\)</span> test in R using the command <code>chisq.test()</code>. Recall that we set up our data as a matrix in R:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="chi2-tests-for-contingency-tables.html#cb222-1" tabindex="-1"></a>observed</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]  146   70   33   24   25
+## [2,]  419  277  102   66   52</code></pre>
+<p>We can then use the <code>chisq.test()</code> function:</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="chi2-tests-for-contingency-tables.html#cb224-1" tabindex="-1"></a><span class="fu">chisq.test</span>(observed)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  observed
+## X-squared = 6.9, df = 4, p-value = 0.1</code></pre>
+</div>
+<div id="row-homogeneity-and-independence" class="section level3 hasAnchor" number="10.6.2">
+<h3><span class="header-section-number">10.6.2</span> Row homogeneity and independence<a href="chi2-tests-for-contingency-tables.html#row-homogeneity-and-independence" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <span class="math inline">\(\chi^2\)</span> test described above can be used in two different situations: testing for “row homogeneity” and testing for “independence”. <strong>The calculations used in each case are identical</strong> and so for this module, you don’t need to worry about the difference. In later modules, or in textbooks, you may come across these two terms, so we will explain what they mean. Two examples are given, which are included in the Tutorial Booklet, and so you will be able to see the solutions.</p>
+<div id="row-homogeneity" class="section level4 hasAnchor" number="10.6.2.1">
+<h4><span class="header-section-number">10.6.2.1</span> Row homogeneity<a href="chi2-tests-for-contingency-tables.html#row-homogeneity" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Here, we suppose that totals in each row are fixed in advance. For each row, the counts along the columns can be modelled with a multinomial distribution. By “row homogeneity”, we mean that the multinomial probabilities are the same for every row. For example, suppose we want to compare voting preferences between voters who did and did not attend university. Suppose two random samples are drawn: 500 from each group. Participants named their favoured political party. Fictitious data are given below.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Con</th>
+<th align="right">Lab</th>
+<th align="right">Lib</th>
+<th align="right">Other</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">University: yes</td>
+<td align="right">202</td>
+<td align="right">82</td>
+<td align="right">102</td>
+<td align="right">114</td>
+</tr>
+<tr class="even">
+<td align="left">University: no</td>
+<td align="right">178</td>
+<td align="right">116</td>
+<td align="right">42</td>
+<td align="right">116</td>
+</tr>
+</tbody>
+</table>
+<p>Here, the totals in each row are fixed at 500, and we can test whether the probabilities of voting for particular parties are the same in each row.</p>
+</div>
+<div id="independence" class="section level4 hasAnchor" number="10.6.2.2">
+<h4><span class="header-section-number">10.6.2.2</span> Independence<a href="chi2-tests-for-contingency-tables.html#independence" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>In this scenario, we take two ‘measurements’ per individual, and want to tests whether the measurements are related. For example, in a survey of 237 (Statistics) students from the University of Adelaide, smoking habits (recorded here as one of “Never”, “Occasional”, “Regular” or “Heavy”) and exercise levels (recorded here as one of “Regular” or “some/none”) were observed. A contingency table is given below, with smoking status in the rows, and exercise in the columns [^61].</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Smoking status</th>
+<th align="left">exercise: regular</th>
+<th align="left">exercise: some/none</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Never</td>
+<td align="left">87</td>
+<td align="left">102</td>
+</tr>
+<tr class="even">
+<td align="left">Occasional</td>
+<td align="left">12</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">Regular</td>
+<td align="left">9</td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">Heavy</td>
+<td align="left">7</td>
+<td align="left">4</td>
+</tr>
+</tbody>
+</table>
+<p>Here, we may wish to test whether smoking status is independent of exercise level, for example:</p>
+<p><span class="math display">\[\begin{align}
+&amp;P(\mbox{regular exerciser and heavy smoker})\\
+&amp;= P(\mbox{regular exerciser})\\
+&amp;\times P(\mbox{heavy smoker})
+\end{align}\]</span>
+We can use <strong>exactly the same</strong> method as before: we calculate the expected values in exactly the same way, and compute the same <span class="math inline">\(X^2\)</span> test statistic, checking for cells with small expected counts as before. The reason this works is that we can express the null hypothesis of independence another way:
+<span class="math display">\[
+P(\mbox{regular exerciser | heavy smoker}) = P(\mbox{regular exerciser}),
+\]</span>
+so that the probability of being a regular exerciser would be the same for each row of the table: this is exactly what we would test for when testing for row homogeneity.</p>
+</div>
+</div>
+</div>
+<div id="exercise" class="section level2 hasAnchor" number="10.7">
+<h2><span class="header-section-number">10.7</span> Exercise<a href="chi2-tests-for-contingency-tables.html#exercise" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="example">
+<p><span id="exm:exampleChisq" class="example"><strong>Example 10.1  (Analysing student module questionnaire results) </strong></span><br> The following data are from student module evaluations for this module, taken from two successive years. Regarding the statement, “I am satisfied with the quality of this module,” the following responses were given. (56 students responded in 2017, and 33 students responded in 2018.)</p>
+</div>
+<table>
+<caption><span id="tab:unnamed-chunk-213">Table 10.2: </span>A contingency table showing numbers of students responses to a statement ‘I am satisfied with the quality of this module’, for two successive years. Percentages for each response within each each year are shown in brackets.</caption>
+<colgroup>
+<col width="5%" />
+<col width="17%" />
+<col width="13%" />
+<col width="27%" />
+<col width="16%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Definitely agree</th>
+<th align="left">Mostly agree</th>
+<th align="left">Neither agree nor disagree</th>
+<th align="left">Mostly disagree</th>
+<th align="left">Definitely disagree</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2017</td>
+<td align="left">15 (26.8%)</td>
+<td align="left">25 (44.6%)</td>
+<td align="left">9 (16.1%)</td>
+<td align="left">6 (10.7%)</td>
+<td align="left">1 (1.8%)</td>
+</tr>
+<tr class="even">
+<td align="left">2018</td>
+<td align="left">12 (36.4%)</td>
+<td align="left">17 (51.5%)</td>
+<td align="left">3 (9.1%)</td>
+<td align="left">1 (3%)</td>
+<td align="left">0 (0%)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="MPS114-Data-Science_files/figure-html/unnamed-chunk-214-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>The counts for the disagree responses are small, so we will combine those categories:</p>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="30%" />
+<col width="20%" />
+<col width="38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Year</th>
+<th>Definitely agree</th>
+<th>Mostly agree</th>
+<th>Neither agree nor disagree / mostly disagree / definitely disagree</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2017</td>
+<td>15</td>
+<td>25</td>
+<td>16</td>
+</tr>
+<tr class="even">
+<td>2018</td>
+<td>12</td>
+<td>17</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>There appears to be some improvement in 2018, but is it statistically significant?</p>
+<ol style="list-style-type: decimal">
+<li>State the model and suitable hypotheses</li>
+<li>Under a hypothesis of no difference between the years, give the expected number of “definitely agree” responses in 2018.</li>
+<li>Given a <span class="math inline">\(\chi^2\)</span> statistic of 3.34, draw a sketch to indicate what the <span class="math inline">\(p\)</span>-value would represent, and give a conclusion for the test. Some of the R output below will help you.</li>
+</ol>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="chi2-tests-for-contingency-tables.html#cb226-1" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="fl">3.34</span>, <span class="at">df =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>))</span></code></pre></div>
+<pre><code>## [1] 0.9324 0.8118 0.6579 0.4974</code></pre>
+<div class="fold">
+<p><strong>Solution</strong></p>
+<ol style="list-style-type: decimal">
+<li>We can model these data using multinomial distributions. Define <span class="math display">\[Y=(Y_1,Y_2,Y_3)\]</span> to be the numbers responding in each category in 2017, and <span class="math display">\[Z=(Z_1,Z_2,Z_3)\]</span> to be the numbers responding in each category in 2018 (so, for example, <span class="math inline">\(Y_2\)</span> would be the number of “mostly agree responses” in 2017, and <span class="math inline">\(Z_1\)</span> would be the number of “definitely agree” responses in 2018.) Before the responses are observed (but given the total number of responses in each year), we might suppose that
+<span class="math display">\[\begin{align}
+Y &amp;\sim multinom(56; \theta_{1}, \theta_{2},\theta_{3}),\\
+Z &amp;\sim multinom(33; \phi_{1}, \phi_{2},\phi_{3}),
+\end{align}\]</span>
+with, for example, <span class="math inline">\(\theta_{1}\)</span> the probability of a “Definitely agree” response in 2017, and <span class="math inline">\(\phi_2\)</span> the probability of a “Mostly agree” response in 2018.</li>
+</ol>
+<p>For the null hypothesis, we suppose there was no difference between the two years: probabilities of any particular response were the same in each year. For the alternative hypothesis, at least some of the probabilities should be different. We write
+<span class="math display">\[\begin{align}
+H_0 &amp;:\theta_i = \phi_i,\quad i=1,2,3
+H_A &amp;:\theta_i \neq \phi_i,\quad \mbox{for at least one $i$}.
+\end{align}\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>For the expected number of “definitely agree” responses in 2018, we compute
+<span class="math display">\[
+\frac{\mbox{total no. of 2018 responses}\times\mbox{total no. of ``definitely agree responses&quot;}}{\mbox{total number of responses}} = \frac{33 \times 27}{89}
+\]</span></p></li>
+<li><p>Note that the <span class="math inline">\(X^2\)</span> statistic has 2 degrees of freedom, so the R output of interest is</p></li>
+</ol>
+<p>The <span class="math inline">\(p\)</span>-value is the probability of exceeding 3.34, i.e. <span class="math inline">\(1 - 0.81=0.19\)</span></p>
+<p>The <span class="math inline">\(p\)</span>-value is indicated by the shaded area: <span class="math inline">\(1 - 0.81=0.19\)</span>. Hence, if <span class="math inline">\(H_0\)</span> were true, the differences we observed between the years would be ‘unsurprising’: there is no evidence against the null hypothesis of no change in student satisfaction.</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sample-size-and-power-for-a-neyman-pearson-hypothesis-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="index-of-definitions-and-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
