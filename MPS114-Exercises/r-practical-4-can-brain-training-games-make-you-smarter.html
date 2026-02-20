@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 4 R practical 4: can brain-training games make you smarter? | Data Science R Practicals and Exercises</title>
+  <meta name="description" content=" 4 R practical 4: can brain-training games make you smarter? | Data Science R Practicals and Exercises" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 4 R practical 4: can brain-training games make you smarter? | Data Science R Practicals and Exercises" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 4 R practical 4: can brain-training games make you smarter? | Data Science R Practicals and Exercises" />
+  
+  
+  
+
+<meta name="author" content="Dr Jill Johnson" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="r-practical-3-detecting-breast-cancer.html"/>
+<link rel="next" href="chapter-1-problems.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MPS114 Exercises</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Instructions</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-packages"><i class="fa fa-check"></i>R Packages</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-markdown"><i class="fa fa-check"></i>R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="r-practical-1-brexit.html"><a href="r-practical-1-brexit.html"><i class="fa fa-check"></i><b>1</b> R Practical 1: Brexit</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-practical-1-brexit.html"><a href="r-practical-1-brexit.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="r-practical-1-brexit.html"><a href="r-practical-1-brexit.html#tasks"><i class="fa fa-check"></i><b>1.2</b> Tasks</a></li>
+<li class="chapter" data-level="1.3" data-path="r-practical-1-brexit.html"><a href="r-practical-1-brexit.html#data-sources"><i class="fa fa-check"></i><b>1.3</b> Data sources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-practical-2-mapping-house-price-variation-in-sheffield.html"><a href="r-practical-2-mapping-house-price-variation-in-sheffield.html"><i class="fa fa-check"></i><b>2</b> R Practical 2: mapping house price variation in Sheffield</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-practical-2-mapping-house-price-variation-in-sheffield.html"><a href="r-practical-2-mapping-house-price-variation-in-sheffield.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="r-practical-2-mapping-house-price-variation-in-sheffield.html"><a href="r-practical-2-mapping-house-price-variation-in-sheffield.html#tasks-1"><i class="fa fa-check"></i><b>2.2</b> Tasks</a></li>
+<li class="chapter" data-level="2.3" data-path="r-practical-2-mapping-house-price-variation-in-sheffield.html"><a href="r-practical-2-mapping-house-price-variation-in-sheffield.html#data-sources-1"><i class="fa fa-check"></i><b>2.3</b> Data sources</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-practical-3-detecting-breast-cancer.html"><a href="r-practical-3-detecting-breast-cancer.html"><i class="fa fa-check"></i><b>3</b> R Practical 3: detecting breast cancer</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="r-practical-3-detecting-breast-cancer.html"><a href="r-practical-3-detecting-breast-cancer.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="r-practical-3-detecting-breast-cancer.html"><a href="r-practical-3-detecting-breast-cancer.html#data"><i class="fa fa-check"></i><b>3.2</b> Data</a></li>
+<li class="chapter" data-level="3.3" data-path="r-practical-3-detecting-breast-cancer.html"><a href="r-practical-3-detecting-breast-cancer.html#tasks-2"><i class="fa fa-check"></i><b>3.3</b> Tasks</a></li>
+<li class="chapter" data-level="3.4" data-path="r-practical-3-detecting-breast-cancer.html"><a href="r-practical-3-detecting-breast-cancer.html#data-source"><i class="fa fa-check"></i><b>3.4</b> Data source</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r-practical-4-can-brain-training-games-make-you-smarter.html"><a href="r-practical-4-can-brain-training-games-make-you-smarter.html"><i class="fa fa-check"></i><b>4</b> R practical 4: can brain-training games make you smarter?</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r-practical-4-can-brain-training-games-make-you-smarter.html"><a href="r-practical-4-can-brain-training-games-make-you-smarter.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="r-practical-4-can-brain-training-games-make-you-smarter.html"><a href="r-practical-4-can-brain-training-games-make-you-smarter.html#tasks-3"><i class="fa fa-check"></i><b>4.2</b> Tasks</a></li>
+<li class="chapter" data-level="4.3" data-path="r-practical-4-can-brain-training-games-make-you-smarter.html"><a href="r-practical-4-can-brain-training-games-make-you-smarter.html#data-source-1"><i class="fa fa-check"></i><b>4.3</b> Data source</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chapter-1-problems.html"><a href="chapter-1-problems.html"><i class="fa fa-check"></i><b>5</b> Chapter 1 problems</a></li>
+<li class="chapter" data-level="6" data-path="chapters-3-and-4-problems.html"><a href="chapters-3-and-4-problems.html"><i class="fa fa-check"></i><b>6</b> Chapters 3 and 4 problems</a></li>
+<li class="chapter" data-level="7" data-path="chapter-5-problems.html"><a href="chapter-5-problems.html"><i class="fa fa-check"></i><b>7</b> Chapter 5 problems</a></li>
+<li class="chapter" data-level="8" data-path="chapters-7-and-8-problems.html"><a href="chapters-7-and-8-problems.html"><i class="fa fa-check"></i><b>8</b> Chapters 7 and 8 problems</a></li>
+<li class="chapter" data-level="9" data-path="chapters-9-and-10-problems.html"><a href="chapters-9-and-10-problems.html"><i class="fa fa-check"></i><b>9</b> Chapters 9 and 10 problems</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science R Practicals and Exercises</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-practical-4-can-brain-training-games-make-you-smarter" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number"> 4</span> R practical 4: can brain-training games make you smarter?<a href="r-practical-4-can-brain-training-games-make-you-smarter.html#r-practical-4-can-brain-training-games-make-you-smarter" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<script type="text/javascript">
+$(document).ready(function() {
+  $folds = $(".fold");
+  $folds.wrapInner("<div class=\"fold-blck\">"); // wrap a div container around content
+  $folds.prepend("<button class=\"fold-btn\">Show hint</button>");  // add a button
+  $(".fold-blck").toggle();  // fold all blocks
+  $(".fold-btn").on("click", function() {  // add onClick event
+    $(this).text($(this).text() === "Show hint" ? "Hide hint" : "Show hint");  // if the text equals "Fold", change it to "Unfold"or else to "Fold" 
+    $(this).next(".fold-blck").toggle("linear");  // "swing" is the default easing function. This can be further customized in its speed or the overall animation itself.
+  })
+});
+</script>
+<div id="introduction-3" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Introduction<a href="r-practical-4-can-brain-training-games-make-you-smarter.html#introduction-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Various games have been devised which, according to their designers, can boost your intelligence if you play them regularly. How can we tell if they work? In this practical, you will analyse data from an experiment reported in Lawlor-Savage and Goghari (2016)<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, designed to test the effectiveness of dual-n-back games compared with “processing speed training”.</p>
+<p>In their experiment:</p>
+<ul>
+<li>84 healthy adults, aged 30-60, were allocated at random to one of two games:
+<ul>
+<li>dual-n-back, or</li>
+<li>processing speed training. (This is the control group. It is not believed “processing speed training” has any effect on intelligence.)</li>
+</ul></li>
+<li>57 adults were included in the final analysis: these adults played their respective games on at least 13 occasions over a 5 week period, playing the game for around 30 minutes per occasion.</li>
+<li>The adults took various tests at the start (before playing any games) and end of the experiment.</li>
+</ul>
+<p>In this practical, you will analyse their scores from one test: <a href="https://en.wikipedia.org/wiki/Raven%27s_Progressive_Matrices" target="_blank">Raven’s Advanced Progressive Matrices</a> (a test of fluid intelligence).</p>
+<p>Try dual-n-back training for yourself, using the <a href="http://brainscale.net/dual-n-back/training" target="_blank">demo available here</a> (you will need sound enabled).</p>
+<ul>
+<li>You will see a sequence: in each step, a square appears in one of the grid cells, and you will hear a letter.</li>
+<li>You have to remember what you saw and heard <em>two</em> steps back in the sequence</li>
+<li>Press the appropriate keys whenever the position of the square and/or the letter is repeated from two steps back.</li>
+</ul>
+<p>(It’s hard!)</p>
+<p>Data are in the file <code>brain2.csv</code>, available on Blackboard. The column headings are</p>
+<ul>
+<li><code>subject</code>: a label for each participant;</li>
+<li><code>game</code>: which game the participant trained with: dual-n-back, or speed processing training.</li>
+<li><code>RAPM1</code>: the score on Raven’s Advanced Progressive Matrices (RAPM) before training;</li>
+<li><code>RAPM2</code>: the score on Raven’s Advanced Progressive Matrices after training;</li>
+<li><code>RAPM.improve</code>: the change between the two scores (RAPM after training - RAPM before training)</li>
+</ul>
+</div>
+<div id="tasks-3" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Tasks<a href="r-practical-4-can-brain-training-games-make-you-smarter.html#tasks-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Inside your folder for this module, create another folder: <code>Practical 4</code>.</li>
+</ol>
+<hr>
+<ol start="2" style="list-style-type: decimal">
+<li>Download the R Markdown document <code>Practical4.Rmd</code> and data <code>brain2.csv</code> from Blackboard, and put these files into your <code>Practical 4</code> folder. <strong>You must put your solutions to the following tasks in the R Markdown document</strong>.</li>
+</ol>
+<div class="fold">
+<p>(This animation is from R Practical 1, but you need to do the same sort of thing here. Change the title at the top, as well as the author name.)</p>
+<p><img src="images/rmarkdown.gif" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<hr>
+<ol start="3" style="list-style-type: decimal">
+<li>Import the data into R, storing it as a data frame called <code>brain</code>. You need to do this using a suitable command inside your .Rmd document. If you import your data some other way, although you will still be able to do tasks 4-7, your .Rmd document will not compile successfully.</li>
+</ol>
+<div class="fold">
+<ul>
+<li>Copy and modify <a href="https://johnsonj11.github.io/MPS114-Notes/exploratory-data-analysis-using-r.html#importing-data-into-r-csv-and-.xlsx-files" target="_blank">this lecture notes example: importing data</a></li>
+<li>Here, rather than <code>maths.csv</code>, you are importing a file called <code>brain2.csv</code>.</li>
+<li>You need to store the result as <code>brain</code> rather than <code>maths</code>.</li>
+</ul>
+</div>
+<hr>
+<ol start="4" style="list-style-type: decimal">
+<li>For all the participants in the study, find the mean and interquartile range of the RAPM scores taken at the <strong>start</strong> of the experiment.</li>
+</ol>
+<div class="fold">
+<ul>
+<li>You can get various summary statistics using the <code>summary()</code> command. <a href="https://johnsonj11.github.io/MPS114-Notes/exploratory-data-analysis-using-r.html#calculating-summary-statistics-with-the-summary-command" target="_blank">Here is an example.</a></li>
+<li>The interquartile range is defined <a href="https://johnsonj11.github.io/MPS114-Notes/exploratory-data-analysis-using-r.html#def:defIQR" target="_blank">here</a>.</li>
+</ul>
+</div>
+<hr>
+<ol start="5" style="list-style-type: decimal">
+<li>Assuming RAPM scores are normally distributed, calculate a 95% confidence interval for the population mean RAPM score at the beginning of the experiment. (You can treat all the participants as a single sample, ignoring which game they played: none of the participants had played either game at the start of the experiment).</li>
+</ol>
+<div class="fold">
+<ul>
+<li>See <a href="https://johnsonj11.github.io/MPS114-Notes/exploratory-data-analysis-using-r.html#viewing-and-extracting-data-from-a-column" target="_blank">this example</a> for extracting the values of a column from a data frame.</li>
+<li>The confidence interval formula is given <a href="https://johnsonj11.github.io/MPS114-Notes/interval-estimates-and-confidence-intervals.html#confidence-intervals-for-the-mean-and-the-variance-of-a-normal-distribution" target="_blank">here</a>.</li>
+<li>Use the functions <code>mean()</code> and <code>var()</code> for computing the sample mean and the sample variance, and see <a href="https://johnsonj11.github.io/MPS114-Notes/interval-estimates-and-confidence-intervals.html#the-t-distribution-in-r." target="_blank">here</a> for working with the <span class="math inline">\(t\)</span>-distribution in R.</li>
+</ul>
+</div>
+<hr>
+<ol start="6" style="list-style-type: decimal">
+<li>Conduct a suitable hypothesis test to test whether the dual-n-back game has improved intelligence, compared with speed processing training. Find the 95% confidence interval for the difference between mean improvements in the two groups</li>
+</ol>
+<div class="fold">
+<p>To do a two-sample <span class="math inline">\(t\)</span>-test in R, see <a href="https://johnsonj11.github.io/MPS114-Notes/hypothesis-testing-comparing-two-population-means.html#t-tests-with-data-frames-in-r" target="_blank">Section 7.6.1</a>.</p>
+</div>
+<hr>
+<ol start="7" style="list-style-type: decimal">
+<li>Using one of the types of plots described in <a href="https://johnsonj11.github.io/MPS114-Notes/exploratory-data-analysis-using-r.html" target="_blank">Chapter 1</a>, produce a suitable plot to compare the improvements in RAPM scores between the two groups.</li>
+</ol>
+<ul>
+<li>Specify axes labels to make them more descriptive;</li>
+<li>Add a caption, stating what the plots suggest regarding whether the dual-n-back game has improved intelligence.</li>
+</ul>
+<div class="fold">
+<ul>
+<li>One of the plot types in Chapter 1 is described as being useful for comparing groups.</li>
+<li>To add a caption, use a code chunk option <code>fig.cap = "Insert your caption here"</code></li>
+</ul>
+<p><img src="images/caption.gif" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<hr>
+</div>
+<div id="data-source-1" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Data source<a href="r-practical-4-can-brain-training-games-make-you-smarter.html#data-source-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The data were obtained from (<a href="https://figshare.com/articles/Working_Memory_Training_in_Healthy_Adults/3121582" class="uri">https://figshare.com/articles/Working_Memory_Training_in_Healthy_Adults/3121582</a>) [Accessed 20/12/17]</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>Lawlor-Savage L, Goghari VM (2016) Dual N-Back Working Memory Training in Healthy Adults: A Randomized Comparison to Processing Speed Training. PLoS ONE 11(4): e0151817. (<a href="https://doi.org/10.1371/journal.pone.0151817" class="uri">https://doi.org/10.1371/journal.pone.0151817</a>)<a href="r-practical-4-can-brain-training-games-make-you-smarter.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r-practical-3-detecting-breast-cancer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-1-problems.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-BrainTraining.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 8 Chapters 7 and 8 problems | Data Science R Practicals and Exercises</title>
+  <meta name="description" content=" 8 Chapters 7 and 8 problems | Data Science R Practicals and Exercises" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 8 Chapters 7 and 8 problems | Data Science R Practicals and Exercises" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 8 Chapters 7 and 8 problems | Data Science R Practicals and Exercises" />
+  
+  
+  
+
+<meta name="author" content="Dr Jill Johnson" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="chapter-5-problems.html"/>
+<link rel="next" href="chapters-9-and-10-problems.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MPS114 Exercises</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Instructions</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-packages"><i class="fa fa-check"></i>R Packages</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-markdown"><i class="fa fa-check"></i>R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="r-practical-1-brexit.html"><a href="r-practical-1-brexit.html"><i class="fa fa-check"></i><b>1</b> R Practical 1: Brexit</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-practical-1-brexit.html"><a href="r-practical-1-brexit.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="r-practical-1-brexit.html"><a href="r-practical-1-brexit.html#tasks"><i class="fa fa-check"></i><b>1.2</b> Tasks</a></li>
+<li class="chapter" data-level="1.3" data-path="r-practical-1-brexit.html"><a href="r-practical-1-brexit.html#data-sources"><i class="fa fa-check"></i><b>1.3</b> Data sources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-practical-2-mapping-house-price-variation-in-sheffield.html"><a href="r-practical-2-mapping-house-price-variation-in-sheffield.html"><i class="fa fa-check"></i><b>2</b> R Practical 2: mapping house price variation in Sheffield</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-practical-2-mapping-house-price-variation-in-sheffield.html"><a href="r-practical-2-mapping-house-price-variation-in-sheffield.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="r-practical-2-mapping-house-price-variation-in-sheffield.html"><a href="r-practical-2-mapping-house-price-variation-in-sheffield.html#tasks-1"><i class="fa fa-check"></i><b>2.2</b> Tasks</a></li>
+<li class="chapter" data-level="2.3" data-path="r-practical-2-mapping-house-price-variation-in-sheffield.html"><a href="r-practical-2-mapping-house-price-variation-in-sheffield.html#data-sources-1"><i class="fa fa-check"></i><b>2.3</b> Data sources</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-practical-3-detecting-breast-cancer.html"><a href="r-practical-3-detecting-breast-cancer.html"><i class="fa fa-check"></i><b>3</b> R Practical 3: detecting breast cancer</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="r-practical-3-detecting-breast-cancer.html"><a href="r-practical-3-detecting-breast-cancer.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="r-practical-3-detecting-breast-cancer.html"><a href="r-practical-3-detecting-breast-cancer.html#data"><i class="fa fa-check"></i><b>3.2</b> Data</a></li>
+<li class="chapter" data-level="3.3" data-path="r-practical-3-detecting-breast-cancer.html"><a href="r-practical-3-detecting-breast-cancer.html#tasks-2"><i class="fa fa-check"></i><b>3.3</b> Tasks</a></li>
+<li class="chapter" data-level="3.4" data-path="r-practical-3-detecting-breast-cancer.html"><a href="r-practical-3-detecting-breast-cancer.html#data-source"><i class="fa fa-check"></i><b>3.4</b> Data source</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r-practical-4-can-brain-training-games-make-you-smarter.html"><a href="r-practical-4-can-brain-training-games-make-you-smarter.html"><i class="fa fa-check"></i><b>4</b> R practical 4: can brain-training games make you smarter?</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r-practical-4-can-brain-training-games-make-you-smarter.html"><a href="r-practical-4-can-brain-training-games-make-you-smarter.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="r-practical-4-can-brain-training-games-make-you-smarter.html"><a href="r-practical-4-can-brain-training-games-make-you-smarter.html#tasks-3"><i class="fa fa-check"></i><b>4.2</b> Tasks</a></li>
+<li class="chapter" data-level="4.3" data-path="r-practical-4-can-brain-training-games-make-you-smarter.html"><a href="r-practical-4-can-brain-training-games-make-you-smarter.html#data-source-1"><i class="fa fa-check"></i><b>4.3</b> Data source</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chapter-1-problems.html"><a href="chapter-1-problems.html"><i class="fa fa-check"></i><b>5</b> Chapter 1 problems</a></li>
+<li class="chapter" data-level="6" data-path="chapters-3-and-4-problems.html"><a href="chapters-3-and-4-problems.html"><i class="fa fa-check"></i><b>6</b> Chapters 3 and 4 problems</a></li>
+<li class="chapter" data-level="7" data-path="chapter-5-problems.html"><a href="chapter-5-problems.html"><i class="fa fa-check"></i><b>7</b> Chapter 5 problems</a></li>
+<li class="chapter" data-level="8" data-path="chapters-7-and-8-problems.html"><a href="chapters-7-and-8-problems.html"><i class="fa fa-check"></i><b>8</b> Chapters 7 and 8 problems</a></li>
+<li class="chapter" data-level="9" data-path="chapters-9-and-10-problems.html"><a href="chapters-9-and-10-problems.html"><i class="fa fa-check"></i><b>9</b> Chapters 9 and 10 problems</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science R Practicals and Exercises</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chapters-7-and-8-problems" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number"> 8</span> Chapters 7 and 8 problems<a href="chapters-7-and-8-problems.html#chapters-7-and-8-problems" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<ol style="list-style-type: decimal">
+<li>Baumann and Jones of the Purdue University Education Department conducted an experiment to compare different methods for reaching reading comprehension in children. Three methods were compared, but here we will consider two only:</li>
+</ol>
+<ul>
+<li>Basal - using textbooks designed to develop reading skills</li>
+<li>Directed Reading Thinking Activity (DRTA) - a comprehension strategy that guides students in asking questions about a text, making predictions, and then reading to confirm or refute their predictions.</li>
+</ul>
+<p>Twenty-two children were randomly allocated to each of these methods (so that we might expect similar abilities between the two groups at the start), and their reading comprehension was tested before and after instruction. Here, we just analyse scores <em>after</em> instruction. Histograms of the data are shown in the next plot.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-37"></span>
+<img src="MPS114-Exercises_files/figure-html/unnamed-chunk-37-1.png" alt="Histograms of reading comprehension scores for children taught by the basal and DRTA methods. From the data, we want to determine which method is best on average." width="384" />
+<p class="caption">
+Figure 8.1: Histograms of reading comprehension scores for children taught by the basal and DRTA methods. From the data, we want to determine which method is best on average.
+</p>
+</div>
+<p>The scores are stored in the R vectors <code>basal</code> and <code>drta</code>. Some R output is given below.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="chapters-7-and-8-problems.html#cb43-1" tabindex="-1"></a>basal</span></code></pre></div>
+<pre><code>##  [1]  5  9  5  8 10  9 12  5  8  7 12  4  4  8  6  9  3  5  4  2  5  7</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="chapters-7-and-8-problems.html#cb45-1" tabindex="-1"></a>drta</span></code></pre></div>
+<pre><code>##  [1]  7  5 13  5 14 14 10 13 12 11  8  7 10  8  8 10 12 10 11  7  8 12</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="chapters-7-and-8-problems.html#cb47-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">mean</span>(basal), <span class="fu">var</span>(basal), <span class="fu">mean</span>(drta), <span class="fu">var</span>(drta))</span></code></pre></div>
+<pre><code>## [1] 6.682 7.656 9.773 7.422</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>Write down a suitable model for the data, defining your notation carefully. You can assume test scores are normally distributed.</li>
+<li>State appropriate null and alternative hypotheses, in terms of your model parameters, to test whether the mean scores are different between the two methods.</li>
+<li>For an appropriate two-sample <span class="math inline">\(t\)</span>-test, calculate the value of the test statistic</li>
+<li>Draw a sketch to illustrate what the <span class="math inline">\(p\)</span>-value would represent, indicating the value of your test statistic.</li>
+<li>Give the R command needed to find the <span class="math inline">\(p\)</span>-value.</li>
+<li>How would you interpret a <span class="math inline">\(p\)</span>-value less than 0.001, with reference to the two teaching methods?</li>
+</ol>
+<hr>
+<ol start="2" style="list-style-type: decimal">
+<li>A new 12 week weight-loss plan has been designed to help adults with a body mass index (BMI) <span class="math inline">\(&gt;\)</span> 25 lose weight. Forty volunteers are recruited to a study to test the plan. Half the volunteers are assigned to the new plan, and the other half are assigned to an alternative plan: one that is currently recommended. The change in weight (in kg) is measured for each adult at the end of the study. The interest is in whether the new plan is any more effective than the current one.
+<ol style="list-style-type: lower-alpha">
+<li>Assume the changes in weight in the two groups are normally distributed. <strong>Defining your notation carefully</strong>, write down a null and alternative hypotheses that would be appropriate for testing whether the new plan is more or less effective than the current one.</li>
+</ol></li>
+</ol>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Histograms for the two groups are shown below. The sample mean is indicated by the dashed line in each case. Note that the sample mean was lower (more weight lost on average) in the group with the new plan. If your hypothesis test in part (a) was to be conducted, at the 5% level of significance (so that you are using the Neyman-Pearson framework), by studying the plot below, what do you think the result would be? Briefly explain your answer.</li>
+</ol>
+<p><img src="MPS114-Exercises_files/figure-html/unnamed-chunk-39-1.png" width="384" style="display: block; margin: auto;" /></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>The changes in weight for the two groups are stored in R as the vectors <code>newplan</code> and <code>currentplan</code> respectively. Using the following R output, test your hypothesis in part a at the 5% level of significance. Assume that for <span class="math inline">\(\nu &gt;30\)</span>, you can approximate the <span class="math inline">\(t_\nu\)</span> distribution by the <span class="math inline">\(N(0,1)\)</span> distribution. State clearly the conclusion of your test, in terms of whether there is evidence from the experiment that the new plan is more effective than the current plan.</li>
+</ol>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="chapters-7-and-8-problems.html#cb49-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">mean</span>(newplan), <span class="fu">var</span>(newplan))</span></code></pre></div>
+<pre><code>## [1] -0.6450  0.7089</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="chapters-7-and-8-problems.html#cb51-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">mean</span>(currentplan), <span class="fu">var</span>(currentplan))</span></code></pre></div>
+<pre><code>## [1] -0.285  0.515</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="chapters-7-and-8-problems.html#cb53-1" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.975</span>)</span></code></pre></div>
+<pre><code>## [1] 1.96</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Using (some of) the following R output, deduce an interval within which the <span class="math inline">\(p\)</span>-value from your hypothesis test must lie.</li>
+</ol>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="chapters-7-and-8-problems.html#cb55-1" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.95</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<pre><code>## [1] 1.282 1.645 1.960</code></pre>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Calculate a 95% confidence interval for the difference between the two population means, again, assuming that for <span class="math inline">\(\nu &gt;30\)</span>, you can approximate the <span class="math inline">\(t_\nu\)</span> distribution by the <span class="math inline">\(N(0,1)\)</span> distribution. By inspecting your interval, what would be the outcome of a test of the null hypothesis, of size 0.05, that patients on the new plan lose, on average 0.5kg more than patients on the current plan? Would this contradict your earlier conclusion?</li>
+</ol>
+<hr>
+<ol start="3" style="list-style-type: decimal">
+<li>Two driving instructors are to be compared regarding how many of their pupils pass their driving tests at the first attempt. Instructor A has 30 pupils, and 18 pass at the first attempt. Instructor B has 35 pupils, and 12 pass at the first attempt. Conduct a suitable hypothesis to compare the two instructors.
+<ul>
+<li>State your model for the data and define your notation carefully.</li>
+<li>Draw a sketch to indicate your observed test statistic and <span class="math inline">\(p\)</span>-value.</li>
+<li>State the R command you would use to get the <span class="math inline">\(p\)</span>-value.</li>
+<li>How would a <span class="math inline">\(p\)</span>-value of 0.04 be interpreted in this case?</li>
+</ul></li>
+</ol>
+<hr>
+<ol start="4" style="list-style-type: decimal">
+<li>Suppose we have two binomial random variables
+<span class="math display">\[\begin{align*}
+X&amp;\sim Bin(n, \theta_X),\\
+Y&amp;\sim Bin(m, \theta_Y),
+\end{align*}\]</span>
+and we wish to test the null hypothesis
+<span class="math display">\[
+H_0: \theta_X = \theta_Y.
+\]</span>
+We use the test statistic
+<span class="math display">\[
+Z:= \frac{\frac{X}{n} - \frac{Y}{m}}{\sqrt{v}}
+\]</span>
+where
+<span class="math display">\[
+v:= p^*(1-p^*)\left(\frac{1}{n} + \frac{1}{m}\right),
+\]</span>
+and
+<span class="math display">\[
+p^*: = \frac{x+y}{n+m}.
+\]</span>
+If we assume <span class="math inline">\(H_0\)</span> is true, and we further assume <span class="math inline">\(\theta_X = \theta_Y = \frac{x+y}{n+m}\)</span>, then prove that</li>
+</ol>
+<p><span class="math display">\[\begin{align}
+\mathbb{E}(Z) &amp;= 0,\\
+Var(Z)&amp;=1.
+\end{align}\]</span></p>
+<hr>
+<ol start="5" style="list-style-type: decimal">
+<li><strong>Challenge problem</strong>. In an investigation into the effects of a pesticide on the leaves of a plant, eight leaves were chosen and each was divided into two parts. One part of each leaf was treated with the pesticide and the other was not. Microscopic examination of the leaves for structural damage gave the following comparative responses, where a higher number corresponds to more damage.
+A scatter plot of these data are shown below. The dashed line has gradient 1 and <span class="math inline">\(y\)</span>-intercept 0.</li>
+</ol>
+<p><img src="MPS114-Exercises_files/figure-html/unnamed-chunk-43-1.png" width="288" style="display: block; margin: auto;" /></p>
+<p>Suppose the observations are normally distributed, and consider the following R output</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="chapters-7-and-8-problems.html#cb57-1" tabindex="-1"></a>untreated <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.7</span>, <span class="fl">4.6</span>, <span class="fl">3.8</span>, <span class="fl">4.8</span>, <span class="fl">3.9</span>, <span class="fl">6.2</span>, <span class="fl">4.8</span>, <span class="fl">3.1</span>)</span>
+<span id="cb57-2"><a href="chapters-7-and-8-problems.html#cb57-2" tabindex="-1"></a>treated <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.9</span>, <span class="fl">4.3</span>, <span class="fl">4.2</span>, <span class="fl">5.4</span>, <span class="fl">4.8</span>, <span class="fl">6.1</span>, <span class="fl">5.6</span>, <span class="fl">3.6</span>)</span>
+<span id="cb57-3"><a href="chapters-7-and-8-problems.html#cb57-3" tabindex="-1"></a>differences <span class="ot">&lt;-</span> untreated <span class="sc">-</span> treated</span>
+<span id="cb57-4"><a href="chapters-7-and-8-problems.html#cb57-4" tabindex="-1"></a><span class="fu">t.test</span>(untreated, treated)</span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  untreated and treated
+## t = -1, df = 13, p-value = 0.3
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -1.5809  0.5809
+## sample estimates:
+## mean of x mean of y 
+##     4.237     4.737</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="chapters-7-and-8-problems.html#cb59-1" tabindex="-1"></a><span class="fu">t.test</span>(differences)</span></code></pre></div>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  differences
+## t = -2.8, df = 7, p-value = 0.03
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  -0.9192 -0.0808
+## sample estimates:
+## mean of x 
+##      -0.5</code></pre>
+<p>In the second <span class="math inline">\(t\)</span>-test, a <strong>one-sample <span class="math inline">\(t\)</span>-test</strong> has been conducted. For a one-sample <span class="math inline">\(t\)</span> test, we have random variables
+<span class="math display">\[
+X_1,\ldots,X_n\stackrel{i.i.d}{\sim}N(\mu, \sigma^2),
+\]</span>
+we test the hypothesis <span class="math inline">\(H_0:\mu = 0\)</span>, and our test statistic is
+<span class="math display">\[
+T = \frac{\bar{X}}{\sqrt{S^2/n}}\sim t_{n-1},
+\]</span>
+assuming <span class="math inline">\(H_0\)</span> is true.</p>
+<p>Do the two <span class="math inline">\(p\)</span>-values give contradictory conclusions? If not, why not?</p>
+<hr>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chapter-5-problems.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapters-9-and-10-problems.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/06-exercises.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
